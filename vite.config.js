@@ -27,11 +27,12 @@ export default defineConfig({
     rollupOptions: {
       external: [
         /lodash/i,
-        /vue/i,
+        /^vue/i,
         /vue-router/i,
         /@ue/i,
         /@eci/i,
         /ant-design-vue/i,
+        /@ant-design\/icons-vue/i,
         /@fengqiaogang/,
         /@fengqiaogang/,
       ],

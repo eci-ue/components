@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -9,7 +9,7 @@
   "scripts": {
     "test": "vite --clearScreen --port 3000",
     "build": "vue-tsc && vite build",
-    "types": "tsc --declaration --jsx preserve --outDir types ./src/index"
+    "types": "vue-tsc --declaration --noEmit false --emitDeclarationOnly --declarationDir ./types"
   },
   "keywords": [
     "form",

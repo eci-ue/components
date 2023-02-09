@@ -2,6 +2,7 @@
   "compilerOptions": {
     "outDir": "build",
     "target": "ESNext",
+    "declaration": true,
     "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Node",

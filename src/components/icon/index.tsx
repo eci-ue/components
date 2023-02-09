@@ -4,7 +4,7 @@
  * @description 组合 IconFont & Ant Design Icon 图标
  */
 
-import _ from "lodash-es";
+import * as _ from "lodash-es";
 import { IconExpand } from "./expand";
 import safeGet from "@fengqiaogang/safe-get";
 import * as icons from "@ant-design/icons-vue";

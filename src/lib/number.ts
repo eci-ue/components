@@ -3,7 +3,7 @@
  * @author svon.me@gmail.com
  */
 
-import _ from "lodash-es";
+import * as _ from "lodash-es";
 import { toNumberCash, isZero } from "@eci/utils";
 import type { Directive, App } from "vue";
 

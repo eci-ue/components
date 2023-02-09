@@ -3,7 +3,7 @@
  * @author svon.me@gmail.com
  */
 
-import _ from "lodash-es";
+import * as _ from "lodash-es";
 import safeGet from "@fengqiaogang/safe-get";
 import { RouterLink, useRouter } from "vue-router";
 import { defineComponent, PropType, h as createElement } from "vue";
