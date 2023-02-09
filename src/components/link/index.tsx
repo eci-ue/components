@@ -8,6 +8,7 @@ import safeGet from "@fengqiaogang/safe-get";
 import { RouterLink, useRouter } from "vue-router";
 import { defineComponent, PropType, h as createElement } from "vue";
 
+import type { Props } from "./props";
 import type { LocationQueryRaw, RouteParamsRaw, RouteLocationRaw } from "vue-router";
 
 const isHref = function(value: string | RouteLocationRaw) {
@@ -17,33 +18,10 @@ const isHref = function(value: string | RouteLocationRaw) {
   return false;
 }
 
-interface Props {
-  tag?: string;
-  target?: string;
-  to?: string | RouteLocationRaw;
-};
-
 const blank = "_blank";
 
-export default defineComponent({
+export default defineComponent<Props>({
   name: "Link",
-  props: {
-    to: {
-      required: false,
-      default: "",
-      type: [String, Object] as PropType<string | RouteLocationRaw>
-    },
-    tag: {
-      type: String,
-      default: "div",
-      required: false,
-    },
-    target: {
-      type: String,
-      default: "",
-      required: false,
-    }
-  },
   setup(props: Props, { slots }) {
     const router = useRouter();
     const link = function(href: string | RouteLocationRaw, target?: string) {
@@ -68,7 +46,7 @@ export default defineComponent({
         }
         return link({ name, params, query } as any);
       }
-      return createElement(props.tag || "div", {}, slots);
+      return createElement(props.tag || "a", {}, slots);
     };
   }
 });

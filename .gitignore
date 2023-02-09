@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+types/*
+!types/shims-vue.d.ts
 *.local
 
 # Editor directories and files
