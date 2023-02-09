@@ -10,8 +10,8 @@ import safeGet from "@fengqiaogang/safe-get";
 import * as icons from "@ant-design/icons-vue";
 import { DefineComponent, defineComponent, h as createElement, PropType } from "vue";
 
-import type { Component } from "vue";
 import type { Props } from "./props";
+import type { Component, CSSProperties } from "vue";
 
 const expand = function(props: Props) {
   let value: Component | boolean = false;
@@ -25,9 +25,23 @@ const expand = function(props: Props) {
 };
 
 const create = function(name: string) {
+  const iconFontStyle: CSSProperties = {
+    "font-style": "normal",
+    "line-height": 0,
+    "text-transform": "none",
+    "vertical-align": "-0.125em",
+    "text-rendering": "optimizeLegibility",
+    "-webkit-font-smoothing": "antialiased",
+    "fill": "currentColor",
+    "overflow": "hidden",
+  };
+  const svgStyle: CSSProperties = {
+    width: "1rem", 
+    height: "1rem",
+  };
   return (<span class="icon-font">
-    <i>
-      <svg aria-hidden="true">
+    <i style={ iconFontStyle }>
+      <svg aria-hidden="true" style={ svgStyle }>
         <use xlinkHref={`#${name}`}/>
       </svg>
     </i>
