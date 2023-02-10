@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -9,7 +9,7 @@
   "scripts": {
     "test": "vite --clearScreen --port 3000",
     "build": "vue-tsc && vite build",
-    "types": "vue-tsc --declaration --noEmit false --emitDeclarationOnly --declarationDir ./types"
+    "types": "vue-tsc --jsx preserve --declaration --noEmit false --emitDeclarationOnly --declarationDir ./types ./src/index"
   },
   "keywords": [
     "form",
@@ -28,8 +28,10 @@
     "url": "git+https://github.com/eci-ue/components.git"
   },
   "dependencies": {
-    "@eci/utils": "^0.0.5",
     "@fengqiaogang/safe-get": "^0.1.1",
+    "@js-lion/api": "^0.0.5",
+    "@ue/model": "^0.1.1",
+    "@ue/utils": "^0.1.1",
     "bignumber.js": "^9.1.1"
   },
   "devDependencies": {

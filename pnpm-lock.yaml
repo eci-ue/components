@@ -2,11 +2,12 @@ lockfileVersion: 5.4
 
 specifiers:
   '@ant-design/icons-vue': ^6.1.0
-  '@eci/utils': ^0.0.5
   '@fengqiaogang/safe-get': ^0.1.1
   '@js-lion/api': ^0.0.5
   '@types/lodash-es': ^4.17.6
   '@types/node': ^18.8.4
+  '@ue/model': ^0.1.1
+  '@ue/utils': ^0.1.1
   '@vitejs/plugin-vue': ^4.0.0
   '@vitejs/plugin-vue-jsx': ^3.0.0
   ant-design-vue: ^3.2.13
@@ -21,9 +22,10 @@ specifiers:
   vue-tsc: ^1.0.24
 
 dependencies:
-  '@eci/utils': 0.0.5_vue@3.2.47
   '@fengqiaogang/safe-get': 0.1.1
   '@js-lion/api': 0.0.5
+  '@ue/model': 0.1.1
+  '@ue/utils': 0.1.1_vue@3.2.47
   bignumber.js: 9.1.1
 
 devDependencies:
@@ -381,19 +383,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /@eci/utils/0.0.5_vue@3.2.47:
-    resolution: {integrity: sha512-6nqqLnTslu+iXrcFukk/4DzGF656Z9mkyJo35xosjIEvNjlPl2VBCLRLZmBPqH6UNclHNiDjonKjlcrBlD/TXg==}
-    dependencies:
-      '@vueuse/core': 9.12.0_vue@3.2.47
-      bignumber.js: 9.1.1
-      dayjs: 1.11.7
-      lodash-es: 4.17.21
-      uuid: 9.0.0
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
-    dev: false
-
   /@esbuild/android-arm/0.16.17:
     resolution: {integrity: sha512-N9x1CMXVhtWEAMS7pNNONyA14f71VPQN9Cnavj1XQh6T7bskqiLLrSca4O0Vr8Wdcga943eThxnVp3JLnBMYtw==}
     engines: {node: '>=12'}
@@ -684,6 +673,23 @@ packages:
 
   /@types/web-bluetooth/0.0.16:
     resolution: {integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==}
+    dev: false
+
+  /@ue/model/0.1.1:
+    resolution: {integrity: sha512-C+Ozg2WTtIN4lemlha3W3A9Bor+WicE2wwIi7g8G983jY/FxHixhfRet0dC4Y13/uLi3bnZFQWG4jPV1sqlUrw==}
+    dev: false
+
+  /@ue/utils/0.1.1_vue@3.2.47:
+    resolution: {integrity: sha512-oheBnmzySRfyGIpRq9fQt5OE5VBrW6OmwxS99owkFjKIaby1SkqajdTKITsuRxy+aGGpfSTO9V2EbOUsmZFVAA==}
+    dependencies:
+      '@vueuse/core': 9.12.0_vue@3.2.47
+      bignumber.js: 9.1.1
+      dayjs: 1.11.7
+      lodash-es: 4.17.21
+      uuid: 9.0.0
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
     dev: false
 
   /@vitejs/plugin-vue-jsx/3.0.0_vite@4.1.1+vue@3.2.47:

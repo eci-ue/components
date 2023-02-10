@@ -4,7 +4,7 @@
  */
 
 import * as _ from "lodash-es";
-import { date } from "@eci/utils";
+import { date } from "@ue/utils";
 import { PropType, defineComponent } from "vue";
 
 interface Props {

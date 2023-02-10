@@ -4,7 +4,7 @@
  */
 
 import * as _ from "lodash-es";
-import { date } from "@eci/utils";
+import { date } from "@ue/utils";
 
 import type { Directive, App } from "vue";
 

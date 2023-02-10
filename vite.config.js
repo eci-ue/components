@@ -35,6 +35,8 @@ export default defineConfig({
         /@ant-design\/icons-vue/i,
         /@fengqiaogang/,
         /@fengqiaogang/,
+        /@js-lion\/api/i,
+        /@ui\/model/i,
       ],
       output: {
         inlineDynamicImports: true

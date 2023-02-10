@@ -4,7 +4,7 @@
  */
 
 import * as _ from "lodash-es";
-import { toNumberCash, isZero } from "@eci/utils";
+import { toNumberCash, isZero } from "@ue/utils";
 import type { Directive, App } from "vue";
 
 const main = function(el: HTMLElement, bind: object) {
