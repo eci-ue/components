@@ -87,6 +87,7 @@ export default defineComponent({
     };
 
     return () => {
+      const content = icon(props.type);
       const className = [props["class"]];
       if (props["class"] && props["class"].includes("flex")) {
         className.push("eci-icon");
@@ -97,18 +98,17 @@ export default defineComponent({
       if (props.color) {
         _.set(style, "color", props.color);
       }
-      
       if (props.size) {
         const value = _.isNumber(props.size) ? `${props.size}px` : props.size;
         if (isExpand) {
           className.push("items-center");
           _.set(style, "--eci-icon-size", value);
-          _.set(style, "height", "var(--eci-icon-size)");
+          _.set(style, "--icon-size", value);
+          _.set(style, "height", "var(--icon-size)");
         } else {
           _.set(style, "fontSize", value);
         }
       }
-      const content = icon(props.type);
       return createElement(content, { style, "class": className }, slots);
     }
   }
