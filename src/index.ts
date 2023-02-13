@@ -7,7 +7,7 @@
 import lib from "./lib/index";
 import Pic from "./components/icon/pic.vue";
 import Enum from "./components/enum/index.vue";
-import Alert from "./components/alter/index.vue";
+import Alert from "./components/alert/index.vue";
 import Operate from "./components/operate/index.vue";
 export { IconExpand } from "./components/icon/expand";
 
