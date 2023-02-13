@@ -5,7 +5,7 @@
  */
 
 import { Alert } from "ant-design-vue";
-import { api, useState } from "src/api";
+import { api, useState } from "../../api";
 import { watch } from "vue";
 
 const engineeringTip = "Pre-Engineering task is in processing, You can’t assign language task until it done"

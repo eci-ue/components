@@ -38,6 +38,8 @@ export default defineConfig({
         /@fengqiaogang/,
         /@js-lion\/api/i,
         /@ui\/model/i,
+        /^bignumber/i,
+        /reflect-metadata/i,
       ],
       output: {
         inlineDynamicImports: true
