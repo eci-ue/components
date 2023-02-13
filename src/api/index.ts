@@ -4,14 +4,12 @@
  */
 
 import Task from "./task";
-import { API } from "@js-lion/api";
+import File from "./file";
 export { useState } from "@ue/utils";
 
-export class Http extends API {
+export class Http {
   readonly task: Task = new Task();
-  constructor() {
-    super();
-  }
+  readonly file: File = new File();
 }
 
 export const api = new Http();

@@ -5,7 +5,7 @@ import { Menu, MenuItem, Button, Space, Modal, message } from "ant-design-vue";
 import { form } from "@ue/form";
 import { RatePartner, DoOperation, ResourceType, Skin } from "./type";
 import { default as Icon } from "../icon";
-import { api } from "src/api";
+import { api } from "../../api";
 import { ratePartner, interupt } from "./util";
 import safeGet from "@fengqiaogang/safe-get";
 

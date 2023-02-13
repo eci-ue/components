@@ -5,16 +5,17 @@
 
 
 import lib from "./lib/index";
-import Pic from "./components/icon/pic.vue";
-import Enum from "./components/enum/index.vue";
-import Alert from "./components/alert/index.vue";
-import Operate from "./components/operate/index.vue";
-export { IconExpand } from "./components/icon/expand";
+export { default as Pic } from "./components/icon/pic.vue";
+export { default as Enum } from "./components/enum/index.vue";
+export { default as Alter } from "./components/alter/index.vue";
+export { default as Operate } from "./components/operate/index.vue";
 
-export { default as Icon } from "./components/icon";
+export { IconExpand } from "./components/icon/expand";
 export { default as Link } from "./components/link";
 export { default as Time } from "./components/time";
 
-export { Enum, Pic,Alert,Operate };
+export { default as Icon } from "./components/icon";
+export { default as FileIcon } from "./components/icon/file.vue";
+export { default as Upload, UploadSkin } from "./components/upload";
 
 export default lib;
