@@ -31,6 +31,7 @@ export default defineConfig({
         /vue-router/i,
         /@ue/i,
         /@eci/i,
+        /ali-oss/i,
         /ant-design-vue/i,
         /@ant-design\/icons-vue/i,
         /@fengqiaogang/,
@@ -42,5 +43,22 @@ export default defineConfig({
         inlineDynamicImports: true
       }
     }
-  }
+  },
+  server: {
+    port: 3000,
+    host: "0.0.0.0",
+    https: false,
+    hmr: {
+      protocol: 'ws',
+      host: '127.0.0.1',
+      port: 3000,
+    },
+    proxy: {
+      // "/tbms-task": {
+      //   target: "http://192.168.15.203:8091",
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/tbms-task/, '')
+      // },
+    }
+  },
 })
