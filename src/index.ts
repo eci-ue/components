@@ -5,10 +5,11 @@
 
 
 import lib from "./lib/index";
+export * from "./components/operate";
 export { default as Pic } from "./components/icon/pic.vue";
 export { default as Enum } from "./components/enum/index.vue";
 export { default as Alter } from "./components/alter/index.vue";
-export { default as Operate } from "./components/operate/index.vue";
+
 
 export { IconExpand } from "./components/icon/expand";
 export { default as Link } from "./components/link";

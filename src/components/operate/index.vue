@@ -1,25 +1,13 @@
 <script setup lang="ts">
-import _ from "lodash-es";
+import Icon from "../icon";
+import * as _ from "lodash-es";
+import { api } from "../../api";
+import { form } from "@ue/form";
+import { ratePartner, interupt } from "./util";
 import { computed, reactive, PropType } from "vue";
 import { Menu, MenuItem, Button, Space, Modal, message } from "ant-design-vue";
-import { form } from "@ue/form";
-import { RatePartner, DoOperation, ResourceType, Skin } from "./type";
-import { default as Icon } from "../icon";
-import { api } from "../../api";
-import { ratePartner, interupt } from "./util";
-import safeGet from "@fengqiaogang/safe-get";
-
-
-enum IconType {
-  delete = "delete-outlined",
-  interupt = "file-sync-outlined"
-}
-
-interface itemType extends ResourceType {
-  taskId: string | number,
-  id?: string | number,
-  [key: string]: any
-}
+import { DoOperation, IconType, Skin } from "./type";
+import type { RatePartner, itemType } from "./type";
 
 const props = defineProps({
   item: {
@@ -47,7 +35,6 @@ const emit = defineEmits(["reload"]);
 const onReload = function (tip?: string) {
   message.success(tip)
   emit("reload");
-
 }
 
 const handleClick = async (name: string) => {
@@ -125,7 +112,7 @@ const deleteTask = async function () {
           onReload("Delete Successfully!")
         }
       } catch (error) {
-        const tips = safeGet<string>(error as object, "message");
+        const tips = _.get(error, "message");
         message.error(tips);
       }
     }
@@ -142,7 +129,7 @@ const cancelTask = async function () {
           onReload("Cancel Successfully!")
         }
       } catch (error) {
-        const tips = safeGet<string>(error as object, "message");
+        const tips = _.get(error, "message");
         message.error(tips);
       }
     }
@@ -160,7 +147,7 @@ const rejectTask = function () {
           onReload("Reject Successfully!")
         }
       } catch (error) {
-        const tips = safeGet<string>(error as object, "message");
+        const tips = _.get(error, "message");
         message.error(tips);
       }
     }

@@ -40,3 +40,14 @@ export interface RatePartner extends ResourceType {
   impression?: string, //评价/印象
   taskId?: string | number, //任务id
 }
+
+export enum IconType {
+  delete = "delete-outlined",
+  interupt = "file-sync-outlined"
+}
+
+export interface itemType extends ResourceType {
+  taskId: string | number,
+  id?: string | number,
+  [key: string]: any
+}

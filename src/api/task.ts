@@ -3,7 +3,7 @@
  * @author theresia@eci.com
  */
 
-import _ from "lodash-es";
+import * as _ from "lodash-es";
 import { validate, required, get, tryError, post } from "@js-lion/api";
 
 export default class Task {

@@ -4,7 +4,7 @@
  * @author svon.me@gmail.com
  */
 
-import _ from "lodash-es";
+import * as _ from "lodash-es";
 import { PropType, ref } from "vue";
 import { UploadSkin } from "./props";
 import * as upload from "../../logic/upload";

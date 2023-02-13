@@ -1,5 +1,5 @@
 
-import _ from "lodash-es";
+import * as _ from "lodash-es";
 import type { FormOptionValue, FormItemData } from "@ue/form/types/props";
 enum FormItemType {
   textarea = "textarea",

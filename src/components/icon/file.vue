@@ -4,7 +4,7 @@
  * @author svon.me@gmail.com
  */
 
-import _ from "lodash-es";
+import * as _ from "lodash-es";
 import Icon from "./index";
 import { Tooltip } from "ant-design-vue";
 

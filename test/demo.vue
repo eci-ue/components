@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { Alter, Operate } from "../src/index";
 import Upload from "../src/components/upload";
 
-import type { UploadFile } from "src/components/upload/props";
+import type { UploadFile } from "../src/components/upload/props";
 
 const state = ref(false)
 

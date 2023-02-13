@@ -3,13 +3,13 @@
  * @author svon.me@gmail.com
  */
 
-import _ from "lodash-es";
+import * as _ from "lodash-es";
 import OSS from "ali-oss";
 import { api } from "../../api";
 import BigNumber from "bignumber.js";
 import { UUid, path } from "@ue/utils";
 
-import type { SignatureSTS } from "src/components/upload/props";
+import type { SignatureSTS } from "../../components/upload/props";
 import type { Checkpoint } from "ali-oss";
 
 export enum Status {
