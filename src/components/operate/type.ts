@@ -1,3 +1,8 @@
+export enum Skin {
+  horizontal = "horizontal",
+  vertical = "vertical"
+}
+
 //task操作按钮
 export enum DoOperation {
   delete = "delete",

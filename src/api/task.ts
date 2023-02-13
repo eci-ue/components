@@ -12,7 +12,6 @@ export default class Task {
    * @param projectId 项目ID
    * @returns 
    */
- @tryError(false)
  @post("/:task/task/getPreTask")
  @validate
  getPreTask(@required projectId: string | number): Promise<Boolean> {
@@ -21,7 +20,6 @@ export default class Task {
  }
   
   //合作伙伴评价
-  @tryError(false)
   @post("/:task/task/ratePartner/save")
   @validate
   saveRatePartner<D>(@required data: D): Promise<Boolean> {
@@ -29,7 +27,6 @@ export default class Task {
   }
 
   //生成平账任务
-  @tryError(false)
   @get("/:task/task/hedgeJAS/:taskId")
   @validate
   hedgeJAS(@required taskId: string | number): Promise<Boolean> {
@@ -38,7 +35,6 @@ export default class Task {
   }
 
   //confirm
-  @tryError(false)
   @get("/:task/task/confirm/:taskId")
   @validate
   confirm(@required taskId: string | number): Promise<Boolean> {
@@ -47,7 +43,6 @@ export default class Task {
   }
 
   //删除任务
-  @tryError(false)
   @post("/:task/task/delete")
   @validate
   deleteTask(@required taskId: string | number): Promise<Boolean> {
@@ -56,7 +51,6 @@ export default class Task {
   }
   
   //审批-取消
-  @tryError(false)
   @get("/:task/task/cancel/:taskId")
   @validate
   cancelTask(@required taskId: string | number): Promise<Boolean> {
@@ -65,7 +59,6 @@ export default class Task {
   }
   
   //任务-审批-拒绝
-  @tryError(false)
   @get("/:task/task/reject/:taskId")
   @validate
   rejectTask(@required taskId: string | number): Promise<Boolean> {
@@ -79,7 +72,6 @@ export default class Task {
    * @param reason 任务原因
    * @returns 
    */
-   @tryError(false)
    @post("/:task/task/interrupt")
    @validate
    addInterupt(@required taskId: string | number, reason: string = "") {

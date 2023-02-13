@@ -1,19 +1,14 @@
 <script setup lang="ts">
 import _ from "lodash-es";
 import { computed, reactive, PropType } from "vue";
-import { Menu, MenuItem, Button, Space, Modal } from "ant-design-vue";
+import { Menu, MenuItem, Button, Space, Modal, message } from "ant-design-vue";
 import { form } from "@ue/form";
-import { RatePartner, DoOperation, ResourceType } from "./type";
+import { RatePartner, DoOperation, ResourceType, Skin } from "./type";
 import { default as Icon } from "../icon";
 import { api } from "src/api";
 import { ratePartner, interupt } from "./util";
-import message from "ant-design-vue/lib/message/index";
 import safeGet from "@fengqiaogang/safe-get";
 
-enum Skin {
-  horizontal = "horizontal",
-  vertical = "vertical"
-}
 
 enum IconType {
   delete = "delete-outlined",
@@ -38,7 +33,7 @@ const props = defineProps({
   },
   //水平（horizontal）或垂直（vertical）
   layout: {
-    type: String as PropType<String | Skin>,
+    type: String as PropType<Skin>,
     default: "horizontal",
   },
   keyId: {
@@ -49,7 +44,8 @@ const props = defineProps({
 const emit = defineEmits(["reload"]);
 
 //刷新列表
-const onReload = function () {
+const onReload = function (tip?: string) {
+  message.success(tip)
   emit("reload");
 
 }
@@ -81,7 +77,7 @@ const taskId = computed(function () {
 const confirm = async function () {
   const status = await api.task.confirm(taskId.value);
   if (status) {
-    onReload()
+    onReload("Confirm Successfully!")
   }
 }
 
@@ -111,7 +107,7 @@ const interruptTask = async function () {
     async onOk(data: any) {
       const status = await api.task.addInterupt(taskId.value, data.reason)
       if (status) {
-        onReload()
+        onReload("Interupt Successfully!")
       }
     }
   });
@@ -124,8 +120,9 @@ const deleteTask = async function () {
     onOk: async () => {
       try {
         const status = await api.task.deleteTask(taskId.value)
+        console.log(status)
         if (status) {
-          onReload()
+          onReload("Delete Successfully!")
         }
       } catch (error) {
         const tips = safeGet<string>(error as object, "message");
@@ -142,7 +139,7 @@ const cancelTask = async function () {
       try {
         const status = await api.task.cancelTask(taskId.value)
         if (status) {
-          onReload()
+          onReload("Cancel Successfully!")
         }
       } catch (error) {
         const tips = safeGet<string>(error as object, "message");
@@ -160,7 +157,7 @@ const rejectTask = function () {
       try {
         const status = await api.task.rejectTask(taskId.value)
         if (status) {
-          onReload()
+          onReload("Reject Successfully!")
         }
       } catch (error) {
         const tips = safeGet<string>(error as object, "message");
@@ -178,7 +175,7 @@ const onHedge = async function () {
       try {
         const status = await api.task.hedgeJAS(taskId.value)
         if (status) {
-          onReload()
+          onReload("Saved Successfully!")
         }
       } catch (error) { }
     }

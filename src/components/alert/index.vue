@@ -6,7 +6,7 @@
 
 import { Alert } from "ant-design-vue";
 import { api, useState } from "src/api";
-import { watch } from "vue";
+import { watch, onMounted } from "vue";
 
 const engineeringTip = "Pre-Engineering task is in processing, You can’t assign language task until it done"
 const $emit = defineEmits(["update:value"]);
@@ -22,11 +22,13 @@ const props = defineProps({
   }
 });
 // 获取项目的前置任务是否完成
-const { state } = useState.data(async function () {
+const { state, execute } = useState.dataExecute(async function () {
   return api.task.getPreTask(props.projectId);
 });
-watch(()=>state.value, () => {
-  $emit("update:value", state.value)
+onMounted(async () => {
+  await execute(50)
+  await $emit("update:value", state.value)
+  console.log(props.value)
 })
 </script>
 
