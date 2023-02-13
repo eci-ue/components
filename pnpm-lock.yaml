@@ -30,7 +30,6 @@ specifiers:
 dependencies:
   '@fengqiaogang/safe-get': 0.1.1
   '@fengqiaogang/safe-set': 0.1.2
-  '@types/ali-oss': 6.16.7
   '@ue/form': 0.1.1
   '@ue/model': 0.1.1
   '@ue/utils': 0.1.6_vue@3.2.47
@@ -40,6 +39,7 @@ dependencies:
 devDependencies:
   '@ant-design/icons-vue': 6.1.0_vue@3.2.47
   '@js-lion/api': 0.0.5
+  '@types/ali-oss': 6.16.7
   '@types/lodash-es': 4.17.6
   '@types/node': 18.13.0
   '@vitejs/plugin-vue': 4.0.0_vite@4.1.1+vue@3.2.47
@@ -680,7 +680,7 @@ packages:
 
   /@types/ali-oss/6.16.7:
     resolution: {integrity: sha512-o3jORqeXEgooIkOfXk1r77BaIZtPHaPRJvTus/yvFDrjRVt65POGalmt9w72d1amGq39mag/t7Rd99MLs3nasw==}
-    dev: false
+    dev: true
 
   /@types/lodash-es/4.17.6:
     resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}

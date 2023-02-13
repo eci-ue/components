@@ -6,7 +6,7 @@
 
 import { Alert } from "ant-design-vue";
 import { api, useState } from "../../api";
-import { watch } from "vue";
+import { onMounted } from "vue";
 
 const engineeringTip = "Pre-Engineering task is in processing, You can’t assign language task until it done"
 const $emit = defineEmits(["update:value"]);
