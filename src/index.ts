@@ -24,7 +24,7 @@ export { default as DriveFile } from "./utils/drive";
 export { default as Drive, FileType } from "./components/drive";
 
 export { default as FileCheckbox } from "./components/file/checkbox";
-export { default as LanguagePairs, LanguageData, LanguagePairsData } from "./components/language";
+export { LanguagePairs, LanguageGroup, LanguageData, LanguagePairsData } from "./components/language";
 
 export { default as FormFile } from "./components/form/file.vue";
 export { default as FormLanguagePairs } from "./components/form/language/pairs.vue";

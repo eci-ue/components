@@ -1,19 +1,20 @@
 <script setup lang="ts">
+import Icon from "../icon";
 import * as _ from "lodash-es";
 import { api } from "../../api";
-import Icon from "../icon";
-import FileIcon from "../icon/file.vue";
-import { Button, Table } from "ant-design-vue";
-import { table, useState, date } from "@ue/utils";
+import { some } from "../../utils";
 import BigNumber from "bignumber.js";
+import FileIcon from "../icon/file.vue";
 import { ref, computed, PropType } from "vue";
+import { Button, Table } from "ant-design-vue";
+import { table, useState, date, downloadFile, fileDownloadUrl } from "@ue/utils";
+
 import Handle from "./handle.vue";
 import { headers } from "./heder";
-import { some } from "../../utils";
+import { LanguageGroup } from "../language";
 
-import type { FileType, FileItem } from "./props";
 import type { Upload } from "../../utils/upload";
-
+import type { FileType, FileItem } from "./props";
 
 const $emit = defineEmits(["change"]);
 
@@ -41,7 +42,7 @@ const props = defineProps({
 });
 
 const uploadFileProgress = ref<Upload[]>([]);
-const { selectedKeys, rowSelection, onClearSelected } = table.useSelection();
+const { selected, selectedKeys, rowSelection, onClearSelected } = table.useSelection<FileItem>();
 
 const { state, isLoading, execute } = useState.list<FileItem>(() => {
   if (props.task) {
@@ -97,6 +98,17 @@ const customRow = function(data: FileItem) {
   }
   return {};
 };
+
+
+const onDownload = function() {
+  for (const item of selected.value) {
+    if (item.filePath) {
+      const url = fileDownloadUrl(item.filePath);
+      downloadFile(url, item.fileName);
+    }
+  }
+}
+
 </script>
 
 <template>
@@ -110,8 +122,9 @@ const customRow = function(data: FileItem) {
       :task="task" 
       :selected="selectedKeys" 
       v-model:progress="uploadFileProgress" 
-      @click="onReload"></Handle>
+      @click="onReload" @download="onDownload"></Handle>
     </div>
+
     <!-- 资源文件列表 -->
     <Table class="drive-list" table-layout="auto" 
       :custom-row="customRow" 
@@ -137,7 +150,7 @@ const customRow = function(data: FileItem) {
           <span>{{ date.format(text) }}</span>
         </template>
         <template v-else-if="column.key ==='pairs'">
-          <span>{{ text }}</span>
+          <LanguageGroup :more="true" :show-name="false" :list="text"></LanguageGroup>
         </template>
       </template>
     </Table>

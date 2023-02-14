@@ -138,7 +138,7 @@ export default class Project {
   @$error("Edit failed, please contact administrator or try again later.")
   @post("/:project/cat/file/set-lpairs")
   @validate
-  setPairs<D = object>(@required fileIds: string[], @required languagePairs: D): Promise<boolean> {
+  setPairs<D = object>(@required fileIds: Array<string | number>, @required languagePairs: D): Promise<boolean> {
     const data = { fileIds, langPairIds: languagePairs };
     return { data } as any;
   }

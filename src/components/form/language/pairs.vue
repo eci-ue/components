@@ -7,7 +7,7 @@
 import * as _ from "lodash-es";
 import { computed, PropType, ref } from "vue";
 import { CheckboxGroup, Checkbox } from "ant-design-vue";
-import LanguagePairs from "../../language";
+import { LanguagePairs } from "../../language";
 
 import type { Meta } from "./props";
 import type { LanguagePairsData } from "../../language/props";

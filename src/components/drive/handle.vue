@@ -12,14 +12,15 @@ import { FileType } from "./props";
 import { Button, Space } from "ant-design-vue";
 import { computed, PropType, toRaw } from "vue";
 
+import Upload from "../upload";
 import FormFile from "../form/file.vue";
 import FormlanguagePairs from "../form/language/pairs.vue";
 
-import type { Upload } from "../../utils/upload";
+import type { Upload as UploadData } from "../../utils/upload";
 import type { UploadFile } from "../../components/upload/props";
 
 
-const $emit = defineEmits(["update:progress", "click"]);
+const $emit = defineEmits(["update:progress", "click", "download"]);
 const props = defineProps({
   // 项目ID / 任务ID
   id: {
@@ -41,9 +42,10 @@ const props = defineProps({
     type: Boolean,
     default: () => false
   },
+  // 已选择的文件ID 列表
   selected: {
     default: [],
-    type: Array as PropType<any[]>,
+    type: Array as PropType<Array<string | number>>,
   },
   progress: {
     default: [],
@@ -52,9 +54,9 @@ const props = defineProps({
 });
 
 // 上传中的文件
-const uploadFileProgress = computed<Upload[]>({
+const uploadFileProgress = computed<UploadData[]>({
   get: () => props.progress,
-  set: (value: Upload[]) => {
+  set: (value: UploadData[]) => {
     $emit("update:progress", value);
   }
 });
@@ -78,12 +80,18 @@ const onSelectDriveFile = async function() {
   if (!data) {
     return;
   }
-  const status = await api.project.uploadDrive(
-    data.fileIds, 
-    props.id, 
-    props.type, 
-    props.language
-  );
+
+  let status: boolean = false;
+  if (props.task) {
+    // todo
+  } else {
+    status = await api.project.uploadDrive(
+      data.fileIds, 
+      props.id, 
+      props.type, 
+      props.language
+    );
+  }
   if (status) {
     $emit("click");
   }
@@ -98,12 +106,18 @@ const onUpload = async function(data: UploadFile) {
     fileSize: data.file?.size,
     fileExt: _.last(data.name.split(".")),
   };
-  const status = await api.project.uploadDirect(
-    [file], 
-    props.id, 
-    props.type, 
-    props.language
-  );
+
+  let status: boolean = false;
+  if (props.task) {
+    // todo
+  } else {
+    status = await api.project.uploadDirect(
+      [file], 
+      props.id, 
+      props.type, 
+      props.language
+    );
+  }
   if (status) {
     $emit("click");
   }
@@ -123,12 +137,18 @@ const onChangePairs = async function() {
     rules: rules.array("Please select language pairs")
   }, option);
   if (data) {
-    const fileIds = toRaw(props.selected);
+    const fileIds: Array<string | number> = [...toRaw(props.selected)];
     const languagePairs = _.map(data.langPairIds, function(value: string) {
       const [ sourceLanguageId, targetLanguageId] = value.split(".");
       return { sourceLanguageId, targetLanguageId }
     });
-    const status = await api.project.setPairs(fileIds, languagePairs);
+
+    let status: boolean = false;
+    if (props.task) {
+      // todo
+    } else {
+      status = await api.project.setPairs(fileIds, languagePairs);
+    }
     if (status) {
       $emit("click");
     }
@@ -137,10 +157,20 @@ const onChangePairs = async function() {
 // 删除文件
 const onRemoveFile = async function() {
   const fileIds = toRaw(props.selected);
-  const status = await api.project.removeFile(props.id, fileIds);
+  let status: boolean = false;
+  if (props.task) {
+    // todo
+  } else {
+    status = await api.project.removeFile(props.id, fileIds);
+  }
   if (status) {
     $emit("click");
   }
+}
+
+// 文件下载
+const onDwonload = function() {
+  $emit("download");
 }
 
 </script>
@@ -149,6 +179,7 @@ const onRemoveFile = async function() {
   <div class="flex justify-between items-center">
     <Space>
       <Button :disabled="selected.length < 1" @click="onRemoveFile">Delete</Button>
+      <Button :disabled="selected.length < 1" @click="onDwonload">Download</Button>
       <template v-if="type === FileType.source">
         <!-- 源文件模式下才启用该功能 -->
         <Button :disabled="selected.length < 1" @click="onChangePairs">Language pairs</Button>

@@ -18,7 +18,7 @@ export class FileItem<Language = object> {
   createdTime?: string;  // 创建时间
   fileId?: string | number; // 如果是源文件，则为网盘文件ID
   fileName: string = ""; // 文件名称
-  filePath?: string; // 文件路径
+  filePath: string = ""; // 文件路径
   fileSize: number = 0;     // 文件大小
   languagePairs?: Language; // 语言对
   key?: string;         // 文件唯一值（文件上传时使用）

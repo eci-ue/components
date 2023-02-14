@@ -12,7 +12,7 @@ specifiers:
   '@ue/form': ^0.1.1
   '@ue/message': ^0.0.1
   '@ue/model': ^0.1.1
-  '@ue/utils': ^0.1.6
+  '@ue/utils': ^0.1.8
   '@vitejs/plugin-vue': ^4.0.0
   '@vitejs/plugin-vue-jsx': ^3.0.0
   ali-oss: ^6.17.1
@@ -37,7 +37,7 @@ dependencies:
   '@ue/form': 0.1.1
   '@ue/message': 0.0.1
   '@ue/model': 0.1.1
-  '@ue/utils': 0.1.6_vue@3.2.47
+  '@ue/utils': 0.1.8_vue@3.2.47
   ali-oss: 6.17.1
   bignumber.js: 9.1.1
   sass: 1.58.1
@@ -728,8 +728,8 @@ packages:
     resolution: {integrity: sha512-C+Ozg2WTtIN4lemlha3W3A9Bor+WicE2wwIi7g8G983jY/FxHixhfRet0dC4Y13/uLi3bnZFQWG4jPV1sqlUrw==}
     dev: false
 
-  /@ue/utils/0.1.6_vue@3.2.47:
-    resolution: {integrity: sha512-Xc8IEiw8PU0aQkOiNT3B89BjkHuOorAgmOzqkLfcxCJHCbs9VbzTn1tai8eP1XvouXL5/72BMkn6FImHC4bmOg==}
+  /@ue/utils/0.1.8_vue@3.2.47:
+    resolution: {integrity: sha512-PIpQByLSPCMquyp7EtOnaci3wa14llsAIkrYTgU8lZY+MUwok3vMq3mQHZ3dZbZozs++N6SQHdBbDDM/226uXw==}
     dependencies:
       '@vueuse/core': 9.12.0_vue@3.2.47
       bignumber.js: 9.1.1
