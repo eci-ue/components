@@ -5,11 +5,11 @@
  */
 
 import { Alert } from "ant-design-vue";
+import * as _ from "lodash-es";
 import { api, useState } from "../../api";
-import { onMounted } from "vue";
-
+import { computed } from "vue";
 const engineeringTip = "Pre-Engineering task is in processing, You can’t assign language task until it done"
-const $emit = defineEmits(["update:value"]);
+const $emit = defineEmits(["update:value", "state"]);
 const props = defineProps({
   //项目id
   projectId: {
@@ -22,16 +22,20 @@ const props = defineProps({
   }
 });
 // 获取项目的前置任务是否完成
-const { state, execute } = useState.dataExecute(async function () {
+const { state } = useState.data(async function () {
   return api.task.getPreTask(props.projectId);
 });
-onMounted(async () => {
-  await execute(50)
-  await $emit("update:value", state.value)
-  console.log(props.value)
+const show = computed<Boolean>(() => {
+  if (_.isBoolean(state.value)) {
+    $emit("update:value", state.value)
+    $emit("state", state.value)
+    return state.value
+  }
+  return false
+
 })
 </script>
 
 <template>
-  <Alert v-if="!state" :message="engineeringTip" type="warning" />
+  <Alert v-if="!show" :message="engineeringTip" type="warning" />
 </template>

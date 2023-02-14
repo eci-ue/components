@@ -74,7 +74,7 @@ export default class Task {
    */
    @post("/:task/task/interrupt")
    @validate
-   addInterupt(@required taskId: string | number, reason: string = "") {
+   addInterupt(@required taskId: string | number, reason: string = ""): Promise<Boolean> {
      const data = { id: taskId, reason };
      return { data } as any;
    }

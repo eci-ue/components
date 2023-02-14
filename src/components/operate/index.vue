@@ -32,27 +32,27 @@ const props = defineProps({
 const emit = defineEmits(["reload"]);
 
 //刷新列表
-const onReload = function (tip?: string) {
+const onReload = function (name:string,tip?: string) {
   message.success(tip)
-  emit("reload");
+  emit("reload",name);
 }
 
 const handleClick = async (name: string) => {
   //合作伙伴评价
   if (name == DoOperation.partner) {
-    ratePartnerFn()
+    ratePartnerFn(name)
   } else if (name == DoOperation.hedge) {
-    onHedge()
+    onHedge(name)
   } else if (name == DoOperation.delete) {
-    deleteTask()
+    deleteTask(name)
   } else if (name == DoOperation.interrupt) {
-    interruptTask()
+    interruptTask(name)
   } else if (name == DoOperation.confirm) {
-    confirm()
+    confirm(name)
   } else if (name == DoOperation.cancel) {
-    cancelTask()
+    cancelTask(name)
   } else if (name == DoOperation.reject) {
-    rejectTask()
+    rejectTask(name)
   }
 };
 
@@ -61,15 +61,15 @@ const taskId = computed(function () {
 });
 
 //confirm
-const confirm = async function () {
+const confirm = async function (name: string) {
   const status = await api.task.confirm(taskId.value);
   if (status) {
-    onReload("Confirm Successfully!")
+    onReload(name,"Confirm Successfully!")
   }
 }
 
 //Rate partner
-const ratePartnerFn = async function () {
+const ratePartnerFn = async function (name: string) {
   form(ratePartner(), {
     okText: "Save",
     title: "Rate the partner",
@@ -85,8 +85,9 @@ const ratePartnerFn = async function () {
       })
       try {
         const status = await api.task.saveRatePartner<RatePartner>(params);
+        console.log(status)
         if (status) {
-          onReload("Save Successfully!")
+          onReload(name,"Save Successfully!")
         }
       } catch (error) {
         const tips = _.get(error, "message");
@@ -97,14 +98,15 @@ const ratePartnerFn = async function () {
   });
 }
 //interrupts
-const interruptTask = async function () {
+const interruptTask = async function (name: string) {
   form(interupt(), {
     title: "Interupt",
     async onOk(data: any) {
       try {
         const status = await api.task.addInterupt(taskId.value, data.reason)
+        console.log(status)
         if (status) {
-          onReload("Interupt Successfully!")
+          onReload(name,"Interupt Successfully!")
         }
       } catch (error) {
         const tips = _.get(error, "message");
@@ -115,15 +117,14 @@ const interruptTask = async function () {
 
 }
 //delete
-const deleteTask = async function () {
+const deleteTask = async function (name: string) {
   Modal.confirm({
     content: 'Are you sure delete this task.',
     onOk: async () => {
       try {
         const status = await api.task.deleteTask(taskId.value)
-        console.log(status)
         if (status) {
-          onReload("Delete Successfully!")
+          onReload(name,"Delete Successfully!")
         }
       } catch (error) {
         const tips = _.get(error, "message");
@@ -133,14 +134,14 @@ const deleteTask = async function () {
   });
 }
 //cancel
-const cancelTask = async function () {
+const cancelTask = async function (name: string) {
   Modal.confirm({
     content: 'Are you sure cancel this task.',
     onOk: async () => {
       try {
         const status = await api.task.cancelTask(taskId.value)
         if (status) {
-          onReload("Cancel Successfully!")
+          onReload(name,"Cancel Successfully!")
         }
       } catch (error) {
         const tips = _.get(error, "message");
@@ -151,14 +152,14 @@ const cancelTask = async function () {
 }
 
 //reject
-const rejectTask = function () {
+const rejectTask = function (name: string) {
   Modal.confirm({
     content: 'Are you sure reject this task.',
     onOk: async () => {
       try {
         const status = await api.task.rejectTask(taskId.value)
         if (status) {
-          onReload("Reject Successfully!")
+          onReload(name,"Reject Successfully!")
         }
       } catch (error) {
         const tips = _.get(error, "message");
@@ -169,14 +170,14 @@ const rejectTask = function () {
 }
 //Hedge Jas
 const tip = `Are you sure you want to create a hedged JAS?The newly created hedging JAS is a JAS with a negative workload that needs to be confirmed by the resource.`
-const onHedge = async function () {
+const onHedge = async function (name: string) {
   Modal.confirm({
     content: tip,
     onOk: async () => {
       try {
         const status = await api.task.hedgeJAS(taskId.value)
         if (status) {
-          onReload("Saved Successfully!")
+          onReload(name,"Saved Successfully!")
         }
       } catch (error) { }
     }
