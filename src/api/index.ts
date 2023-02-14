@@ -5,11 +5,12 @@
 
 import Task from "./task";
 import File from "./file";
-export { useState } from "@ue/utils";
+import Project from "./project";
 
 export class Http {
   readonly task: Task = new Task();
   readonly file: File = new File();
+  readonly project: Project = new Project();
 }
 
 export const api = new Http();

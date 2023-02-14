@@ -20,4 +20,13 @@ export { default as FileIcon } from "./components/icon/file.vue";
 export { default as Upload, UploadSkin } from "./components/upload";
 export * as UploadUtil from "./utils/upload";
 
+export { default as DriveFile } from "./utils/drive";
+export { default as Drive, FileType } from "./components/drive";
+
+export { default as FileCheckbox } from "./components/file/checkbox";
+export { default as LanguagePairs, LanguageData, LanguagePairsData } from "./components/language";
+
+export { default as FormFile } from "./components/form/file.vue";
+export { default as FormLanguagePairs } from "./components/form/language/pairs.vue";
+
 export default lib;

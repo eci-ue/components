@@ -5,7 +5,8 @@ import { api } from "../../api";
 import { form } from "@ue/form";
 import { ratePartner, interupt } from "./util";
 import { computed, reactive, PropType } from "vue";
-import { Menu, MenuItem, Button, Space, Modal, message } from "ant-design-vue";
+import message from "ant-design-vue/lib/message/index";
+import { Menu, MenuItem, Button, Space, Modal } from "ant-design-vue";
 import { DoOperation, IconType, Skin } from "./type";
 import type { RatePartner, itemType } from "./type";
 
@@ -175,16 +176,17 @@ const typeIcon = function (name: string) {
 </script>
 
 <template>
-  <Menu v-if="layout == Skin.vertical">
-    <MenuItem @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ name }} </MenuItem>
-  </Menu>
-  <Space :size="22" v-else>
-    <Button @click="handleClick(name)" :key="name" v-for="name in optTypes">
-      <template #icon>
-        <Icon class="text-base" :type="typeIcon(name)"></Icon>
-      </template>
-      <span>{{ name }}</span>
-    </Button>
-  </Space>
-
+  <div>
+    <Menu v-if="layout == Skin.vertical">
+      <MenuItem @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ name }} </MenuItem>
+    </Menu>
+    <Space size="large" v-else>
+      <Button @click="handleClick(name)" :key="name" v-for="name in optTypes">
+        <template #icon>
+          <Icon class="text-base" :type="typeIcon(name)"></Icon>
+        </template>
+        <span>{{ name }}</span>
+      </Button>
+    </Space>
+  </div>
 </template>

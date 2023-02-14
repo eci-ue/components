@@ -12,6 +12,14 @@ export default defineConfig({
       "types/": `${path.resolve(__dirname, "types")}/`,
     },
   },
+  css: {
+    preprocessorOptions: {
+      css: {
+        charset: false
+      },
+      scss: {}
+    }
+  },
   plugins: [vue(), jsx()],
   build: {
     target: "modules",
@@ -26,20 +34,14 @@ export default defineConfig({
     manifest: false,
     rollupOptions: {
       external: [
-        /lodash/i,
+        /^lodash/i,
+        /^bignumber/i,
         /^vue/i,
-        /vue-router/i,
-        /@ue/i,
-        /@eci/i,
         /ali-oss/i,
-        /ant-design-vue/i,
-        /@ant-design\/icons-vue/i,
-        /@fengqiaogang/,
+        /ant-design/i,
+        /@ue\//i,
         /@fengqiaogang/,
         /@js-lion\/api/i,
-        /@ui\/model/i,
-        /^bignumber/i,
-        /reflect-metadata/i,
       ],
       output: {
         inlineDynamicImports: true

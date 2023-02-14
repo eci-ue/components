@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { Alter, Operate } from "../src/index";
 import Upload from "../src/components/upload";
 
+import DriveFile from "../src/utils/drive";
+
 import type { UploadFile } from "../src/components/upload/props";
+import { FileType } from "../src/components/drive/props";
 
 const state = ref(false)
 
@@ -18,6 +21,14 @@ const onSuccess = function(data: UploadFile) {
 const onSubmit = function() {
   console.log("submit");
 }
+
+onMounted(function() {
+  DriveFile("xxx", {
+    id: 1,
+    language: 7,
+    type: FileType.source
+  });
+});
 
 </script>
 <template>
