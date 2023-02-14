@@ -10,6 +10,7 @@ export interface Props {
   id: string | number;       // 项目ID或者任务ID
   language: string | number; // 语言ID
   type: FileType;            // 文件类型
+  task?: boolean;            // 是否为 task 任务
   onChange?: (fileCount: number) => void
 }
 
