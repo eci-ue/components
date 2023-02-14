@@ -14,6 +14,10 @@ const optTypes = ref(["cancel","delete","interrupt","confirm","reject","hedge JA
 const item = ref({taskId:2,resourceId:1,resourceName:"资源"})
 
 
+const stateVal = function(val: boolean) {
+  console.log(val);
+}
+
 const onSuccess = function(data: UploadFile) {
   console.log(data);
 }
@@ -35,7 +39,7 @@ onMounted(function() {
   <div>
     <div>
       <Operate :item="item" :optTypes="optTypes"></Operate>
-      <Alter v-model:value="state" :project-id="1"></Alter>
+      <Alter v-model:value="state" :project-id="1" @state="stateVal"></Alter>{{ state }}
     </div>
     <br/>
     <div>
