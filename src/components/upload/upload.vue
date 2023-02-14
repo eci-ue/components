@@ -7,14 +7,14 @@
 import * as _ from "lodash-es";
 import { PropType, ref } from "vue";
 import { UploadSkin } from "./props";
-import * as upload from "../../logic/upload";
+import * as upload from "../../utils/upload";
 
 import Icon from "../icon";
 import Progress from "./progress.vue";
 import { Modal, Input } from "ant-design-vue";
 
 import type { UploadFile } from "./props";
-import type { Upload } from "../../logic/upload";
+import type { Upload } from "../../utils/upload";
 
 defineProps({
   // 是否上传到网盘

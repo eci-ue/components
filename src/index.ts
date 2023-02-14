@@ -18,5 +18,6 @@ export { default as Time } from "./components/time";
 export { default as Icon } from "./components/icon";
 export { default as FileIcon } from "./components/icon/file.vue";
 export { default as Upload, UploadSkin } from "./components/upload";
+export * as UploadUtil from "./utils/upload";
 
 export default lib;

@@ -8,9 +8,9 @@ import { PropType } from "vue";
 import BigNumber from "bignumber.js";
 import { Progress } from "ant-design-vue";
 import FileIcon from "../icon/file.vue";
-import { Status } from "../../logic/upload";
+import { Status } from "../../utils/upload";
 
-import type { Upload } from "../../logic/upload";
+import type { Upload } from "../../utils/upload";
 
 defineProps({
   fileList: {

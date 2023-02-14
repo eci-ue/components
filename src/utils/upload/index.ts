@@ -42,7 +42,7 @@ const calcSize = function(file: File) {
   return new BigNumber(value).toNumber();
 }
 
-export const createKey = function(file: File): string {
+const createKey = function(file: File): string {
   return UUid(file.name, file.size);
 }
 
