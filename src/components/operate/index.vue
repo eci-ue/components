@@ -33,9 +33,8 @@ const props = defineProps({
 const emit = defineEmits(["reload"]);
 
 //刷新列表
-const onReload = function (name:string,tip?: string) {
-  message.success(tip)
-  emit("reload",name);
+const onReload = function (name: string) {
+  emit("reload", name);
 }
 
 const handleClick = async (name: string) => {
@@ -65,7 +64,7 @@ const taskId = computed(function () {
 const confirm = async function (name: string) {
   const status = await api.task.confirm(taskId.value);
   if (status) {
-    onReload(name,"Confirm Successfully!")
+    onReload(name)
   }
 }
 
@@ -84,17 +83,10 @@ const ratePartnerFn = async function (name: string) {
       _.forEach(data.partner, item => {
         (params as any)[item] = 1
       })
-      try {
-        const status = await api.task.saveRatePartner<RatePartner>(params);
-        console.log(status)
-        if (status) {
-          onReload(name,"Save Successfully!")
-        }
-      } catch (error) {
-        const tips = _.get(error, "message");
-        message.error(tips);
+      const status = await api.task.saveRatePartner<RatePartner>(params);
+      if (status) {
+        onReload(name)
       }
-
     }
   });
 }
@@ -103,15 +95,9 @@ const interruptTask = async function (name: string) {
   form(interupt(), {
     title: "Interupt",
     async onOk(data: any) {
-      try {
-        const status = await api.task.addInterupt(taskId.value, data.reason)
-        console.log(status)
-        if (status) {
-          onReload(name,"Interupt Successfully!")
-        }
-      } catch (error) {
-        const tips = _.get(error, "message");
-        message.error(tips);
+      const status = await api.task.addInterupt(taskId.value, data.reason)
+      if (status) {
+        onReload(name)
       }
     }
   });
@@ -122,14 +108,9 @@ const deleteTask = async function (name: string) {
   Modal.confirm({
     content: 'Are you sure delete this task.',
     onOk: async () => {
-      try {
-        const status = await api.task.deleteTask(taskId.value)
-        if (status) {
-          onReload(name,"Delete Successfully!")
-        }
-      } catch (error) {
-        const tips = _.get(error, "message");
-        message.error(tips);
+      const status = await api.task.deleteTask(taskId.value)
+      if (status) {
+        onReload(name)
       }
     }
   });
@@ -139,14 +120,9 @@ const cancelTask = async function (name: string) {
   Modal.confirm({
     content: 'Are you sure cancel this task.',
     onOk: async () => {
-      try {
-        const status = await api.task.cancelTask(taskId.value)
-        if (status) {
-          onReload(name,"Cancel Successfully!")
-        }
-      } catch (error) {
-        const tips = _.get(error, "message");
-        message.error(tips);
+      const status = await api.task.cancelTask(taskId.value)
+      if (status) {
+        onReload(name)
       }
     }
   });
@@ -157,14 +133,9 @@ const rejectTask = function (name: string) {
   Modal.confirm({
     content: 'Are you sure reject this task.',
     onOk: async () => {
-      try {
-        const status = await api.task.rejectTask(taskId.value)
-        if (status) {
-          onReload(name,"Reject Successfully!")
-        }
-      } catch (error) {
-        const tips = _.get(error, "message");
-        message.error(tips);
+      const status = await api.task.rejectTask(taskId.value)
+      if (status) {
+        onReload(name)
       }
     }
   });
@@ -178,7 +149,7 @@ const onHedge = async function (name: string) {
       try {
         const status = await api.task.hedgeJAS(taskId.value)
         if (status) {
-          onReload(name,"Saved Successfully!")
+          onReload(name)
         }
       } catch (error) { }
     }

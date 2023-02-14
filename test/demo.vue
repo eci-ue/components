@@ -39,7 +39,7 @@ onMounted(function() {
   <div>
     <div>
       <Operate :item="item" :optTypes="optTypes"></Operate>
-      <Alter v-model:value="state" :project-id="1" @state="stateVal"></Alter>{{ state }}
+      <Alter v-model:value="state" :project-id="1" @state="stateVal"></Alter>
     </div>
     <br/>
     <div>
