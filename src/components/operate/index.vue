@@ -83,7 +83,16 @@ const ratePartnerFn = async function () {
       _.forEach(data.partner, item => {
         (params as any)[item] = 1
       })
-      api.task.saveRatePartner<RatePartner>(params);
+      try {
+        const status = await api.task.saveRatePartner<RatePartner>(params);
+        if (status) {
+          onReload("Save Successfully!")
+        }
+      } catch (error) {
+        const tips = _.get(error, "message");
+        message.error(tips);
+      }
+
     }
   });
 }
@@ -92,9 +101,14 @@ const interruptTask = async function () {
   form(interupt(), {
     title: "Interupt",
     async onOk(data: any) {
-      const status = await api.task.addInterupt(taskId.value, data.reason)
-      if (status) {
-        onReload("Interupt Successfully!")
+      try {
+        const status = await api.task.addInterupt(taskId.value, data.reason)
+        if (status) {
+          onReload("Interupt Successfully!")
+        }
+      } catch (error) {
+        const tips = _.get(error, "message");
+        message.error(tips);
       }
     }
   });
