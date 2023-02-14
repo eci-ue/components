@@ -6,7 +6,7 @@ import Upload from "../src/components/upload";
 import DriveFile from "../src/utils/drive";
 
 import type { UploadFile } from "../src/components/upload/props";
-import { FileType } from "../src/components/drive/props";
+import { FileType,FileOperate } from "../src/components/drive/props";
 
 const state = ref(false)
 
@@ -30,7 +30,8 @@ onMounted(function() {
   DriveFile("xxx", {
     id: 1,
     language: 7,
-    type: FileType.source
+    type: FileType.source,
+    fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large]
   });
 });
 

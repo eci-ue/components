@@ -8,7 +8,7 @@ import * as _ from "lodash-es";
 import { api } from "../../api";
 import { rule as rules } from "@ue/utils";
 import { form } from "@ue/form"
-import { FileType } from "./props";
+import { FileType, FileOperate } from "./props";
 import { Button, Space } from "ant-design-vue";
 import { computed, PropType, toRaw } from "vue";
 
@@ -37,6 +37,11 @@ const props = defineProps({
     required: true,
     type: String as PropType<FileType>
   },
+  // 文件操作按钮
+  fileOperate: {
+    required: true,
+    type: Array as PropType<FileOperate[]>
+  },
   // 是否为 task 类型
   task: {
     type: Boolean,
@@ -62,13 +67,13 @@ const uploadFileProgress = computed<UploadData[]>({
 });
 
 // 选择网盘文件
-const onSelectDriveFile = async function() {
+const onSelectDriveFile = async function () {
   const option = {
     width: 460,
     title: "ECI Drive"
   };
 
-  const data = await form<{fileIds: number[]}>({
+  const data = await form<{ fileIds: number[] }>({
     key: "fileIds",
     component: FormFile,
     meta: {
@@ -86,9 +91,9 @@ const onSelectDriveFile = async function() {
     // todo
   } else {
     status = await api.project.uploadDrive(
-      data.fileIds, 
-      props.id, 
-      props.type, 
+      data.fileIds,
+      props.id,
+      props.type,
       props.language
     );
   }
@@ -98,7 +103,7 @@ const onSelectDriveFile = async function() {
 };
 
 // 直接上传文件
-const onUpload = async function(data: UploadFile) {
+const onUpload = async function (data: UploadFile) {
   console.log(data);
   const file = {
     fileName: data.name,
@@ -109,12 +114,12 @@ const onUpload = async function(data: UploadFile) {
 
   let status: boolean = false;
   if (props.task) {
-    // todo
+    status = await api.project.uploadTaskFile(file, props.id, props.type);
   } else {
     status = await api.project.uploadDirect(
-      [file], 
-      props.id, 
-      props.type, 
+      [file],
+      props.id,
+      props.type,
       props.language
     );
   }
@@ -124,7 +129,7 @@ const onUpload = async function(data: UploadFile) {
 }
 
 // 设置语言对
-const onChangePairs = async function() {
+const onChangePairs = async function () {
   const list = await api.project.getPairs(props.id, props.language);
   const option = {
     width: 460,
@@ -138,8 +143,8 @@ const onChangePairs = async function() {
   }, option);
   if (data) {
     const fileIds: Array<string | number> = [...toRaw(props.selected)];
-    const languagePairs = _.map(data.langPairIds, function(value: string) {
-      const [ sourceLanguageId, targetLanguageId] = value.split(".");
+    const languagePairs = _.map(data.langPairIds, function (value: string) {
+      const [sourceLanguageId, targetLanguageId] = value.split(".");
       return { sourceLanguageId, targetLanguageId }
     });
 
@@ -155,11 +160,11 @@ const onChangePairs = async function() {
   }
 }
 // 删除文件
-const onRemoveFile = async function() {
+const onRemoveFile = async function () {
   const fileIds = toRaw(props.selected);
   let status: boolean = false;
   if (props.task) {
-    // todo
+    status = await api.project.deleteTaskFile(fileIds);
   } else {
     status = await api.project.removeFile(props.id, fileIds);
   }
@@ -169,25 +174,40 @@ const onRemoveFile = async function() {
 }
 
 // 文件下载
-const onDwonload = function() {
+const onDwonload = function () {
   $emit("download");
 }
+
+const isHave = function (val: FileOperate) {
+  return _.includes(props.fileOperate, val)
+}
+
+const operateBtn = computed(() => {
+  return {
+    upload: isHave(FileOperate.upload), // 上传
+    large: isHave(FileOperate.large), // large files entry
+    delete: isHave(FileOperate.delete), // delete
+    language: isHave(FileOperate.language), // Language pairs
+    download: isHave(FileOperate.download), //  download
+    downTarget: isHave(FileOperate.downTarget), // download -target
+  }
+})
 
 </script>
 
 <template>
   <div class="flex justify-between items-center">
     <Space>
-      <Button :disabled="selected.length < 1" @click="onRemoveFile">Delete</Button>
-      <Button :disabled="selected.length < 1" @click="onDwonload">Download</Button>
-      <template v-if="type === FileType.source">
+      <Button v-if="operateBtn.delete" :disabled="selected.length < 1" @click="onRemoveFile">Delete</Button>
+      <Button v-if="operateBtn.download" :disabled="selected.length < 1" @click="onDwonload">Download</Button>
+      <template v-if="type === FileType.source && operateBtn.language">
         <!-- 源文件模式下才启用该功能 -->
         <Button :disabled="selected.length < 1" @click="onChangePairs">Language pairs</Button>
       </template>
-      <Upload :show-progress="false" :multiple="true" v-model:progress="uploadFileProgress" @success="onUpload">
+      <Upload v-if="operateBtn.upload" :show-progress="false" :multiple="true" v-model:progress="uploadFileProgress" @success="onUpload">
         <span class="ant-btn ant-btn-primary">Upload Files</span>
       </Upload>
     </Space>
-    <Button type="link" @click="onSelectDriveFile">Large files entry</Button>
+    <Button v-if="operateBtn.large" type="link" @click="onSelectDriveFile">Large files entry</Button>
   </div>
 </template>

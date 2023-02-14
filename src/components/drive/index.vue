@@ -14,7 +14,7 @@ import { headers } from "./heder";
 import { LanguageGroup } from "../language";
 
 import type { Upload } from "../../utils/upload";
-import type { FileType, FileItem } from "./props";
+import type { FileType, FileItem,FileOperate } from "./props";
 
 const $emit = defineEmits(["change"]);
 
@@ -34,6 +34,11 @@ const props = defineProps({
     required: true,
     type: String as PropType<FileType>
   },
+  // 文件操作按钮
+  fileOperate: {
+    required: true,
+    type: Array as PropType<FileOperate[]>
+  },
   // 是否为 task 类型
   task: {
     type: Boolean,
@@ -46,7 +51,7 @@ const { selected, selectedKeys, rowSelection, onClearSelected } = table.useSelec
 
 const { state, isLoading, execute } = useState.list<FileItem>(() => {
   if (props.task) {
-    return [] as any;
+    return api.project.taskFileList(props.id, props.type);
   }
   return api.project.fileList(props.id, props.type, props.language);
 }, void 0, void 0, "fileId");
@@ -119,6 +124,7 @@ const onDownload = function() {
       :id="id" 
       :language="language" 
       :type="type" 
+      :fileOperate="fileOperate" 
       :task="task" 
       :selected="selectedKeys" 
       v-model:progress="uploadFileProgress" 
@@ -126,7 +132,7 @@ const onDownload = function() {
     </div>
 
     <!-- 资源文件列表 -->
-    <Table class="drive-list" table-layout="auto" 
+    <Table class="drive-list mt-5" table-layout="auto" 
       :custom-row="customRow" 
       :loading="isLoading" 
       :row-selection="rowSelection" 
