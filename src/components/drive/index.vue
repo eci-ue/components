@@ -36,8 +36,9 @@ const props = defineProps({
   },
   // 文件操作按钮
   fileOperate: {
-    required: true,
-    type: Array as PropType<FileOperate[]>
+    required: false,
+    type: Array as PropType<FileOperate[]>,
+    default: () => []
   },
   // 是否禁用操作按钮
   disabled: {

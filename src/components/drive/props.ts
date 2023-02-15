@@ -14,7 +14,7 @@ export interface Props {
   type: FileType;            // 文件类型
   task?: boolean;            // 是否为 task 任务
   disabled?: boolean;         // 是否禁用
-  fileOperate: FileOperate[];
+  fileOperate?: FileOperate[];
   accept?: string | ((value: File) => boolean);  // 文件过滤条件
   onChange?: (fileCount: number) => void
 }
