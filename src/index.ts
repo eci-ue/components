@@ -18,7 +18,7 @@ export { default as Time } from "./components/time";
 export { default as Icon } from "./components/icon";
 
 export { default as DriveFile } from "./utils/drive";
-export { default as Drive, FileType } from "./components/drive";
+export { default as Drive, FileType,FileOperate } from "./components/drive";
 
 export { default as FileIcon } from "./components/icon/file.vue";
 export { default as Upload, UploadSkin } from "./components/upload";

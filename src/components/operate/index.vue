@@ -5,7 +5,7 @@ import { api } from "../../api";
 import { form } from "@ue/form";
 import { ratePartner, interupt } from "./util";
 import { computed, reactive, PropType } from "vue";
-import message from "ant-design-vue/lib/message/index";
+import * as message from "@ue/message";
 import { Menu, MenuItem, Button, Space, Modal } from "ant-design-vue";
 import { DoOperation, IconType, Skin } from "./type";
 import type { RatePartner, itemType } from "./type";
@@ -105,55 +105,45 @@ const interruptTask = async function (name: string) {
 }
 //delete
 const deleteTask = async function (name: string) {
-  Modal.confirm({
-    content: 'Are you sure delete this task.',
-    onOk: async () => {
-      const status = await api.task.deleteTask(taskId.value)
-      if (status) {
-        onReload(name)
-      }
+  const isOk = await message.confirm('Are you sure delete this task.');
+  if (isOk) {
+    const status = await api.task.deleteTask(taskId.value)
+    if (status) {
+      onReload(name)
     }
-  });
+  }
 }
 //cancel
 const cancelTask = async function (name: string) {
-  Modal.confirm({
-    content: 'Are you sure cancel this task.',
-    onOk: async () => {
-      const status = await api.task.cancelTask(taskId.value)
-      if (status) {
-        onReload(name)
-      }
+  const isOk = await message.confirm('Are you sure cancel this task.');
+  if (isOk) {
+    const status = await api.task.cancelTask(taskId.value)
+    if (status) {
+      onReload(name)
     }
-  });
+  }
 }
 
 //reject
-const rejectTask = function (name: string) {
-  Modal.confirm({
-    content: 'Are you sure reject this task.',
-    onOk: async () => {
-      const status = await api.task.rejectTask(taskId.value)
-      if (status) {
-        onReload(name)
-      }
+const rejectTask = async function (name: string) {
+  const isOk = await message.confirm('Are you sure reject this task.');
+  if (isOk) {
+    const status = await api.task.rejectTask(taskId.value)
+    if (status) {
+      onReload(name)
     }
-  });
+  }
 }
 //Hedge Jas
 const tip = `Are you sure you want to create a hedged JAS?The newly created hedging JAS is a JAS with a negative workload that needs to be confirmed by the resource.`
 const onHedge = async function (name: string) {
-  Modal.confirm({
-    content: tip,
-    onOk: async () => {
-      try {
-        const status = await api.task.hedgeJAS(taskId.value)
-        if (status) {
-          onReload(name)
-        }
-      } catch (error) { }
+  const isOk = await message.confirm(tip);
+  if (isOk) {
+    const status = await api.task.hedgeJAS(taskId.value)
+    if (status) {
+      onReload(name)
     }
-  });
+  }
 }
 
 const typeIcon = function (name: string) {

@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -32,7 +32,7 @@
     "@fengqiaogang/safe-get": "^0.1.1",
     "@fengqiaogang/safe-set": "^0.1.2",
     "@ue/form": "^0.1.1",
-    "@ue/message": "^0.0.1",
+    "@ue/message": "^0.0.2",
     "@ue/model": "^0.1.1",
     "@ue/utils": "^0.1.8",
     "ali-oss": "^6.17.1",

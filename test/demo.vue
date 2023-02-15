@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { Alter, Operate } from "../src/index";
+import { Alter, Operate,FileOperate } from "../src/index";
 import Upload from "../src/components/upload";
 
 import DriveFile from "../src/utils/drive";
 
 import type { UploadFile } from "../src/components/upload/props";
-import { FileType,FileOperate } from "../src/components/drive/props";
+import { FileType} from "../src/components/drive/props";
 
 const state = ref(false)
 

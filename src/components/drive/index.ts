@@ -4,6 +4,6 @@
  */
 
 import Drive from "./index.vue";
-export { FileType } from "./props";
+export { FileType,FileOperate } from "./props";
 
 export default Drive;
