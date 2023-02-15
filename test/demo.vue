@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { check } from "@ue/utils";
 import { Alter, Operate } from "../src/index";
 import Upload from "../src/components/upload";
 
@@ -34,7 +35,9 @@ onMounted(function() {
     fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large]
   });
 });
-
+const accept = function(file: File): boolean {
+  return check.fileSuffix(file.name, "zip");
+}
 </script>
 <template>
   <div>
@@ -44,7 +47,7 @@ onMounted(function() {
     </div>
     <br/>
     <div>
-      <Upload @success="onSuccess" @submit="onSubmit"></Upload>
+      <Upload @success="onSuccess" @submit="onSubmit" :accept="accept"></Upload>
     </div>
   </div>
 </template>
