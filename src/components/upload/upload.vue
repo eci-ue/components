@@ -5,7 +5,7 @@
  */
 
 import * as _ from "lodash-es";
-import { PropType, ref } from "vue";
+import { PropType, ref, computed } from "vue";
 import { UploadSkin } from "./props";
 import * as upload from "../../utils/upload";
 
@@ -16,7 +16,7 @@ import { Modal, Input } from "ant-design-vue";
 import type { UploadFile } from "./props";
 import type { Upload } from "../../utils/upload";
 
-defineProps({
+const props = defineProps({
   // 是否上传到网盘
   drive: {
     type: Boolean,
@@ -34,8 +34,8 @@ defineProps({
   },
   // 文件类型
   accept: {
-    type: String,
-    default: "*"
+    type: [String, Function] as PropType<string | ((value: File) => boolean)>,
+    default: () => "*"
   },
   // 皮肤，默认提供几种 UI 效果，不满足的情况下请使用 slot 自定义
   skin: {
@@ -97,16 +97,36 @@ const onUploadChange = async function (url: string, data: Upload) {
   emit("update:progress", ingFileList);
 }
 
+const fileAccept = computed<string>(function() {
+  if (typeof props.accept === "string") {
+    return props.accept;
+  }
+  return "*";
+});
+
 const onChange = function (e: Event) {
-  // 线上上传进度条
-  visible.value = true;
   const input: HTMLInputElement = e.target as HTMLInputElement;
-  // 上传文件
-  const list = upload.put([].slice.call(input.files), onUploadChange);
+  const files = [].slice.call(input.files);
   // 重置上传按钮
   input.value = "";
-  // 上传文件记录
-  fileList.value = _.concat(list, fileList.value);
+  let status = true;
+  if (typeof props.accept === "function") {
+    for (const file of files) {
+      // 判断选择的文件格式
+      status = props.accept(file);
+      if (!status) {
+        break;
+      }
+    }
+  }
+  if (status) {
+    // 显示上传进度条
+    visible.value = true;
+    // 上传文件
+    const list = upload.put(files, onUploadChange);
+    // 上传文件记录
+    fileList.value = _.concat(list, fileList.value);
+  }
   return false;
 }
 
@@ -142,10 +162,10 @@ const onCancel = function () {
       </template>
       <template v-else>
         <template v-if="multiple">
-          <input class="hidden" type="file" @change="onChange" multiple :accept="accept" />
+          <input class="hidden" type="file" @change="onChange" multiple :accept="fileAccept" />
         </template>
         <template v-else>
-          <input class="hidden" type="file" @change="onChange" :accept="accept" />
+          <input class="hidden" type="file" @change="onChange" :accept="fileAccept" />
         </template>
         <span class="ant-btn ant-btn-primary text-white">
           <i class="flex items-center not-italic">
@@ -166,10 +186,10 @@ const onCancel = function () {
       </template>
       <template v-else>
         <template v-if="multiple">
-          <input class="hidden" type="file" @change="onChange" multiple :accept="accept" />
+          <input class="hidden" type="file" @change="onChange" multiple :accept="fileAccept" />
         </template>
         <template v-else>
-          <input class="hidden" type="file" @change="onChange" :accept="accept" />
+          <input class="hidden" type="file" @change="onChange" :accept="fileAccept" />
         </template>
         <span class="ant-btn">
           <i class="flex items-center not-italic">
@@ -184,10 +204,10 @@ const onCancel = function () {
         <template #addonAfter>
           <label class="inline-block cursor-pointer">
             <template v-if="multiple">
-              <input class="hidden" type="file" @change="onChange" multiple :accept="accept" />
+              <input class="hidden" type="file" @change="onChange" multiple :accept="fileAccept" />
             </template>
             <template v-else>
-              <input class="hidden" type="file" @change="onChange" :accept="accept" />
+              <input class="hidden" type="file" @change="onChange" :accept="fileAccept" />
             </template>
             <span class="flex items-center select-none">
               <Icon type="upload-outlined"></Icon>
@@ -199,10 +219,10 @@ const onCancel = function () {
     </div>
     <label class="block" v-else>
       <template v-if="multiple">
-        <input class="hidden" type="file" @change="onChange" multiple :accept="accept" :disabled="disabled"/>
+        <input class="hidden" type="file" @change="onChange" multiple :accept="fileAccept" :disabled="disabled"/>
       </template>
       <template v-else>
-        <input class="hidden" type="file" @change="onChange" :accept="accept" :disabled="disabled"/>
+        <input class="hidden" type="file" @change="onChange" :accept="fileAccept" :disabled="disabled"/>
       </template>
       <slot></slot>
     </label>
