@@ -152,7 +152,7 @@ export default class Project {
   ): Promise<PageResult<T>> {
     const data = {
       taskId,
-      fileType: fileType
+      type: fileType
     };
     return { data } as any;
   }
