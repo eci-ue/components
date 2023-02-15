@@ -27,17 +27,20 @@ const onSubmit = function() {
   console.log("submit");
 }
 
+const accept = function(file: File): boolean {
+  return check.fileSuffix(file.name, "zip");
+}
+
 onMounted(function() {
   DriveFile("xxx", {
     id: 1,
     language: 7,
     type: FileType.source,
-    fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large]
+    fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large],
+    accept: accept
   });
 });
-const accept = function(file: File): boolean {
-  return check.fileSuffix(file.name, "zip");
-}
+
 </script>
 <template>
   <div>
@@ -47,7 +50,7 @@ const accept = function(file: File): boolean {
     </div>
     <br/>
     <div>
-      <Upload @success="onSuccess" @submit="onSubmit" :accept="accept"></Upload>
+      <Upload @success="onSuccess" @submit="onSubmit" :accept="accept" :disabled="true"></Upload>
     </div>
   </div>
 </template>

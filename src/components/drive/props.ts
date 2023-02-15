@@ -13,9 +13,12 @@ export interface Props {
   language: string | number; // 语言ID
   type: FileType;            // 文件类型
   task?: boolean;            // 是否为 task 任务
-  fileOperate:FileOperate[];
+  disabled?: boolean;         // 是否禁用
+  fileOperate: FileOperate[];
+  accept?: string | ((value: File) => boolean);  // 文件过滤条件
   onChange?: (fileCount: number) => void
 }
+
 
 export class FileItem<Language = object> {
   fileExt: string = ""; // 文件类型（文件后缀）

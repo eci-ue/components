@@ -39,6 +39,16 @@ const props = defineProps({
     required: true,
     type: Array as PropType<FileOperate[]>
   },
+  // 是否禁用操作按钮
+  disabled: {
+    type: Boolean,
+    default: () => false
+  },
+  // 文件类型过滤
+  accept: {
+    type: [String, Function] as PropType<string | ((value: File) => boolean)>,
+    required: false
+  },
   // 是否为 task 类型
   task: {
     type: Boolean,
@@ -126,6 +136,8 @@ const onDownload = function() {
       :type="type" 
       :fileOperate="fileOperate" 
       :task="task" 
+      :accept="accept" 
+      :disabled="disabled" 
       :selected="selectedKeys" 
       v-model:progress="uploadFileProgress" 
       @click="onReload" @download="onDownload"></Handle>

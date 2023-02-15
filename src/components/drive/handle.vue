@@ -55,7 +55,17 @@ const props = defineProps({
   progress: {
     default: [],
     type: Array as PropType<any[]>,
-  }
+  },
+  // 是否禁用操作按钮
+  disabled: {
+    type: Boolean,
+    default: () => false
+  },
+  // 文件类型过滤
+  accept: {
+    type: [String, Function] as PropType<string | ((value: File) => boolean)>,
+    required: false
+  },
 });
 
 // 上传中的文件
@@ -104,7 +114,6 @@ const onSelectDriveFile = async function () {
 
 // 直接上传文件
 const onUpload = async function (data: UploadFile) {
-  console.log(data);
   const file = {
     fileName: data.name,
     filePath: data.url,
@@ -198,16 +207,22 @@ const operateBtn = computed(() => {
 <template>
   <div class="flex justify-between items-center">
     <Space>
-      <Button v-if="operateBtn.delete" :disabled="selected.length < 1" @click="onRemoveFile">Delete</Button>
+      <Button v-if="operateBtn.delete" :disabled="disabled || selected.length < 1" @click="onRemoveFile">Delete</Button>
       <Button v-if="operateBtn.download" :disabled="selected.length < 1" @click="onDwonload">Download</Button>
       <template v-if="type === FileType.source && operateBtn.language">
         <!-- 源文件模式下才启用该功能 -->
-        <Button :disabled="selected.length < 1" @click="onChangePairs">Language pairs</Button>
+        <Button :disabled="disabled || selected.length < 1" @click="onChangePairs">Language pairs</Button>
       </template>
-      <Upload v-if="operateBtn.upload" :show-progress="false" :multiple="true" v-model:progress="uploadFileProgress" @success="onUpload">
+      <Upload v-if="operateBtn.upload" 
+        :accept="accept" 
+        :disabled="disabled" 
+        :show-progress="false" 
+        :multiple="true" 
+        v-model:progress="uploadFileProgress" 
+        @success="onUpload">
         <span class="ant-btn ant-btn-primary">Upload Files</span>
       </Upload>
     </Space>
-    <Button v-if="operateBtn.large" type="link" @click="onSelectDriveFile">Large files entry</Button>
+    <Button v-if="operateBtn.large" type="link" :disabled="disabled" @click="onSelectDriveFile">Large files entry</Button>
   </div>
 </template>
