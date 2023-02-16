@@ -43,7 +43,7 @@ export default defineComponent<Props>({
     const router = useRouter();
     const link = function(href: string | RouteLocationRaw, target?: string) {
       if (isHref(href)) {
-        const value = { href, target: blank.includes(target || "") ? blank : "_self" };
+        const value = { href, target: target && blank.includes(target) ? blank : "_self" };
         return createElement("a", value, slots);
       }
       return createElement(RouterLink, { to: href }, slots);
