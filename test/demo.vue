@@ -36,7 +36,7 @@ onMounted(function() {
     id: 1,
     language: 7,
     type: FileType.source,
-    fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large],
+    fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large,FileOperate.downTarget],
     accept: accept
   });
 });

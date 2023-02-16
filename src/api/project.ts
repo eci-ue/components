@@ -170,7 +170,7 @@ export default class Project {
     const data = {
       ...file,
       taskId,
-      fileType: getType(fileType)
+      type: getType(fileType)
     };
     return { data } as any;
   }

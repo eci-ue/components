@@ -10,11 +10,12 @@ export enum FileType {
 
 export interface Props {
   id: string | number;       // 项目ID或者任务ID
-  language: string | number; // 语言ID
+  language?: string | number; // 语言ID
   type: FileType;            // 文件类型
   task?: boolean;            // 是否为 task 任务
   disabled?: boolean;         // 是否禁用
-  fileOperate?: FileOperate[];
+  fileOperate?: FileOperate[];    //操作按钮
+  subType?:string,      //任务节点
   accept?: string | ((value: File) => boolean);  // 文件过滤条件
   onChange?: (fileCount: number) => void
 }

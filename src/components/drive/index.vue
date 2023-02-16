@@ -14,7 +14,7 @@ import { headers } from "./heder";
 import { LanguageGroup } from "../language";
 
 import type { Upload } from "../../utils/upload";
-import type { FileType, FileItem,FileOperate } from "./props";
+import type { FileType, FileItem, FileOperate } from "./props";
 
 const $emit = defineEmits(["change"]);
 
@@ -54,6 +54,11 @@ const props = defineProps({
   task: {
     type: Boolean,
     default: () => false
+  },
+  //任务节点
+  subType: {
+    type: String,
+    default: ""
   }
 });
 
@@ -68,14 +73,14 @@ const { state, isLoading, execute } = useState.list<FileItem>(() => {
 }, void 0, void 0, "fileId");
 
 
-const onReload = async function() {
+const onReload = async function () {
   onClearSelected();
   await execute(50);
   $emit("change", state.value.total);
 };
 
 
-const fileList = computed<FileItem[]>(function() {
+const fileList = computed<FileItem[]>(function () {
   const uploadList: FileItem[] = [];
   const list: FileItem[] = state.value.results;
   for (const upload of uploadFileProgress.value) {
@@ -97,14 +102,14 @@ const fileList = computed<FileItem[]>(function() {
   return _.concat(uploadList, list);
 });
 
-const tableScroll = computed(function() {
+const tableScroll = computed(function () {
   if (state.value.total > 5) {
     return { y: 300 };
   }
   return {};
 });
 
-const customRow = function(data: FileItem) {
+const customRow = function (data: FileItem) {
   if (data.key) {
     const number = new BigNumber(data.progress).times(100).toFixed(0);
     return {
@@ -116,7 +121,7 @@ const customRow = function(data: FileItem) {
 };
 
 
-const onDownload = function() {
+const onDownload = function () {
   for (const item of selected.value) {
     if (item.filePath) {
       const url = fileDownloadUrl(item.filePath);
@@ -131,45 +136,42 @@ const onDownload = function() {
   <div>
     <div>
       <!-- 操作按钮 -->
-      <Handle
-      :id="id" 
-      :language="language" 
-      :type="type" 
-      :fileOperate="fileOperate" 
-      :task="task" 
-      :accept="accept" 
-      :disabled="disabled" 
-      :selected="selectedKeys" 
-      v-model:progress="uploadFileProgress" 
-      @click="onReload" @download="onDownload"></Handle>
+      <Handle :id="id" :language="language" :type="type" :fileOperate="fileOperate" :task="task" :accept="accept"
+        :disabled="disabled" :selectedKeys="selectedKeys" :selected="selected" v-model:progress="uploadFileProgress"
+        @click="onReload" @download="onDownload"></Handle>
     </div>
 
     <!-- 资源文件列表 -->
-    <Table class="drive-list mt-5" table-layout="auto" 
+    <Table 
+      class="drive-list mt-5" 
+      table-layout="auto" 
       :custom-row="customRow" 
-      :loading="isLoading" 
+      :loading="isLoading"
       :row-selection="rowSelection" 
-      :columns="headers(task)" 
+      :columns="headers(task,subType)" 
       :data-source="fileList" 
-      :scroll="tableScroll" 
+      :scroll="tableScroll"
       :pagination="false">
 
-      <template #bodyCell="{ column, record, text  }">
-        <template v-if="column.key ==='name'">
+      <template #bodyCell="{ column, record, text }">
+        <template v-if="column.key === 'name'">
           <Button type="link">
             <FileIcon :value="text" :max-size="24">
               <Icon type="link-outlined"></Icon>
             </FileIcon>
           </Button>
         </template>
-        <template v-if="column.key ==='type'">
+        <template v-else-if="column.key === 'type'">
           <span>{{ _.toUpper(text) }}</span>
         </template>
-        <template v-if="column.key ==='date'">
+        <template v-else-if="column.key === 'date'">
           <span>{{ date.format(text) }}</span>
         </template>
-        <template v-else-if="column.key ==='pairs'">
+        <template v-else-if="column.key === 'pairs'">
           <LanguageGroup :more="true" :show-name="false" :list="text"></LanguageGroup>
+        </template>
+        <template v-else>
+          {{ text || "--" }}
         </template>
       </template>
     </Table>
@@ -185,6 +187,7 @@ const onDownload = function() {
       background-size: var(--eci-upload-progress) 100%;
       background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAwCAYAAADQMxCBAAAABHNCSVQICAgIfAhkiAAAABFJREFUCFtjePL+3z+GkUMAAK6zttH3E4MqAAAAAElFTkSuQmCC");
     }
+
     &:hover {
       td {
         background: none !important;
