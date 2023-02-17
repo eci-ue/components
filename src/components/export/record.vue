@@ -4,6 +4,7 @@
  * @author svon.me@gmail.com
  */
 import * as _ from "lodash-es";
+import { api } from "../../api";
 import { PropType, onMounted } from "vue";
 import { WorkMode, headers, expanded } from "./props";
 import { downloadFile, fileDownloadUrl, PageResult, table, useState } from "@ue/utils";
@@ -13,7 +14,6 @@ import Time from "../time";
 
 import type { Props, Data, ExportedFile } from "./props";
 import type { UsePaginationData } from "@ue/utils/types/table/props";
-import { api } from "../../api";
 
 const $emit = defineEmits(["cancel"]);
 

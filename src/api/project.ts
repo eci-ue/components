@@ -342,4 +342,28 @@ export default class Project {
     const params = { projectId, sourceLang: languageId, userType: partner ? 2 : 1 };
     return { params } as any;
   }
+
+
+  /**
+   * CAT 基础信息
+   * @param id 项目ID
+   * @param language 语言ID
+   * @returns CatConfig
+   */
+  @tryError(void 0)
+  @get("/:project/cat/getConfig/:projectId")
+  @validate
+  catConfig<T>(
+    @required id: string | number,
+    @required language: string | number
+  ): Promise<T> {
+    const params = { projectId: id, sourceLanguageId: language };
+    const callback = function(res: T) {
+      if (_.isBoolean(res) || _.isNil(res)) {
+        return void 0;
+      }
+      return res;
+    }
+    return { params, callback } as any;
+  }
 }
