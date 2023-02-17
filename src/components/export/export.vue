@@ -68,11 +68,14 @@ const status = computed<boolean>(function() {
   if (_.isNil(props.id) || _.isNil(props.language)) {
     return true;
   }
+  if (!state.value || state.value.workMode === WorkMode.Offline) {
+    return true;
+  }
   return false;
 });
 
 const onClick = function() {
-  if (state.value.templateId) {
+  if (state.value && state.value.templateId) {
     ExportFile({
       id: props.id,
       language: props.language,
@@ -87,5 +90,5 @@ const onClick = function() {
 </script>
 
 <template>
-  <Button type="primary" :disabled="status || state.workMode === WorkMode.Offline" @click.prevent="onClick">Export record</Button>
+  <Button type="primary" :disabled="status" @click.prevent="onClick">Export record</Button>
 </template>

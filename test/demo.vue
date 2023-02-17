@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { Alter, Operate,FileOperate } from "../src/index";
+import { Alter, Operate,FileOperate, ExportButton } from "../src/index";
 import { check } from "@ue/utils";
 import Upload from "../src/components/upload";
 
@@ -52,6 +52,9 @@ onMounted(function() {
     <br/>
     <div>
       <Upload @success="onSuccess" @submit="onSubmit" :accept="accept" :disabled="true"></Upload>
+    </div>
+    <div>
+      <ExportButton :id="1" :language="2"></ExportButton>
     </div>
   </div>
 </template>
