@@ -237,7 +237,7 @@ const disabledDel = computed(()=>{
     <Space>
       <Button v-if="operateBtn.delete" :disabled="disabled || disabledDel" @click="onRemoveFile">Delete</Button>
       <Button v-if="operateBtn.download" :disabled="selectedKeys.length < 1" @click="onDwonload">Download</Button>
-      <template v-if="type === FileType.source && operateBtn.language">
+      <template v-if="operateBtn.language">
         <!-- 源文件模式下才启用该功能 -->
         <Button :disabled="disabled || selectedKeys.length < 1" @click="onChangePairs">Language pairs</Button>
       </template>

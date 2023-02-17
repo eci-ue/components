@@ -33,9 +33,10 @@ const accept = function(file: File): boolean {
 
 onMounted(function() {
   DriveFile("xxx", {
-    id: 1,
+    id: 2,
     language: 7,
     type: FileType.source,
+    task:true,
     fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large,FileOperate.downTarget],
     accept: accept
   });
