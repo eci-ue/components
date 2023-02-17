@@ -104,7 +104,11 @@ const onSelectDriveFile = async function () {
 
   let status: boolean = false;
   if (props.task) {
-    // todo
+    status = await api.project.uploadTaskDrive(
+      data.fileIds,
+      props.id,
+      props.type
+    );
   } else {
     status = await api.project.uploadDrive(
       data.fileIds,
@@ -145,7 +149,12 @@ const onUpload = async function (data: UploadFile) {
 
 // 设置语言对
 const onChangePairs = async function () {
-  const list = await api.project.getPairs(props.id, props.language);
+  let list:any = []
+  if (props.task) {
+    list = await api.project.getTaskPairs(props.id, props.language);
+    } else {
+      list = await api.project.getPairs(props.id, props.language);
+    }
   const option = {
     width: 460,
     title: "Language pairs"
@@ -165,7 +174,7 @@ const onChangePairs = async function () {
 
     let status: boolean = false;
     if (props.task) {
-      // todo
+      status = await api.project.setTaskPairs(fileIds, languagePairs);
     } else {
       status = await api.project.setPairs(fileIds, languagePairs);
     }
@@ -232,7 +241,7 @@ const disabledDel = computed(()=>{
         <!-- 源文件模式下才启用该功能 -->
         <Button :disabled="disabled || selectedKeys.length < 1" @click="onChangePairs">Language pairs</Button>
       </template>
-      <Upload v-if="operateBtn.upload" 
+      <Upload v-if="operateBtn.upload"
         :accept="accept" 
         :disabled="disabled" 
         :show-progress="false" 

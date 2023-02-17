@@ -132,6 +132,7 @@ export default class Project {
     return { params, callback } as any;
   }
 
+
   // 设置语言对
   @tryError(false)
   @$error("Edit failed, please contact administrator or try again later.")
@@ -139,6 +140,60 @@ export default class Project {
   @validate
   setPairs<D = object>(@required fileIds: Array<string | number>, @required languagePairs: D): Promise<boolean> {
     const data = { fileIds, langPairIds: languagePairs };
+    return { data } as any;
+  }
+  /**
+   * 获取task语言对
+   * @param taskId 任务ID
+   * @languageId 源语言ID
+   */
+  @tryError([])
+  @post("/:task/file/getTaskLanguagePair")
+  @validate
+  getTaskPairs<T>(
+    @required taskId: string | number,
+    languageId?: string | number,
+  ): Promise<T[]> {
+    const data = { taskId };
+    const callback = function (list: object[]) {
+      const id = _.toInteger(languageId);
+      const data = _.map(list, function (data: any) {
+        return {
+          sourceCountryId: data.slangCountryId,
+          sourceLanguageId: data.slangId,
+          sourceLanguageName: data.slang,
+          targetCountryId: data.tlangCountryId,
+          targetLanguageId: data.tlangId,
+          targetLanguageName: data.tlang,
+        }
+      });
+      const array = transformPairs<object>(data);
+      // 根据源语言过滤数据
+      return _.filter(array, function (data: T) {
+        if (id && id > 0) {
+          return id === safeGet<number>(data as object, "source.id");
+        }
+        return true;
+      });
+    }
+    return { data, callback } as any;
+  }
+  // 设置task语言对
+  @tryError(false)
+  @$error("Edit failed, please contact administrator or try again later.")
+  @post("/:task/file/setFileLanguagePair")
+  @validate
+  setTaskPairs<D>(@required fileIds: Array<string | number>, @required languagePairs: D): Promise<boolean> {
+    let data:any = []
+    _.each(fileIds,val=>{
+      _.each(languagePairs || [],(item:any)=>{
+        data.push({
+          fileId:val,
+          slangId:item.sourceLanguageId,
+          tlangId:item.targetLanguageId
+        })
+      })
+    })
     return { data } as any;
   }
 
@@ -172,6 +227,26 @@ export default class Project {
       taskId,
       type: getType(fileType)
     };
+    return { data } as any;
+  }
+
+  /**
+   * 将网盘文件上传到task项目中
+   * @param fileIds 
+   * @param taskId  任务id 
+   * @param fileType 
+   * @returns 
+   */
+  @tryError(false)
+  @$error("Added failed, please contact administrator or try again later.")
+  @post("/:task/file/uploadOssFolder")
+  @validate
+  uploadTaskDrive(
+    @required fileIds: number | number[],
+    @required taskId: string | number,
+    @required type: FileType
+  ): Promise<boolean> {
+    const data = { fileIds, taskId, type};
     return { data } as any;
   }
 
