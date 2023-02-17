@@ -26,7 +26,7 @@ const props = defineProps({
   },
   // 工作模式
   mode: {
-    required: true,
+    required: false,
     type: String as PropType<WorkMode>,
   },
   // 是否为 PM
