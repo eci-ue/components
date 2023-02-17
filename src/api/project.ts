@@ -5,7 +5,7 @@
 
 import * as _ from "lodash-es";
 import { PageResult } from "@ue/utils";
-import { $error } from "@ue/message";
+import { $error, $success } from "@ue/message";
 import { transformPairs } from "../utils";
 import safeGet from "@fengqiaogang/safe-get";
 import { FileType } from "../components/drive/props";
@@ -260,4 +260,86 @@ export default class Project {
     return { data } as any;
   }
 
+  /**
+   * 文件导出
+   * @param list 文件ID集合  
+   * @param type 导出类型 1: Current xliff files 2: Current target files
+   * @param subType 服务小类
+   * @param operator 是否为 PM 权限（1: 是、2: 否）
+   * @param userType 1: 内部资源, 2: 外部资源, 当 operator 为 0/false 时必填
+   * @returns 
+   */
+  @tryError(false)
+  @$error()
+  @$success(`Export process start successfully, check result in "Export Record"`)
+  @post("/:task/bilingual/export")
+  @validate
+  fileExport(
+    @required list: Array<string | number>,  
+    type: string | number = 1,
+    subType?: string,
+    operator: number | boolean = 1,
+    userType?: number
+  ): Promise<boolean> {
+    const fileIds = _.compact(_.concat(list));
+    const data = { 
+      fileIds, 
+      type,
+      subType,
+      operatorType: operator ? 1 : 0,
+      userType: userType
+    };
+    return { data } as any;
+  }
+
+  /**
+   * 获取 Momeq 下载任务列表
+   * @param projectId  项目ID
+   * @param pageNum    页码
+   * @param pageSize   每页条数
+   */
+  @tryError(new PageResult())
+  @post("/:task/downfile/list", { withCredentials: true })
+  @validate
+  getExportMomoqFileList<T>(
+    @required projectId: string | number,
+    pageNum: number = 1,
+    pageSize: number = 20,
+  ): Promise<PageResult<T>> {
+    const data = { projectId, pageNum, pageSize };
+    return { data } as any;
+  }
+
+  /**
+   * 获取 TransDoc 下载任务列表 （PM）
+   * @param projectId 项目ID
+   * @param languageId 语言ID
+   */
+  @tryError(new PageResult())
+  @get("/:cat/cat/translation/export/task/list/pm", { withCredentials: true })
+  @validate
+  getExportTransDocPmFileList<T>(
+    @required projectId: string | number, 
+    @required languageId: string | number,
+  ): Promise<PageResult<T>> {
+    const params = { projectId, sourceLang: languageId };
+    return { params } as any;
+  }
+  /**
+   * 获取 TransDoc 下载任务列表 （议员）
+   * @param projectId 项目ID
+   * @param languageId 语言ID
+   * @param partner    是否是外部议员
+   */
+  @tryError(new PageResult())
+  @get("/:cat/cat/translation/export/task/list/other", { withCredentials: true })
+  @validate
+  getExportTransDocFileList<T>(
+    @required projectId: string | number, 
+    @required languageId: string | number,
+    partner: boolean = false,
+  ): Promise<PageResult<T>> {
+    const params = { projectId, sourceLang: languageId, userType: partner ? 2 : 1 };
+    return { params } as any;
+  }
 }
