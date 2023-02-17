@@ -10,7 +10,7 @@ specifiers:
   '@types/lodash-es': ^4.17.6
   '@types/node': ^18.13.0
   '@ue/form': ^0.1.1
-  '@ue/message': ^0.0.2
+  '@ue/message': ^0.0.4
   '@ue/model': ^0.1.1
   '@ue/utils': ^0.1.8
   '@vitejs/plugin-vue': ^4.0.0
@@ -35,7 +35,7 @@ dependencies:
   '@fengqiaogang/safe-get': 0.1.1
   '@fengqiaogang/safe-set': 0.1.2
   '@ue/form': 0.1.1
-  '@ue/message': 0.0.2
+  '@ue/message': 0.0.4
   '@ue/model': 0.1.1
   '@ue/utils': 0.1.8_vue@3.2.47
   ali-oss: 6.17.1
@@ -720,9 +720,10 @@ packages:
       '@ue/model': 0.1.1
     dev: false
 
-  /@ue/message/0.0.2:
-    resolution: {integrity: sha512-3/EdIXoFKSKJHPburllpCvWB8QbEPMFVbdwtype/DmHurkxgxS6HiZOii8h1SjEMGkTtaGnIwhh8cI2/XWFiSQ==}
+  /@ue/message/0.0.4:
+    resolution: {integrity: sha512-mg+42lLaQ4IdfvQkOgavYKRLjJTBZ4obEu8d5EGJlc6hG5ixuUSBpiGUAKf/cKv8ymsmBo2ayx75uGnF6ZJU9g==}
     dependencies:
+      '@fengqiaogang/safe-get': 0.1.1
       '@ue/model': 0.1.1
     dev: false
 
