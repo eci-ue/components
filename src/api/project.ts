@@ -209,7 +209,24 @@ export default class Project {
       taskId,
       type: fileType
     };
-    return { data } as any;
+    const callback = function (list: T[]) {
+      return _.map(list, function (data: object) {
+        const value = _.get<object, string>(data, "languagePair");
+        const pairs = _.map(value, function (data: any) {
+          return {
+            sourceCountryId: data.slangCountryId,
+            sourceLanguageId: data.slangId,
+            sourceLanguageName: data.slang,
+            targetCountryId: data.tlangCountryId,
+            targetLanguageId: data.tlangId,
+            targetLanguageName: data.tlang,
+          }
+        });
+        const languagePairs = transformPairs<object>(pairs);
+        return { ...data, languagePairs } as T;
+      });
+    };
+    return { data, callback } as any;
   }
 
   // 上传task任务的文件
