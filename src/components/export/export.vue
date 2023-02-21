@@ -57,9 +57,12 @@ class CatConfig {
 }
 
 
-const { state } = useState.data<CatConfig>(async function() {
-  return api.project.catConfig(props.id, props.language);
-});
+const getCatConfig = function() {
+  if (props.id && props.language) {
+    return api.project.catConfig<CatConfig>(props.id, props.language);
+  }
+  return new CatConfig();
+}
 
 const status = computed<boolean>(function() {
   if (props.disabled) {
@@ -69,24 +72,34 @@ const status = computed<boolean>(function() {
   if (_.isNil(props.id) || _.isNil(props.language)) {
     return true;
   }
-  if (!state.value || state.value.workMode === WorkMode.Offline) {
-    return true;
-  }
   return false;
 });
 
-const onClick = function() {
-  if (state.value && state.value.templateId) {
+const onClick = async function() {
+  
+  if (props.mode) {
     ExportFile({
       id: props.id,
       language: props.language,
-      mode: props.mode || state.value.workMode,
+      mode: props.mode,
       pm: props.pm,
       partner: props.partner
     });
+    return;
   } else {
-    message.error("还未设置 Cat Config, 请先设置！");
+    const state = await getCatConfig();
+    if (state && state.workMode && state.workMode !== WorkMode.Offline) {
+      ExportFile({
+        id: props.id,
+        language: props.language,
+        mode: state.workMode,
+        pm: props.pm,
+        partner: props.partner
+      });
+      return;
+    }
   }
+  message.error("还未设置 Cat Config, 请先设置！");
 };
 </script>
 
