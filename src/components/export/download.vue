@@ -4,9 +4,8 @@
  * @author svon.me@gmail.com
  */
 
-import * as _ from "lodash-es";
 import { api } from "../../api";
-import { PropType } from "vue";
+import { PropType, computed } from "vue";
 import { Dropdown, Button, Menu, MenuItem } from "ant-design-vue";
 
 import type { WorkMode } from "./props";
@@ -50,14 +49,31 @@ const props = defineProps({
   placement: {
     type: String as PropType<any>,
     default: "bottomRight"
+  },
+  // 导出文件类型
+  // 1 = Current target files
+  // 2 = Current xliff files
+  menu: {
+    required: false,
+    default: () => {
+      return [1, 2];
+    },
+    type: [Array, String, Number] as PropType<string | number | Array<string | number>>,
   }
 });
 
+const toArray = function(value: string | number | Array<string | number>): Array<string | number> {
+  if (Array.isArray(value)) {
+    return [...value];
+  }
+  return [value];
+}
+
 
 /** 文件导出 */
-const onExport = function (value: number) {
+const onExport = function (value: number | string) {
   api.project.fileExport(
-    _.concat(props.file), 
+    toArray(props.file), 
     value,
     props.type ? props.type : void 0,
     props.pm ? true : false,
@@ -65,15 +81,28 @@ const onExport = function (value: number) {
   );
 };
 
+const menuItems = computed<Array<number | string>>(function() {
+  return toArray(props.menu);
+});
+
+const menuTexts = {
+  "1": "Current target files",
+  "2": "Current xliff files"
+};
+
 </script>
 <template>
-  <Dropdown :placement="placement">
-    <Button type="primary" @click.prevent :disabled="disabled">Export FIle</Button>
-    <template #overlay>
-      <Menu>
-        <MenuItem @click="onExport(1)">Current target files</MenuItem>
-        <MenuItem @click="onExport(2)">Current xliff files</MenuItem>
-      </Menu>
-    </template>
-  </Dropdown>
+  <div class="inline-block">
+    <Dropdown :placement="placement" v-if="menuItems.length > 1">
+      <Button type="primary" @click.prevent :disabled="disabled">Export FIle</Button>
+      <template #overlay>
+        <Menu>
+          <template v-for="value in menuItems" :key="value">
+            <MenuItem @click="onExport(value)">{{ menuTexts[value] }}</MenuItem>
+          </template>
+        </Menu>
+      </template>
+    </Dropdown>
+    <Button v-else type="primary" @click="onExport(menuItems[0])" :disabled="disabled">Export FIle</Button>
+  </div>
 </template>

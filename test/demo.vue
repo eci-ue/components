@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { Alter, Operate,FileOperate, ExportButton } from "../src/index";
+import { Alter, Operate, FileOperate, ExportButton, ExportDownload } from "../src/index";
 import { check } from "@ue/utils";
 import Upload from "../src/components/upload";
+
+import { Space } from "ant-design-vue";
 
 import DriveFile from "../src/utils/drive";
 
@@ -54,7 +56,10 @@ onMounted(function() {
       <Upload @success="onSuccess" @submit="onSubmit" :accept="accept" :disabled="true"></Upload>
     </div>
     <div>
-      <ExportButton :id="1" :language="2"></ExportButton>
+      <Space>
+        <ExportDownload :file="[1, 2]" :menu="[2]"></ExportDownload>
+        <ExportButton :id="1" :language="2"></ExportButton>
+      </Space>
     </div>
   </div>
 </template>
