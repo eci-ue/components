@@ -1,3 +1,4 @@
+types/shims-vue.d.ts
 pnpm-lock.yaml
 node_modules
 .vscode
