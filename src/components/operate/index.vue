@@ -154,14 +154,14 @@ const typeIcon = function (name: string) {
 <template>
   <div>
     <Menu v-if="layout == Skin.vertical">
-      <MenuItem @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ name }} </MenuItem>
+      <MenuItem @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ _.upperFirst(name) }} </MenuItem>
     </Menu>
     <Space size="large" v-else>
       <Button @click="handleClick(name)" :key="name" v-for="name in optTypes">
         <template #icon>
           <Icon class="text-base" :type="typeIcon(name)"></Icon>
         </template>
-        <span>{{ name }}</span>
+        <span>{{ _.upperFirst(name) }}</span>
       </Button>
     </Space>
   </div>

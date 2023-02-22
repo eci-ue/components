@@ -162,7 +162,7 @@ const onDownload = function () {
           </Button>
         </template>
         <template v-else-if="column.key === 'type'">
-          <span>{{ _.toUpper(text) }}</span>
+          <span>{{ _.toUpper(text) || "--" }}</span>
         </template>
         <template v-else-if="column.key === 'date'">
           <span>{{ date.format(text) }}</span>
