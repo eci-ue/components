@@ -5,6 +5,7 @@
  */
 
 import { api } from "../../api";
+import * as message from "@ue/message";
 import { PropType, computed } from "vue";
 import { Dropdown, Button, Menu, MenuItem } from "ant-design-vue";
 
@@ -69,26 +70,31 @@ const toArray = function(value: string | number | Array<string | number>): Array
   return [value];
 }
 
+const menuItems = computed<string[]>(function() {
+  return toArray(props.menu).map(String);
+});
+
+const menuTexts = new Map<string, string>();
+menuTexts.set("1", "Current target files");
+menuTexts.set("2", "Current xliff files");
+
 
 /** 文件导出 */
 const onExport = function (value: number | string) {
-  api.project.fileExport(
-    toArray(props.file), 
-    value,
-    props.type ? props.type : void 0,
-    props.pm ? true : false,
-    props.partner ? 2 : 1
-  );
+  if (menuTexts.has(String(value))) {
+    api.project.fileExport(
+      toArray(props.file), 
+      value,
+      props.type ? props.type : void 0,
+      props.pm ? true : false,
+      props.partner ? 2 : 1
+    );
+  } else {
+    message.error("System Exception !");
+  }
 };
 
-const menuItems = computed<Array<number | string>>(function() {
-  return toArray(props.menu);
-});
 
-const menuTexts = {
-  "1": "Current target files",
-  "2": "Current xliff files"
-};
 
 </script>
 <template>
@@ -98,7 +104,7 @@ const menuTexts = {
       <template #overlay>
         <Menu>
           <template v-for="value in menuItems" :key="value">
-            <MenuItem @click="onExport(value)">{{ menuTexts[value] }}</MenuItem>
+            <MenuItem v-if="menuTexts.has(value)" @click="onExport(value)">{{ menuTexts.get(value) }}</MenuItem>
           </template>
         </Menu>
       </template>

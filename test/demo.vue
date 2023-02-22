@@ -57,7 +57,7 @@ onMounted(function() {
     </div>
     <div>
       <Space>
-        <ExportDownload :file="[1, 2]" :menu="[2]"></ExportDownload>
+        <ExportDownload :file="[1, 2]" :menu="[1, 2]"></ExportDownload>
         <ExportButton :id="1" :language="2"></ExportButton>
       </Space>
     </div>
