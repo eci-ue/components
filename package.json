@@ -9,6 +9,7 @@
   "scripts": {
     "test": "vite --clearScreen --port 3000",
     "build": "vite build",
+    "version": "npm version patch",
     "types": "node scripts/types.cjs"
   },
   "keywords": [
