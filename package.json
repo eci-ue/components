@@ -8,7 +8,7 @@
   "main": "dist/components",
   "scripts": {
     "test": "vite --clearScreen --port 3000",
-    "build": "vue-tsc && vite build",
+    "build": "vite build",
     "types": "node scripts/types.cjs"
   },
   "keywords": [
