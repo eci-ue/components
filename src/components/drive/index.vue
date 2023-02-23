@@ -63,7 +63,7 @@ const props = defineProps({
   //仅供按钮Download Target使用
   isPm: {
     type: Boolean,
-    default: false
+    default: () => false
   }
 });
 
