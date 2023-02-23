@@ -11,6 +11,7 @@
     "build": "vite build",
     "version": "npm version patch",
     "types": "node scripts/types.cjs",
+    "lock": "npm i --package-lock-only",
     "postinstall": "npm shrinkwrap"
   },
   "keywords": [],
