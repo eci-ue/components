@@ -5,7 +5,7 @@ name: Npm Package
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: http://npm.jslion.xyz/
+          registry-url: ${{REGISTRY}}
       - run: yarn
       - run: yarn run build
       - run: yarn run types

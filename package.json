@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.2.69-0",
+  "version": "0.2.69-1",
   "type": "module",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -62,9 +62,9 @@
     "shelljs": "^0.8.5"
   },
   "files": [
-    "src/",
+    "docs/",
     "dist/",
-    "types/**/*.d.ts",
+    "types/",
     "style/",
     "LICENSE",
     "README.md",
