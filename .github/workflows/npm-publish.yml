@@ -16,9 +16,9 @@ jobs:
         with:
           node-version: 16
           registry-url: ${{secrets.REGISTRY}}
-      - run: yarn
-      - run: yarn run build
-      - run: yarn run types
+      - run: npm ci --quiet --no-progress
+      - run: npm run build
+      - run: npm run types
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
