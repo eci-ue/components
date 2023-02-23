@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: ${{REGISTRY}}
+          registry-url: ${{secrets.REGISTRY}}
       - run: yarn
       - run: yarn run build
       - run: yarn run types
