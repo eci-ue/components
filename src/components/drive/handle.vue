@@ -8,7 +8,7 @@ import * as _ from "lodash-es";
 import { api } from "../../api";
 import { rule as rules } from "@ue/utils";
 import { form } from "@ue/form"
-import { FileType, FileOperate,FileItem } from "./props";
+import { FileType, FileOperate, FileItem } from "./props";
 import { Button, Space } from "ant-design-vue";
 import { computed, PropType, toRaw } from "vue";
 
@@ -18,6 +18,7 @@ import FormlanguagePairs from "../form/language/pairs.vue";
 
 import type { Upload as UploadData } from "../../utils/upload";
 import type { UploadFile } from "../../components/upload/props";
+import { ExportDownload } from "../export/index";
 
 
 const $emit = defineEmits(["update:progress", "click", "download"]);
@@ -72,6 +73,16 @@ const props = defineProps({
     type: [String, Function] as PropType<string | ((value: File) => boolean)>,
     required: false
   },
+  //任务节点(小类)
+  subType: {
+    type: String,
+    default: ""
+  },
+  //仅供按钮Download Target使用
+  isPm: {
+    type: Boolean,
+    default: false
+  }
 });
 
 // 上传中的文件
@@ -149,12 +160,12 @@ const onUpload = async function (data: UploadFile) {
 
 // 设置语言对
 const onChangePairs = async function () {
-  let list:any = []
+  let list: any = []
   if (props.task) {
     list = await api.project.getTaskPairs(props.id, props.language);
-    } else {
-      list = await api.project.getPairs(props.id, props.language);
-    }
+  } else {
+    list = await api.project.getPairs(props.id, props.language);
+  }
   const option = {
     width: 460,
     title: "Language pairs"
@@ -202,12 +213,6 @@ const onDwonload = function () {
   $emit("download");
 }
 
-// 下载目标文件
-const onDwonTarget = function () {
-  //todo
-  console.log("下载双语文件，待处理")
-}
-
 const isHave = function (val: FileOperate) {
   return _.includes(props.fileOperate, val)
 }
@@ -223,10 +228,10 @@ const operateBtn = computed(() => {
   }
 })
 
-const disabledDel = computed(()=>{
-  if (props.task){
+const disabledDel = computed(() => {
+  if (props.task) {
     //解析的双语文件类型不允许删除
-    return _.size(props.selected.filter(item=>item.type != 5)) < 1
+    return _.size(props.selected.filter(item => item.type != 5)) < 1
   }
   return props.selectedKeys.length < 1
 })
@@ -241,17 +246,16 @@ const disabledDel = computed(()=>{
         <!-- 源文件模式下才启用该功能 -->
         <Button :disabled="disabled || selectedKeys.length < 1" @click="onChangePairs">Language pairs</Button>
       </template>
-      <Upload v-if="operateBtn.upload"
-        :accept="accept" 
-        :disabled="disabled" 
-        :show-progress="false" 
-        :multiple="true" 
-        v-model:progress="uploadFileProgress" 
-        @success="onUpload">
+      <Upload v-if="operateBtn.upload" :accept="accept" :disabled="disabled" :show-progress="false" :multiple="true"
+        v-model:progress="uploadFileProgress" @success="onUpload">
         <span class="ant-btn ant-btn-primary">Upload Files</span>
       </Upload>
-      <Button v-if="operateBtn.downTarget" :disabled="selectedKeys.length < 1" @click="onDwonTarget">Download Target</Button>
+      <span v-if="operateBtn.downTarget">
+        <ExportDownload :disabled="selectedKeys.length < 1" :file="selectedKeys" :subType="subType" :pm="isPm" :menu="[1]"
+          exportText="Download Target"></ExportDownload>
+
+      </span>
     </Space>
     <Button v-if="operateBtn.large" type="link" :disabled="disabled" @click="onSelectDriveFile">Large files entry</Button>
-  </div>
+</div>
 </template>

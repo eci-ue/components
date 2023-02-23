@@ -15,7 +15,7 @@ const props = defineProps({
   // 功能是否禁用
   disabled: {
     type: Boolean,
-    default () {
+    default() {
       return false;
     }
   },
@@ -60,17 +60,22 @@ const props = defineProps({
       return [1, 2];
     },
     type: [Array, String, Number] as PropType<string | number | Array<string | number>>,
-  }
+  },
+  // 按钮文案
+  exportText: {
+    type: String,
+    required: false,
+  },
 });
 
-const toArray = function(value: string | number | Array<string | number>): Array<string | number> {
+const toArray = function (value: string | number | Array<string | number>): Array<string | number> {
   if (Array.isArray(value)) {
     return [...value];
   }
   return [value];
 }
 
-const menuItems = computed<string[]>(function() {
+const menuItems = computed<string[]>(function () {
   return toArray(props.menu).map(String);
 });
 
@@ -83,7 +88,7 @@ menuTexts.set("2", "Current xliff files");
 const onExport = function (value: number | string) {
   if (menuTexts.has(String(value))) {
     api.project.fileExport(
-      toArray(props.file), 
+      toArray(props.file),
       value,
       props.type ? props.type : void 0,
       props.pm ? true : false,
@@ -94,7 +99,12 @@ const onExport = function (value: number | string) {
   }
 };
 
-
+const exportFIle = computed<string>(() => {
+  if (props.exportText) {
+    return props.exportText
+  }
+  return "Export FIle"
+})
 
 </script>
 <template>
@@ -109,6 +119,6 @@ const onExport = function (value: number | string) {
         </Menu>
       </template>
     </Dropdown>
-    <Button v-else type="primary" @click="onExport(menuItems[0])" :disabled="disabled">Export FIle</Button>
-  </div>
+    <Button v-else type="primary" @click="onExport(menuItems[0])" :disabled="disabled">{{exportFIle}}</Button>
+</div>
 </template>
