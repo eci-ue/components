@@ -55,10 +55,15 @@ const props = defineProps({
     type: Boolean,
     default: () => false
   },
-  //任务节点
+  //任务节点(小类)
   subType: {
     type: String,
     default: ""
+  },
+  //仅供按钮Download Target使用
+  isPm: {
+    type: Boolean,
+    default: () => false
   }
 });
 
@@ -136,8 +141,8 @@ const onDownload = function () {
   <div>
     <div>
       <!-- 操作按钮 -->
-      <Handle :id="id" :language="language" :type="type" :fileOperate="fileOperate" :task="task" :accept="accept"
-        :disabled="disabled" :selectedKeys="selectedKeys" :selected="selected" v-model:progress="uploadFileProgress"
+      <Handle :id="id" :isPm="isPm" :language="language" :type="type" :fileOperate="fileOperate" :task="task" :accept="accept"
+        :disabled="disabled" :selectedKeys="selectedKeys" :selected="selected" v-model:progress="uploadFileProgress" :subType="subType"
         @click="onReload" @download="onDownload"></Handle>
     </div>
 
