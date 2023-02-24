@@ -9,7 +9,7 @@
   "scripts": {
     "test": "vite --clearScreen --port 3000",
     "build": "vite build",
-    "version": "npm version patch",
+    "postbuild": "npm run types",
     "types": "node scripts/types.cjs",
     "lock": "npm i --package-lock-only",
     "postinstall": "npm shrinkwrap"
@@ -61,7 +61,6 @@
     "docs/",
     "dist/",
     "types/",
-    "style/",
     "LICENSE",
     "README.md",
     "package.json"
