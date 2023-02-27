@@ -102,7 +102,7 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
 </script>
 <template>
   <div>
-    <div class="flex w-full justify-between items-center mt-6 mb-4">
+    <div class="flex w-full justify-between items-center mb-4">
       <Space>
         <!-- Lqr 报告 -->
         <Lqr :id="id" :level="lqrLevel"/>
@@ -123,6 +123,7 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
         </Space>
       </slot>
     </div>
+    
     <Table class="count"
       bordered 
       :pagination="false" 
