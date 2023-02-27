@@ -20,6 +20,7 @@ export { default as Icon } from "./components/icon";
 export { default as DriveFile } from "./utils/drive";
 export { default as Drive, FileType,FileOperate } from "./components/drive";
 
+export * from "./components/project"
 export { ExportDownload, ExportRecord, ExportFile, WorkMode, ExportButton } from "./components/export";
 
 export { default as FileIcon } from "./components/icon/file.vue";

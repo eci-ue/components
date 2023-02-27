@@ -383,4 +383,43 @@ export default class Project {
     }
     return { params, callback } as any;
   }
+
+
+  /**
+   * 计算memoq penalty point对应级别接口
+   * @param point MemoQ penalty point
+   * @param fileId 双语文件ID
+   */
+  @tryError(0)
+  @$error()
+  @post("/:task/detail/culMemoqPoint")
+  @validate
+  culMemoqPoint(@required fileId: number | string, @required point: number): Promise<number> {
+    const data = { point, fileId };
+    return { data } as any;
+  }
+
+  /**
+   * 保存LQR文件及评价
+   */
+  @tryError(false)
+  @$error()
+  @$success("Saved Successfully")
+  @post("/:task/lqr/saveLqr")
+  @validate
+  saveLqr<D>(@required data: D): Promise<Boolean> {
+    return { data } as any;
+  }
+
+  /**
+   * 获取 Lqr 列表
+   * @param taskId 任务ID
+   * @returns 
+   */
+  @tryError(new PageResult())
+  @post("/:task/lqr/list")
+  lqrList(@required taskId: string | number): Promise<PageResult> {
+    const data = { taskId };
+    return { data } as any;
+  }
 }
