@@ -2,6 +2,7 @@ import path from "path";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import jsx from "@vitejs/plugin-vue-jsx";
+import WindCSS from "vite-plugin-windicss";
 
 export default defineConfig({
   resolve: {
@@ -20,7 +21,7 @@ export default defineConfig({
       scss: {}
     }
   },
-  plugins: [vue(), jsx()],
+  plugins: [vue(), jsx(), WindCSS()],
   build: {
     target: "modules",
     polyfillModulePreload: false,

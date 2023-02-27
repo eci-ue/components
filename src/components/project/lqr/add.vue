@@ -8,8 +8,9 @@
 import { api } from "../../../api";
 import { ref, reactive, toRaw } from "vue";
 import { UploadLqr } from "./type";
-import { useValidate } from "@ue/form";
+import { useValidate, Form as UeForm } from "@ue/form";
 import { rule as rules } from "@ue/utils";
+import { partnerItems } from "./util"
 
 import Icon from "../../icon";
 import Upload, { UploadSkin } from "../../upload";
@@ -26,6 +27,14 @@ const props = defineProps({
   taskId: {
     type: [Number, String],
     default: true,
+  },
+  /** 
+   * 是否为外部议员
+   */
+  partner: {
+    type: Boolean,
+    required: false,
+    default: () => false
   },
 });
 
@@ -75,7 +84,14 @@ defineExpose({ submit: onSubmit });
 
 <template>
   <div>
-    <div>
+    <div v-if="partner">
+      <p>感谢您抽出宝贵时间填写本质量评估表。本评估表旨在了解 QA 和审校人员对议员译文质量的反馈意见。您的反馈将帮助我们在客观真实评估议员能力和表现的同时，发现并解决潜在的质量问题。</p>
+      <p>请您客观填写以下评估表。</p>
+      <div class="border border-solid border-gray-300 p-4 rounded-sm">
+        <UeForm :items="partnerItems" :buttons="false"></UeForm>
+      </div>
+    </div>
+    <div v-else>
       <Form ref="formRef" layout="vertical" class="my-4" :model="formState">
         <FormItem label="" name="point" :rules="rules.text('Please Calculate Language Quality Level')">
           <div class="flex space-x-4">

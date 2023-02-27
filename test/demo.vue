@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { Alter, Operate, FileOperate, ExportButton, ExportDownload } from "../src/index";
+import { 
+  Alter, Operate, FileOperate, ExportButton, ExportDownload,
+  WorkMode, LqrAdd
+} from "../src/index";
+import { AddPartner } from "../src/components/project/lqr/partner"
+import * as model from "@ue/model";
 import { check } from "@ue/utils";
 import Upload from "../src/components/upload";
 
@@ -34,14 +39,16 @@ const accept = function(file: File): boolean {
 }
 
 onMounted(function() {
-  DriveFile("xxx", {
-    id: 2,
-    language: 7,
-    type: FileType.source,
-    task:true,
-    fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large,FileOperate.downTarget],
-    accept: accept
-  });
+  // DriveFile("xxx", {
+  //   id: 2,
+  //   language: 7,
+  //   type: FileType.source,
+  //   task:true,
+  //   fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large,FileOperate.downTarget],
+  //   accept: accept
+  // });
+
+  AddPartner();
 });
 
 </script>

@@ -8,6 +8,7 @@ scripts
 node_modules
 tsconfig.json
 vite.config.js
+tailwind.config.cjs
 types/shims-vue.d.ts
 pnpm-lock.yaml
 npm-shrinkwrap.json

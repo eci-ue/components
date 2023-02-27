@@ -30,7 +30,6 @@ export * as UploadUtil from "./utils/upload";
 export { default as FileCheckbox } from "./components/file/checkbox";
 export { LanguagePairs, LanguageGroup, LanguageData, LanguagePairsData } from "./components/language";
 
-export { default as FormFile } from "./components/form/file.vue";
-export { default as FormLanguagePairs } from "./components/form/language/pairs.vue";
+export * from "./components/form";
 
 export default lib;
