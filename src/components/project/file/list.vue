@@ -47,7 +47,7 @@ const props = defineProps({
   },
   /** 报告等级 */
   lqrLevel: {
-    type: Number,
+    type: [Number, String],
     required: false,
     default: () => 0
   },
