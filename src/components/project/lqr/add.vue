@@ -8,13 +8,11 @@
 import { api } from "../../../api";
 import { ref, reactive, toRaw } from "vue";
 import { UploadLqr } from "./type";
-import { useValidate, Form as UeForm } from "@ue/form";
+import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
-import { partnerItems } from "./util"
 
-import Icon from "../../icon";
 import Upload, { UploadSkin } from "../../upload";
-import { Form, FormItem, Button, RadioGroup, RadioButton, Tag, InputNumber } from "ant-design-vue";
+import { Form, FormItem, Button, RadioGroup, RadioButton, InputNumber } from "ant-design-vue";
 
 import type { UploadFile } from "../../upload/props";
 
@@ -27,14 +25,6 @@ const props = defineProps({
   taskId: {
     type: [Number, String],
     default: true,
-  },
-  /** 
-   * 是否为外部议员
-   */
-  partner: {
-    type: Boolean,
-    required: false,
-    default: () => false
   },
 });
 
@@ -84,18 +74,11 @@ defineExpose({ submit: onSubmit });
 
 <template>
   <div>
-    <div v-if="partner">
-      <p>感谢您抽出宝贵时间填写本质量评估表。本评估表旨在了解 QA 和审校人员对议员译文质量的反馈意见。您的反馈将帮助我们在客观真实评估议员能力和表现的同时，发现并解决潜在的质量问题。</p>
-      <p>请您客观填写以下评估表。</p>
-      <div class="border border-solid border-gray-300 p-4 rounded-sm">
-        <UeForm :items="partnerItems" :buttons="false"></UeForm>
-      </div>
-    </div>
-    <div v-else>
-      <Form ref="formRef" layout="vertical" class="my-4" :model="formState">
-        <FormItem label="" name="point" :rules="rules.text('Please Calculate Language Quality Level')">
-          <div class="flex space-x-4">
-            <InputNumber 
+    <Form ref="formRef" layout="vertical" class="my-4 w-full" :model="formState">
+      <FormItem label="" name="point" :rules="rules.text('Please Calculate Language Quality Level')">
+        <div class="flex w-full">
+          <div class="flex-1">
+            <InputNumber class="w-full"
               :min="1" 
               :precision="0" 
               v-model:value.trim="formState.point" 
@@ -103,35 +86,24 @@ defineExpose({ submit: onSubmit });
               placeholder="MemoQ penalty point" 
               @pressEnter="onCalculate" 
               @change="changePoint" />
-            <Button type="primary" :disabled="!formState.point" @click="onCalculate">calculate</Button>
           </div>
-        </FormItem>
+          <Button class="ml-4" type="primary" :disabled="!formState.point" @click="onCalculate">calculate</Button>
+        </div>
+      </FormItem>
 
-        <FormItem label="Language Quality Level:" name="level" :rules="rules.text('')">
-          <RadioGroup :value="formState.level" class="level-box">
-            <RadioButton :value="item.value" :key="item.value" v-for="item in LevelList">{{ item.name }}</RadioButton>
-          </RadioGroup>
-        </FormItem>
+      <FormItem label="Language Quality Level:" name="level" :rules="rules.text('')">
+        <RadioGroup :value="formState.level" class="level-box">
+          <RadioButton :value="item.value" :key="item.value" v-for="item in LevelList">{{ item.name }}</RadioButton>
+        </RadioGroup>
+      </FormItem>
 
-        <FormItem 
-          label="Language Quality Report:" 
-          name="reportPath"
-          :rules="rules.text('Please Upload Language Quality Report')">
-          
-          <Upload :drive="true" label="Upload" :multiple="true" :skin="UploadSkin.default" @success="onUpload"></Upload>
-
-          <div class="mt-2" v-if="formState.fileName">
-            <Tag class="border-none bg-eci-primary-light">
-              <div class="flex items-center space-x-1">
-                <Icon type="icon-link2" class="text-eci-deep-gray text-base"></Icon>
-                <a class="text-eci-info-color mx-1">{{ formState.fileName }}</a>
-                <Icon type="close-outlined" class="text-eci-black-light cursor-pointer" @click="onUpload()"></Icon>
-              </div>
-            </Tag>
-          </div>
-        </FormItem>
-      </Form>
-    </div>
+      <FormItem 
+        label="Language Quality Report:" 
+        name="reportPath"
+        :rules="rules.text('Please Upload Language Quality Report')">
+        <Upload class="w-full" :drive="true" label="Upload" :multiple="true" :skin="UploadSkin.input" @success="onUpload"></Upload>
+      </FormItem>
+    </Form>
     <div>
       <slot name="buttons"></slot>
     </div>

@@ -13,10 +13,10 @@
         "@fengqiaogang/dblist": "^0.3.98",
         "@fengqiaogang/safe-get": "^0.1.1",
         "@fengqiaogang/safe-set": "^0.1.2",
-        "@ue/form": "^0.1.1",
+        "@ue/form": "^0.1.2",
         "@ue/message": "^0.0.4",
         "@ue/model": "^0.1.2",
-        "@ue/utils": "^0.1.8",
+        "@ue/utils": "0.1.9-1",
         "ali-oss": "^6.17.1",
         "bignumber.js": "^9.1.1",
         "sass": "^1.58.1"
@@ -4459,8 +4459,7 @@
       "integrity": "sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ=="
     },
     "@ue/form": {
-      "version": "0.1.1",
-      "resolved": "http://npm.jslion.xyz/@ue/form/-/form-0.1.1.tgz",
+      "version": "http://npm.jslion.xyz/@ue/form/-/form-0.1.1.tgz",
       "integrity": "sha512-lhNTm8jAxAOHsXCWaq5Y+Rgh5ITQ3rgSSJ1WSoHbOSbxLYoo1jQEMMGHZarnkBbXh7AUUS2zLBj9krzVbVMSBg==",
       "requires": {
         "@fengqiaogang/safe-get": "^0.1.1",
@@ -4487,8 +4486,7 @@
       }
     },
     "@ue/utils": {
-      "version": "0.1.8",
-      "resolved": "http://npm.jslion.xyz/@ue/utils/-/utils-0.1.8.tgz",
+      "version": "http://npm.jslion.xyz/@ue/utils/-/utils-0.1.8.tgz",
       "integrity": "sha512-PIpQByLSPCMquyp7EtOnaci3wa14llsAIkrYTgU8lZY+MUwok3vMq3mQHZ3dZbZozs++N6SQHdBbDDM/226uXw==",
       "requires": {
         "@vueuse/core": "^9.12.0",

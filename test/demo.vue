@@ -4,10 +4,11 @@ import {
   Alter, Operate, FileOperate, ExportButton, ExportDownload,
   WorkMode, LqrAdd
 } from "../src/index";
-import { AddPartner } from "../src/components/project/lqr/partner"
+import { AddLqr } from "../src/components/project/lqr"
 import * as model from "@ue/model";
 import { check } from "@ue/utils";
 import Upload from "../src/components/upload";
+import { api } from "../src/api"
 
 import { Space } from "ant-design-vue";
 
@@ -48,7 +49,15 @@ onMounted(function() {
   //   accept: accept
   // });
 
-  AddPartner();
+  // AddLqr({
+  //   id: 1,
+  //   file: 1,
+  //   partner: true
+  // }, {
+  //   onOk: function(state: object) {
+  //     return api.project.saveLqr(state, true);
+  //   }
+  // });
 });
 
 </script>

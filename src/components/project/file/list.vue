@@ -11,19 +11,19 @@ import { PropType } from "vue";
 import Link from "../../link";
 import Icon from "../../icon";
 import safeGet from "@fengqiaogang/safe-get";
-import * as model from "@ue/model";
 
 import { headers, fileList } from "./util";
 
 import Rate from "./rate.vue";
 import Lqr from "../lqr/lqr.vue";
-import AddLqr from "../lqr/add.vue";
+import { AddLqr } from "../lqr/index";
 import { Table, Space, Button } from "ant-design-vue";
 import { ExportDownload, ExportButton } from "../../export";
 
-import type { Component } from "vue";
 import type { TaskFileItem, View } from "./type";
 import type { WorkMode } from "../../export";
+
+const $emit = defineEmits(["reload"]);
 
 const props = defineProps({
   list: {
@@ -83,21 +83,17 @@ const props = defineProps({
 const { selectedKeys, rowSelection } = table.useSelection();
 
 // 添加 Lqr
-const onAddLqr = async function(e: Event, data: TaskFileItem) {
-  const params = { 
-    taskId: props.id, // 任务ID
-    fileId: data.bilingualFileId, // 双语文件ID 
+const onAddLqr = function(e: Event, data: TaskFileItem) {
+  const option = { id: props.id, file: data.bilingualFileId, partner: props.partner };
+  const callback = async function(value: object) {
+    const status = await api.project.saveLqr(value, props.partner);
+    if (status) {
+      $emit("reload", e, data);
+    }
+    return status;
   };
-  const option = {
-    title: "Upload LQR",
-    width: 380,
-    okText: "Save",
-  };
-  const query = await model.confirm<Component>(AddLqr, option, params);
-  if (query) {
-    api.project.saveLqr(query);
-  }
-}
+  AddLqr(option, { onOk: callback });
+};
 
 </script>
 <template>
@@ -146,7 +142,7 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
         </template>
         <template v-else-if="column.key === 'lqr'">
           <!-- Lqr Link -->
-          <Link v-if="record.lqrVisitPath && 1 > 2" :to="record.lqrVisitPath" target="_blank">{{ text }}</Link>
+          <Link v-if="record.lqrVisitPath" :to="record.lqrVisitPath" target="_blank">{{ text }}</Link>
           <!-- Add Lqr Button -->
           <Button v-else type="link" class="text-sm" @click="onAddLqr($event, record)">
             <span class="flex items-center">

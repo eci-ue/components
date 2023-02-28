@@ -11,6 +11,10 @@ import Upload, { UploadSkin } from "../upload";
 import type { FormItemMeta } from "@ue/form/types/props";
 import type { UploadFile } from "../upload/props";
 
+interface Meta extends FormItemMeta {
+  transform?: (value: UploadFile) => any
+}
+
 const emit = defineEmits(["update:value", "change"]);
 
 const props = defineProps({
@@ -31,7 +35,7 @@ const props = defineProps({
   },
   meta: {
     required: false,
-    type: Object as PropType<FormItemMeta>,
+    type: Object as PropType<Meta>,
   }
 });
 
@@ -48,7 +52,10 @@ const placeholder = computed<string>(function() {
 });
 
 const onSuccess = function(value: UploadFile) {
-  const data = _.omit(value, ["file"]);
+  let data = value ? _.omit(value, ["file"]) : null;
+  if (value && props.meta?.transform && typeof props.meta.transform === "function") {
+    data = props.meta.transform(value);
+  }
   emit("update:value", data);
   emit("change", data);
 };

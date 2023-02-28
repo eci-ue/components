@@ -9,7 +9,7 @@ import { $error, $success } from "@ue/message";
 import { transformPairs } from "../utils";
 import safeGet from "@fengqiaogang/safe-get";
 import { FileType } from "../components/drive/props";
-import { post, get, tryError, validate, required } from "@js-lion/api";
+import { API, post, get, tryError, validate, required } from "@js-lion/api";
 
 
 const getType = function (type: FileType) {
@@ -401,14 +401,19 @@ export default class Project {
 
   /**
    * 保存LQR文件及评价
+   * @param data Lqr 数据
+   * @param partner 是否为外部议员提交
    */
   @tryError(false)
   @$error()
   @$success("Saved Successfully")
-  @post("/:task/lqr/saveLqr")
   @validate
-  saveLqr<D>(@required data: D): Promise<Boolean> {
-    return { data } as any;
+  saveLqr<D>(@required data: D, partner: boolean = false): Promise<Boolean> {
+    const api = new API();
+    if (partner) {
+      return api.post("/:task/partner/lqr/submit", data);
+    }
+    return api.post("/:task/lqr/saveLqr", data);
   }
 
   /**
