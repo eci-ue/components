@@ -32,7 +32,7 @@ export default defineComponent({
         const [value, ...array] = props.list;
         const attr = { ...value, showName: props.showName };
         if (_.size(array) > 0) {
-          const hover = createElement(Hover, { list: array });
+          const hover = createElement(Hover, { list: props.list });
           return createElement(Pairs, attr, hover);
         }
         return createElement(Pairs, attr);

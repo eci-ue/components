@@ -29,7 +29,7 @@ const style = {
           </div>
         </div>
       </template>
-      <Badge :count="_.size(list) + 1" :number-style="style" title=""></Badge>
+      <Badge :count="_.size(list)" :number-style="style" title=""></Badge>
     </Popover>
   </span>
 </template>
