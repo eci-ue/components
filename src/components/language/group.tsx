@@ -1,6 +1,6 @@
 import _ from "lodash-es";
 import Pairs from "./pairs.vue";
-import { Badge } from "ant-design-vue";
+import Hover from "./hover.vue";
 import { PropType, defineComponent, h as createElement } from "vue";
 
 import type { LanguagePairsData } from "./props";
@@ -32,9 +32,8 @@ export default defineComponent({
         const [value, ...array] = props.list;
         const attr = { ...value, showName: props.showName };
         if (_.size(array) > 0) {
-          const style = { backgroundColor: `#C9DFFC`, color: `#648ABC` };
-          const slot = (<Badge count={ _.size(array) + 1 } numberStyle={ style }></Badge>);
-          return createElement(Pairs, attr, slot);
+          const hover = createElement(Hover, { list: array });
+          return createElement(Pairs, attr, hover);
         }
         return createElement(Pairs, attr);
       }
