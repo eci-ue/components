@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.2.75",
+  "version": "0.2.76",
   "type": "module",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "@ue/form": "^0.1.2",
     "@ue/message": "^0.0.4",
     "@ue/model": "^0.1.2",
-    "@ue/utils": "0.2.0",
+    "@ue/utils": "0.2.1",
     "ali-oss": "^6.17.1",
     "bignumber.js": "^9.1.1",
     "sass": "^1.58.1"

@@ -7,7 +7,7 @@ import BigNumber from "bignumber.js";
 import FileIcon from "../icon/file.vue";
 import { ref, computed, PropType } from "vue";
 import { Button, Table } from "ant-design-vue";
-import { table, useState, date, downloadFile, fileDownloadUrl } from "@ue/utils";
+import { table, useState, date, downloadFile, fileDownloadUrl, fileSize } from "@ue/utils";
 
 import Handle from "./handle.vue";
 import { headers } from "./heder";
@@ -171,6 +171,9 @@ const onDownload = function () {
         </template>
         <template v-else-if="column.key === 'date'">
           <span>{{ date.format(text) }}</span>
+        </template>
+        <template v-else-if="column.key === 'size'">
+          <span>{{ fileSize(text) }}</span>
         </template>
         <template v-else-if="column.key === 'pairs'">
           <LanguageGroup :more="true" :show-name="false" :list="text"></LanguageGroup>

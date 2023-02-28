@@ -6,7 +6,7 @@ export const headers = function(isTask: boolean = false,subType:string): Columns
   const header = [
     { title: 'File', dataIndex: "fileName", key: "name" },
     { title: 'File Type', dataIndex: "fileExt", key: "type", width: 100 },
-    { title: 'Size', dataIndex: "fileSize", key: "fileSize", width: 100 },
+    { title: 'Size', dataIndex: "fileSize", key: "size", width: 100 },
     { title: 'Upload Time', dataIndex: "createTime", key: "date", width: 160 },
     { title: 'Upload Person', dataIndex: "createUser", key: "user", width: 140 },
   ]
