@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { Alter, Operate, FileOperate, ExportButton, ExportDownload } from "../src/index";
+import { 
+  Alter, Operate, FileOperate, ExportButton, ExportDownload,
+  WorkMode, LqrAdd
+} from "../src/index";
+import { AddLqr } from "../src/components/project/lqr"
+import * as model from "@ue/model";
 import { check } from "@ue/utils";
 import Upload from "../src/components/upload";
+import { api } from "../src/api"
 
 import { Space } from "ant-design-vue";
 
@@ -34,14 +40,24 @@ const accept = function(file: File): boolean {
 }
 
 onMounted(function() {
-  DriveFile("xxx", {
-    id: 2,
-    language: 7,
-    type: FileType.source,
-    task:true,
-    fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large,FileOperate.downTarget],
-    accept: accept
-  });
+  // DriveFile("xxx", {
+  //   id: 2,
+  //   language: 7,
+  //   type: FileType.source,
+  //   task:true,
+  //   fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large,FileOperate.downTarget],
+  //   accept: accept
+  // });
+
+  // AddLqr({
+  //   id: 1,
+  //   file: 1,
+  //   partner: true
+  // }, {
+  //   onOk: function(state: object) {
+  //     return api.project.saveLqr(state, true);
+  //   }
+  // });
 });
 
 </script>

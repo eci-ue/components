@@ -18,8 +18,9 @@ export { default as Time } from "./components/time";
 export { default as Icon } from "./components/icon";
 
 export { default as DriveFile } from "./utils/drive";
-export { default as Drive, FileType,FileOperate } from "./components/drive";
+export { default as Drive, FileType, FileOperate } from "./components/drive";
 
+export * from "./components/project"
 export { ExportDownload, ExportRecord, ExportFile, WorkMode, ExportButton } from "./components/export";
 
 export { default as FileIcon } from "./components/icon/file.vue";
@@ -29,7 +30,6 @@ export * as UploadUtil from "./utils/upload";
 export { default as FileCheckbox } from "./components/file/checkbox";
 export { LanguagePairs, LanguageGroup, LanguageData, LanguagePairsData } from "./components/language";
 
-export { default as FormFile } from "./components/form/file.vue";
-export { default as FormLanguagePairs } from "./components/form/language/pairs.vue";
+export * from "./components/form";
 
 export default lib;

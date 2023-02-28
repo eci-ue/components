@@ -9,14 +9,15 @@ export enum FileType {
 }
 
 export interface Props {
-  id: string | number;       // 项目ID或者任务ID
+  id: string | number;        // 项目ID或者任务ID
   language?: string | number; // 语言ID
-  type: FileType;            // 文件类型
-  task?: boolean;            // 是否为 task 任务
-  disabled?: boolean;         // 是否禁用
+  type: FileType;             // 文件类型
   fileOperate?: FileOperate[];    //操作按钮
-  subType?:string,      //任务节点
+  disabled?: boolean;             // 是否禁用
   accept?: string | ((value: File) => boolean);  // 文件过滤条件
+  task?: boolean;            // 是否为 task 任务
+  subType?:string;           // 任务节点(小类)
+  isPm?: boolean;            // 是否为 PM
   onChange?: (fileCount: number) => void
 }
 

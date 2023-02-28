@@ -51,7 +51,7 @@ export default defineComponent<Props>({
     return () => {
       if (props.to) {
         if (isHref(props.to)) {
-          return link(props.to);
+          return link(props.to, props.target);
         }
         const name = safeGet<string>(props.to, "name");
         const params = safeGet<RouteParamsRaw>(props.to, "params") || {};
@@ -61,7 +61,7 @@ export default defineComponent<Props>({
           const url = router.resolve({ name, params, query });
           return link(url.fullPath, target);
         }
-        return link({ name, params, query } as any);
+        return link({ name, params, query } as any, target);
       }
       return createElement(props.tag || "a", {}, slots);
     };

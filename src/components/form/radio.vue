@@ -1,0 +1,147 @@
+<script setup lang="ts">
+/**
+ * @file 动态表单 - 文本输入框
+ * @author svon.me@gmail.com
+ */
+
+import { computed, PropType } from "vue";
+import { FormRadioSkin as Skin } from "./type";
+
+import Icon from "../icon";
+import { RadioGroup, Radio, RadioButton, Space } from "ant-design-vue";
+
+import type { FormItemMeta } from "@ue/form/types/props";
+
+interface Item {
+  value: string | number;
+  name: string;
+  text?: string;
+  disabled?: boolean
+}
+
+interface Meta extends FormItemMeta{
+  skin: Skin;
+  list: Array<Item>
+}
+
+const emit = defineEmits(["update:value", "change"]);
+
+const props = defineProps({
+  value: {
+    type: String,
+    default: ""
+  },
+  disabled: {
+    type: Boolean,
+    default: () => false
+  },
+  // 动态表单，整个表单的数据
+  state: {
+    type: Object,
+    default: () => {
+      return {};
+    }
+  },
+  meta: {
+    required: false,
+    type: Object as PropType<Meta>,
+  }
+});
+
+const radioList = computed<Item[]>(function() {
+  if (props.meta?.list) {
+    return props.meta?.list;
+  }
+  return [];
+});
+const skin = computed<Skin>(function() {
+  if (props.meta?.skin) {
+    return props.meta?.skin;
+  }
+  return Skin.cover; // 默认效果
+});
+
+const text = computed<string>({
+  get: () => props.value,
+  set: (value: string) => {
+    emit("update:value", value);
+    emit("change", value);
+  }
+});
+
+</script>
+<template>
+  <div class="select-none" :class="`radio-${skin}`">
+    <RadioGroup class="w-full" v-model:value="text">
+      <template v-if="(skin === Skin.mark)">
+        <Space>
+          <template v-for="item in radioList" :key="item.key">
+            <RadioButton class="radio-button" :class="{'active': text === item.value}" :disabled="disabled" :value="item.value">
+              <span class="box">
+                <span></span>
+                <span class="mx-2 whitespace-nowrap">{{ item.name || item.text }}</span>
+                <Icon class="text-sm" type="check-outlined"></Icon>
+              </span>
+            </RadioButton>
+          </template>
+        </Space>
+      </template>
+      <template v-else>
+        <template v-for="item in radioList" :key="item.value">
+          <Radio :value="item.value" :disabled="disabled">{{ item.name || item.text }}</Radio>
+        </template>
+      </template>
+    </RadioGroup>
+  </div>
+</template>
+
+<style scoped lang="scss">
+%border {
+  @apply border-eci-normal-color border-solid border;
+}
+.ant-radio-wrapper {
+  @apply px-3;
+}
+.radio-contain {
+  .ant-radio-wrapper {
+    @apply py-1;
+    @extend %border;
+  }
+}
+.radio-cover {
+  @extend %border;
+  .ant-radio-group {
+    @apply flex justify-between;
+  }
+  .ant-radio-wrapper {
+    @apply flex-1 py-1 mr-0;
+    @apply border-l border-eci-normal-color border-solid;
+    @apply first:border-l-0;
+  }
+}
+
+
+.radio-mark .radio-button{
+  transition: all 0.3s;
+  @apply leading-9 h-9;
+  @apply px-2 lg:px-4;
+  ::v-deep(.ant-radio-button) {
+    @apply hidden;
+    & ~ * {
+      @apply block h-full w-fit;
+    }
+  }
+  .box {
+    @apply flex items-center justify-between h-full;
+  }
+  .eci-icon {
+    @apply invisible;
+  }
+  &.active {
+    @apply bg-eci-primary text-white;
+    .eci-icon {
+      @apply visible;
+    }
+  }
+}
+</style>
