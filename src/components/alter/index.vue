@@ -24,7 +24,7 @@ const props = defineProps({
 });
 // 获取项目的前置任务是否完成
 const { state } = useState.data(async function () {
-  return api.task.getPreTask(props.projectId);
+  return api.task.getPreTask(props.projectId)
 });
 const show = computed<Boolean>(() => {
   if (_.isBoolean(state.value)) {
@@ -32,7 +32,7 @@ const show = computed<Boolean>(() => {
     $emit("state", state.value)
     return state.value
   }
-  return false
+  return true
 
 })
 </script>
