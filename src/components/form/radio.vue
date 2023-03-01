@@ -84,7 +84,7 @@ const text = computed<string>({
       <template v-if="(skin === Skin.mark)">
         <Space>
           <template v-for="item in radioList" :key="item.key">
-            <RadioButton class="radio-button" :class="{'active': text === item.value}" :disabled="disabled" :value="item.value">
+            <RadioButton class="radio-button" :class="{'active': text === item.value}" :disabled="!!(disabled || item.disabled)" :value="item.value">
               <span class="box">
                 <span></span>
                 <span class="mx-2 whitespace-nowrap">{{ item.name || item.text }}</span>
@@ -96,7 +96,7 @@ const text = computed<string>({
       </template>
       <template v-else>
         <template v-for="item in radioList" :key="item.value">
-          <Radio :value="item.value" :disabled="disabled">{{ item.name || item.text }}</Radio>
+          <Radio :value="item.value" :disabled="!!(disabled || item.disabled)">{{ item.name || item.text }}</Radio>
         </template>
       </template>
     </RadioGroup>

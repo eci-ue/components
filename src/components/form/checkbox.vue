@@ -15,6 +15,7 @@ interface Item {
   value: string | number;
   name: string;
   text?: string;
+  disabled?: boolean
 }
 
 interface Meta extends FormItemMeta{
@@ -73,7 +74,7 @@ const text = computed<Array<string | number>>({
   <div :class="`checkbox-${skin}`">
     <CheckboxGroup class="w-full" v-model:value="text">
       <template v-for="item in checkboxList" :key="item.value">
-        <Checkbox :disabled="disabled" :value="item.value">{{ item.name || item.text }}</Checkbox>
+        <Checkbox :disabled="!!(disabled || item.disabled)" :value="item.value">{{ item.name || item.text }}</Checkbox>
       </template>
     </CheckboxGroup>
   </div>
