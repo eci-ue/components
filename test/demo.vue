@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { 
   Alter, Operate, FileOperate, ExportButton, ExportDownload,
-  WorkMode, LqrAdd
+  WorkMode, LqrAdd, FormRadio, FormRadioSkin
 } from "../src/index";
 import { AddLqr } from "../src/components/project/lqr"
 import * as model from "@ue/model";
@@ -38,6 +38,15 @@ const onSubmit = function() {
 const accept = function(file: File): boolean {
   return check.fileSuffix(file.name, "zip");
 }
+const radioValue = ref<string>();
+const radioMeta = {
+  skin: FormRadioSkin.cover,
+  list: [
+    { value: "A", name: "A" },
+    { value: "B", name: "B" },
+    { value: "C", name: "C" },
+  ]
+};
 
 onMounted(function() {
   // DriveFile("xxx", {
@@ -76,6 +85,9 @@ onMounted(function() {
         <ExportDownload :file="[1, 2]" :menu="[1, 2]"></ExportDownload>
         <ExportButton :id="1" :language="2"></ExportButton>
       </Space>
+    </div>
+    <div class="mt-5 p-5">
+      <FormRadio v-model:value="radioValue" :meta="radioMeta"></FormRadio>
     </div>
   </div>
 </template>

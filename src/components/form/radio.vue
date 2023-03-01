@@ -20,8 +20,9 @@ interface Item {
 }
 
 interface Meta extends FormItemMeta{
-  skin: Skin;
-  list: Array<Item>
+  color?: string;
+  skin?: Skin;
+  list?: Array<Item>
 }
 
 const emit = defineEmits(["update:value", "change"]);
@@ -45,7 +46,14 @@ const props = defineProps({
   meta: {
     required: false,
     type: Object as PropType<Meta>,
+  },
+});
+
+const radioPrimaryColor = computed<string>(function() {
+  if (props.meta?.color) {
+    return props.meta.color;
   }
+  return "#3c6cfe";
 });
 
 const radioList = computed<Item[]>(function() {
@@ -71,7 +79,7 @@ const text = computed<string>({
 
 </script>
 <template>
-  <div class="select-none" :class="`radio-${skin}`">
+  <div class="select-none" :class="`radio-${skin}`" :style="`--radio-color: ${radioPrimaryColor}`">
     <RadioGroup class="w-full" v-model:value="text">
       <template v-if="(skin === Skin.mark)">
         <Space>
@@ -97,7 +105,8 @@ const text = computed<string>({
 
 <style scoped lang="scss">
 %border {
-  @apply border-eci-normal-color border-solid border;
+  border-color: #d9d9d9;
+  @apply border border-solid;
 }
 .ant-radio-wrapper {
   @apply px-3;
@@ -114,8 +123,8 @@ const text = computed<string>({
     @apply flex justify-between;
   }
   .ant-radio-wrapper {
+    @extend %border;
     @apply flex-1 py-1 mr-0;
-    @apply border-l border-eci-normal-color border-solid;
     @apply first:border-l-0;
   }
 }
@@ -138,7 +147,8 @@ const text = computed<string>({
     @apply invisible;
   }
   &.active {
-    @apply bg-eci-primary text-white;
+    @apply text-white;
+    background-color: var(--radio-color);
     .eci-icon {
       @apply visible;
     }
