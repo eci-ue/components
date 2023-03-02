@@ -12,7 +12,10 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {},
+      colors: {
+        red: "#E57373",
+        yellow: "#FAAD14"
+      },
       spacing: {},
       height: {},
       minHeight: {},

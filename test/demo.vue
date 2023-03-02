@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { 
   Alter, Operate, FileOperate, ExportButton, ExportDownload,
-  WorkMode, LqrAdd, FormRadio, FormRadioSkin
+  WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery
 } from "../src/index";
 import { AddLqr } from "../src/components/project/lqr"
 import * as model from "@ue/model";
@@ -85,6 +85,9 @@ onMounted(function() {
         <ExportDownload :file="[1, 2]" :menu="[1, 2]"></ExportDownload>
         <ExportButton :id="1" :language="2"></ExportButton>
       </Space>
+    </div>
+    <div>
+      <TimeDelivery value="2023-03-03 15:00"></TimeDelivery>
     </div>
     <div class="mt-5 p-5">
       <FormRadio v-model:value="radioValue" :meta="radioMeta"></FormRadio>

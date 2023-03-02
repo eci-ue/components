@@ -14,6 +14,7 @@ export { default as Alter } from "./components/alter/index.vue";
 export { IconExpand } from "./components/icon/expand";
 export { default as Link } from "./components/link";
 export { default as Time } from "./components/time";
+export { default as TimeDelivery } from "./components/time/delivery.vue";
 
 export { default as Icon } from "./components/icon";
 

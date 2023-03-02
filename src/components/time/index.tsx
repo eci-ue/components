@@ -3,35 +3,21 @@
  * @author svon.me@gmail.com
  */
 
+import { main } from "./util";
 import * as _ from "lodash-es";
-import { date } from "@ue/utils";
+import type { date } from "@ue/utils";
 import { PropType, defineComponent } from "vue";
 
-interface Props {
-  value: date.DateValue;
-  date: boolean | undefined;
-  format: string;
-};
-
-const main = function(data: Props) {
-  if (data.value) {
-    if (data.value === "-" || data.value === "--") {
-      return "--";
-    }
-    return date.format(data.value, data.format ? data.format : data.date);
-  }
-  return "--";
-}
+import type { Props } from "./type";
 
 export default defineComponent({
-  name: "UiTime",
   props: {
     value: {
       default: "",
       type: [Number, String] as PropType<date.DateValue>
     },
     date: {
-      type: Boolean,
+      type: Boolean as PropType<boolean | undefined>,
       required: false,
       default () {
         return undefined;
@@ -42,7 +28,7 @@ export default defineComponent({
       default: ""
     }
   },
-  setup (props: Props) {
+  setup (props: Readonly<Props>) {
     return () => {
       const value = main(props);
       return (<span>{ value }</span>);

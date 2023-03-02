@@ -30,9 +30,10 @@
     "@ue/form": "^0.1.2",
     "@ue/message": "^0.0.4",
     "@ue/model": "^0.1.2",
-    "@ue/utils": "0.2.1",
+    "@ue/utils": "0.2.21",
     "ali-oss": "^6.17.1",
     "bignumber.js": "^9.1.1",
+    "dayjs": "^1.11.7",
     "sass": "^1.58.1"
   },
   "devDependencies": {
