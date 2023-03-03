@@ -1,15 +1,12 @@
 
 import * as _ from "lodash-es";
+import { FormTextarea, FormCheckbox } from "../form/index";
 import type { FormOptionValue, FormItemData } from "@ue/form/types/props";
-enum FormItemType {
-  textarea = "textarea",
-  checkbox = "checkbox"
-}
 
 export const ratePartner = function (): FormOptionValue {
   const proactiveCooperation: FormItemData = {
     key: "partner",
-    component: FormItemType.checkbox,
+    component: FormCheckbox,
     meta: {
       list: [{
         value: "proactiveCooperation",
@@ -34,7 +31,7 @@ export const ratePartner = function (): FormOptionValue {
   const comment: FormItemData = {
     key: "impression",
     lable: "My Impression",
-    component: FormItemType.textarea,
+    component: FormTextarea,
   };
   return [
     [proactiveCooperation, []], comment
@@ -45,7 +42,7 @@ export const interupt = function (): FormOptionValue {
     {
       key: "reason",
       lable: "Reason",
-      component: FormItemType.textarea,
+      component: FormTextarea,
     }
   ]
 }

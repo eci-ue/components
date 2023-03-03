@@ -93,7 +93,7 @@ const ratePartnerFn = async function (name: string) {
 //interrupts
 const interruptTask = async function (name: string) {
   form(interupt(), {
-    title: "Interupt",
+    title: "Interupt Reason",
     async onOk(data: any) {
       const status = await api.task.addInterupt(taskId.value, data.reason)
       if (status) {
