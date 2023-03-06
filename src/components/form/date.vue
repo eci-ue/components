@@ -5,7 +5,6 @@
  * @description 选择的时间，返回数据时已做时区处理
  */
 
-import * as I18n from "src/config/i18n";
 import { computed, PropType } from "vue";
 import { DatePicker } from "ant-design-vue";
 import { date } from "@ue/utils";
@@ -51,6 +50,21 @@ const text = computed<string>({
   }
 });
 
+//是否显示时间
+const showTime = computed<boolean>(function() {
+  if (props.meta?.showTime) {
+    return true;
+  }
+  return false
+});
+
+//时间格式
+const format = computed<date.Template>(function() {
+  if (props.meta?.showTime) {
+    return date.Template.value;
+  }
+  return date.Template.date
+});
 </script>
 <template>
   <div>
@@ -58,7 +72,9 @@ const text = computed<string>({
       v-model:value="text" 
       :disabled="disabled" 
       :allow-clear="true" 
-      :value-format="date.Template.date"
+      :show-time="showTime"
+      :format="format"
+      :value-format="format"
       :placeholder="placeholder">
     </DatePicker>
   </div>
