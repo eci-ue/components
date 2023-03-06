@@ -240,13 +240,13 @@ const disabledDel = computed(() => {
 <template>
   <div class="flex justify-between items-center">
     <Space>
-      <Button v-if="operateBtn.delete" :disabled="disabled || disabledDel" @click="onRemoveFile">Delete</Button>
+      <Button v-if="!disabled && operateBtn.delete" :disabled="disabledDel" @click="onRemoveFile">Delete</Button>
       <Button v-if="operateBtn.download" :disabled="selectedKeys.length < 1" @click="onDwonload">Download</Button>
-      <template v-if="operateBtn.language">
+      <template v-if="!disabled && operateBtn.language">
         <!-- 源文件模式下才启用该功能 -->
-        <Button :disabled="disabled || selectedKeys.length < 1" @click="onChangePairs">Language pairs</Button>
+        <Button :disabled="selectedKeys.length < 1" @click="onChangePairs">Language pairs</Button>
       </template>
-      <Upload v-if="operateBtn.upload" :accept="accept" :disabled="disabled" :show-progress="false" :multiple="true"
+      <Upload v-if="!disabled && operateBtn.upload" :accept="accept" :disabled="disabled" :show-progress="false" :multiple="true"
         v-model:progress="uploadFileProgress" @success="onUpload">
         <span class="ant-btn ant-btn-primary">Upload Files</span>
       </Upload>
@@ -256,6 +256,6 @@ const disabledDel = computed(() => {
 
       </span>
     </Space>
-    <Button v-if="operateBtn.large" type="link" :disabled="disabled" @click="onSelectDriveFile">Large files entry</Button>
+    <Button v-if="!disabled && operateBtn.large" type="link" @click="onSelectDriveFile">Large files entry</Button>
 </div>
 </template>
