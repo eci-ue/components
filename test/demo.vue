@@ -17,6 +17,8 @@ import DriveFile from "../src/utils/drive";
 import type { UploadFile } from "../src/components/upload/props";
 import { FileType} from "../src/components/drive/props";
 
+import { Download, DownloadType } from "../src";
+
 const state = ref(false)
 
 const optTypes = ref(["cancel","delete","interrupt","confirm","reject","hedge JAS","rate partner"])
@@ -83,7 +85,7 @@ onMounted(function() {
     <div>
       <Space>
         <ExportDownload :file="[1, 2]" :menu="[1, 2]"></ExportDownload>
-        <ExportButton :id="1" :language="2"></ExportButton>
+        <ExportButton :id="12" :language="1" :mode="WorkMode.Transdoc" :pm="false"></ExportButton>
       </Space>
     </div>
     <div>
@@ -91,6 +93,12 @@ onMounted(function() {
     </div>
     <div class="mt-5 p-5">
       <FormRadio v-model:value="radioValue" :meta="radioMeta"></FormRadio>
+    </div>
+    <div>
+      <Download 
+        :type="DownloadType.net" 
+        name="合同版本翻译.txt" 
+        value="C:\\ERP\\FileSYWeb\\2023\\20230303\\fd49cf99-4a7f-43e3-8528-794f16ee7c79" />
     </div>
   </div>
 </template>

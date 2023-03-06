@@ -113,15 +113,15 @@ defineExpose({ submit: onSubmit });
 <style lang="scss" scoped>
 .level-box {
   ::v-deep(.ant-radio-button-wrapper) {
-    @apply w-full mb-2 bg-eci-milk text-eci-deep-gray cursor-auto;
+    @apply w-full mb-2 bg-milk text-deep-gray cursor-auto;
   }
 
   ::v-deep(.ant-radio-button-wrapper:hover) {
-    @apply text-eci-deep-gray;
+    @apply text-deep-gray;
   }
 
   ::v-deep(.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)) {
-    @apply text-eci-black border-eci-info-color bg-eci-info-color bg-opacity-20 rounded-sm;
+    @apply text-black border-info-color bg-info-color bg-opacity-20 rounded-sm;
   }
 }
 </style>

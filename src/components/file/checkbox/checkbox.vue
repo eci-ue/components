@@ -195,7 +195,7 @@ onMounted(function() {
           <Icon type="icon-folder"></Icon>
         </div>
         <div class="text-center">
-          <Space class="text-sm text-eci-text-gray">
+          <Space class="text-sm text-text-gray">
             <span>Move to</span>
             <span>{{ getSelectedName() }}</span>
             <span>Folder</span>

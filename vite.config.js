@@ -43,6 +43,7 @@ export default defineConfig({
         /@ue\//i,
         /@fengqiaogang/,
         /@js-lion\/api/i,
+        /url-pattern/i,
       ],
       output: {
         inlineDynamicImports: true
@@ -59,11 +60,11 @@ export default defineConfig({
       port: 3000,
     },
     proxy: {
-      // "/tbms-task": {
-      //   target: "http://192.168.15.203:8091",
-      //   changeOrigin: true,
-      //   rewrite: (path) => path.replace(/^\/tbms-task/, '')
-      // },
+      "/fssyweb": {
+        target: "http://fssyweb.eciol-test.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/fssyweb/, '')
+      },
     }
   },
 })

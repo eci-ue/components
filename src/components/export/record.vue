@@ -5,11 +5,13 @@
  */
 import * as _ from "lodash-es";
 import { api } from "../../api";
+import { Table } from "ant-design-vue";
 import { PropType, onMounted } from "vue";
-import { WorkMode, headers, expanded } from "./props";
-import { downloadFile, fileDownloadUrl, PageResult, table, useState } from "@ue/utils";
+import Download from "../download/index.vue";
+import { DownloadType } from "../download/type";
+import { PageResult, table, useState } from "@ue/utils";
+import { WorkMode, headers, expanded, ExportStatus } from "./props";
 
-import Icon from "../icon";
 import Time from "../time";
 
 import type { Props, Data, ExportedFile } from "./props";
@@ -70,12 +72,21 @@ const onCancel = function(e: Event) {
   $emit("cancel", e);
 };
 
-// 判断导出任务是否已完成
-const isFinished = function(data: Data, status: number): boolean {
-  if (_.toInteger(status) === 1) {
-    return true;
+/**
+ * 判断导出任务是否已完成
+ * @param data 
+ * @param status
+ * @returns ExportStatus
+ */
+const isFinished = function(data: Data): ExportStatus {
+  if (props.mode === WorkMode.Transdoc) {
+    return _.toInteger(data.status) || ExportStatus.prepare; // 默认为未开始
   }
-  return false;
+  // MemoQ
+  if (_.toInteger(data.statusName) === 1) {
+    return ExportStatus.success;
+  }
+  return ExportStatus.inPogress;
 }
 
 // 数据兼容, 导出文件明细
@@ -96,15 +107,6 @@ const expandedList = function(data: Data) {
     })
   }
 }
-
-// 触发文件下载
-const onDownload = function(data: Data, path: string) {
-  if (props.mode === WorkMode.Memoq) {
-    if (isFinished(data, data.status)) {
-      downloadFile(fileDownloadUrl(path));
-    }
-  }
-};
 </script>
 
 <template>
@@ -112,19 +114,33 @@ const onDownload = function(data: Data, path: string) {
     <Table table-layout="auto" :loading="isLoading" :columns="headers(mode)" :data-source="state.results" :pagination="pagination">
       <template #bodyCell="{ column, record, text  }">
         <template v-if="column.key ==='operate'">
-          <span v-if="isFinished(record, text)" class="ininle-block cursor-pointer" @click="onDownload(record, text)">
-            <Icon class="text-sm" type="icon-a-download"></Icon>
-          </span>
-          <span v-else class="ininle-block cursor-no-drop">
-            <Icon class="text-sm" type="icon-a-download"></Icon>
-          </span>
+          <!-- 文件下载 -->
+          <template v-if="isFinished(record) && mode === WorkMode.Memoq">
+            <Download :value="text" :type="DownloadType.oss"></Download>
+          </template>
+          <template v-else-if="isFinished(record) && mode === WorkMode.Transdoc">
+            <Download :value="text" :name="record.fileName" :type="DownloadType.net"></Download>
+          </template>
+          <template v-else>
+            <Download></Download>
+          </template>
         </template>
         <template v-else-if="column.key ==='date'">
           <Time :value="text"></Time>
         </template>
         <template v-else-if="column.key ==='status'">
-          <span class="text-primary py-1 px-2 inline-block rounded-sm border border-solid border-primary bg-primary-500" v-if="isFinished(record, text)">Finished</span>
-          <span class="text-progress py-1 px-2 inline-block rounded-sm border border-solid border-progress bg-progress-500" v-els>In progress</span>
+          <template v-if="isFinished(record) === ExportStatus.prepare">
+            <span class="border-pending-500 bg-pending-200 text-pending py-1 px-2 inline-block rounded-sm border border-solid">Pending</span>
+          </template>
+          <template v-if="isFinished(record) === ExportStatus.inPogress">
+            <span class="border-progress-500 bg-progress-200 text-progress py-1 px-2 inline-block rounded-sm border border-solid">In progress</span>
+          </template>
+          <template v-if="isFinished(record) === ExportStatus.success">
+            <span class="border-primary-500 bg-primary-200 text-primary py-1 px-2 inline-block rounded-sm border border-solid">Finished</span>
+          </template>
+          <template v-if="isFinished(record) === ExportStatus.abnormal">
+            <span class="border-error-500 bg-error-200 text-error py-1 px-2 inline-block rounded-sm border border-solid">Rejected</span>
+          </template>
         </template>
       </template>
       <template #expandedRowRender="{ record }">

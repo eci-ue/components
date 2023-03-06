@@ -22,6 +22,8 @@ export { default as DriveFile } from "./utils/drive";
 export { default as Drive, FileType, FileOperate } from "./components/drive";
 
 export * from "./components/project"
+export { DownloadType } from "./components/download/type";
+export { default as Download } from "./components/download/index.vue";
 export { ExportDownload, ExportRecord, ExportFile, WorkMode, ExportButton } from "./components/export";
 
 export { default as FileIcon } from "./components/icon/file.vue";
