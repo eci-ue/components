@@ -28,10 +28,10 @@ const text = computed<string>(function() {
   }
   const value = _.lowerCase(temp);
   const list = value ? value.split(/\s+/g) : [];
-  if (list.length > 0) {
+  if (list.length > 1) {
     return list.map(_.upperFirst).join(" ");
   }
-  return "";
+  return temp;
 });
 
 </script>
