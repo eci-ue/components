@@ -1,6 +1,13 @@
-
+import { h as createElement } from "vue";
+import safeGet from "@fengqiaogang/safe-get";
 import type { ColumnsType } from "ant-design-vue/lib/table";
 
+export enum ExportStatus {
+  prepare = 0, // 未开始
+  inPogress,   // 进行中
+  success,     // 完成
+  abnormal,    // 异常
+}
 
 export enum WorkMode {
   Transdoc = "Transdoc",
@@ -9,10 +16,19 @@ export enum WorkMode {
 }
 
 export const headers = function(mode: WorkMode): ColumnsType<object> {
+  const operator = {
+    key: "operator", 
+    title: 'Operator',
+    "class": "whitespace-nowrap",
+    customRender(data: object) {
+      const text = safeGet<string>(data, "text");
+      return createElement("span", { "class": "whitespace-nowrap" }, text);
+    }
+  }
   if (mode === WorkMode.Memoq) {
     return [
       { title: 'Task Name', dataIndex: "taskName", key: "name" },
-      { title: 'Operator', dataIndex: "createUser", key: "operator" },
+      { dataIndex: "createUser", ...operator },
       { title: 'Apply Time', dataIndex: "applyTime", key: "date" },
       { title: 'Finished Time', dataIndex: "finishTime", key: "date" },
       { title: 'Status', dataIndex: "status", key: "status" },
@@ -21,7 +37,7 @@ export const headers = function(mode: WorkMode): ColumnsType<object> {
   }
   return [
     { title: 'Task Name', dataIndex: "fileName", key: "name" },
-    { title: 'Operator', dataIndex: "applyBy", key: "operator" },
+    { dataIndex: "applyBy", ...operator  },
     { title: 'Apply Time', dataIndex: "applyOn", key: "date" },
     { title: 'Finished Time', dataIndex: "finishOn", key: "date" },
     { title: 'Status', dataIndex: "statusName", key: "status" },
@@ -41,6 +57,10 @@ export interface ExportedFile {
 
 export interface Data {
   status: number;
+  statusName: string;
+  fileName: string;    // 文件名称
+  storagePath: string; // 文件地址
+
   fileNames: string; // memoq 导出文件列表
   exportedFiles: ExportedFile[]; // TransDoc 导出文件列表
   [key: string]: any;

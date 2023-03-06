@@ -130,7 +130,7 @@ const onAddLqr = function(e: Event, data: TaskFileItem) {
       <template #bodyCell="{ column, record, text }">
         <template v-if="column.key === 'name'">
           <Space>
-            <Icon type="link-outlined" class="text-eci-deep-gray"></Icon>
+            <Icon type="link-outlined" class="text-deep-gray"></Icon>
             <span>{{ text }}</span>
           </Space>
         </template>

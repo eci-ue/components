@@ -7,6 +7,7 @@ import BigNumber from "bignumber.js";
 import FileIcon from "../icon/file.vue";
 import { ref, computed, PropType } from "vue";
 import { Button, Table } from "ant-design-vue";
+import Time from "../time";
 import { table, useState, date, downloadFile, fileDownloadUrl, fileSize } from "@ue/utils";
 
 import Handle from "./handle.vue";
@@ -170,7 +171,7 @@ const onDownload = function () {
           <span>{{ _.toUpper(text) || "--" }}</span>
         </template>
         <template v-else-if="column.key === 'date'">
-          <span>{{ date.format(text) }}</span>
+          <Time :value="text"></Time>
         </template>
         <template v-else-if="column.key === 'size'">
           <span>{{ fileSize(text) }}</span>

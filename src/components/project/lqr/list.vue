@@ -37,11 +37,11 @@ const { state } = useState.list(api.project.lqrList(props.id));
           <template v-if="column.key === 'modify'">
             <Space :size="4" v-if="text > 0">
               <span class="inline-block min-w-10">+{{text}}%</span>
-              <Icon class="text-eci-success-color" type="caret-up-outlined"></Icon>
+              <Icon class="text-success-color" type="caret-up-outlined"></Icon>
             </Space>
             <Space :size="4" v-else>
               <span class="inline-block min-w-10">{{text}}%</span>
-              <Icon class="text-eci-error-color" type="caret-down-outlined"></Icon>
+              <Icon class="text-error-color" type="caret-down-outlined"></Icon>
             </Space>
           </template>
         </template>

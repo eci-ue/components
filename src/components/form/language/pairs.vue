@@ -47,7 +47,7 @@ const checkboxList = computed<LanguagePairsData[]>(function() {
 });
 
 const border = computed<string[]>(function() {
-  return props.meta?.border ? ["p-4", "border", "border-solid", "border-eci-normal-color"] : [];
+  return props.meta?.border ? ["p-4", "border", "border-solid", "border-normal-color"] : [];
 });
 
 const makeKey = function(data: LanguagePairsData) {

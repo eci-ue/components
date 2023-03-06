@@ -76,7 +76,6 @@ const status = computed<boolean>(function() {
 });
 
 const onClick = async function() {
-  
   if (props.mode) {
     ExportFile({
       id: props.id,

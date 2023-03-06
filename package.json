@@ -34,7 +34,8 @@
     "ali-oss": "^6.17.1",
     "bignumber.js": "^9.1.1",
     "dayjs": "^1.11.7",
-    "sass": "^1.58.1"
+    "sass": "^1.58.1",
+    "url-pattern": "^1.0.3"
   },
   "devDependencies": {
     "@ant-design/icons-vue": "^6.1.0",

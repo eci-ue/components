@@ -8,7 +8,8 @@ const API_Server = {
   drive: "/tbms-drive", // 网盘
   cat: "/tbms-cat",     // CAT
   project: "/tbms-project", // 项目
-  task: "/tbms-task" // task
+  task: "/tbms-task", // task
+  signalr: "http://fssyweb.eciol-test.com/signalr"
 }
 // 处理请求前的数据
 const requestCallback = function(req: AxiosRequestConfig): AxiosRequestConfig {
