@@ -130,6 +130,9 @@ const onChange = function (e: Event) {
   return false;
 }
 
+const onflush = function() {
+  fileList.value = [];
+}
 
 const onSubmit = function () {
   visible.value = false;
@@ -147,6 +150,8 @@ const onSubmit = function () {
 const onCancel = function () {
   return onSubmit();
 }
+
+defineExpose([onflush, onSubmit]);
 
 </script>
 <template>

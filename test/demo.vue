@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { 
   Alter, Operate, FileOperate, ExportButton, ExportDownload,
-  WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery
+  WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery, Enum
 } from "../src/index";
 import { AddLqr } from "../src/components/project/lqr"
 import * as model from "@ue/model";
@@ -71,10 +71,17 @@ onMounted(function() {
   // });
 });
 
+enum TestEnum {
+  aBcD = 1,
+  aBcE,
+  abcF
+}
+
 </script>
 <template>
   <div>
-    <div>
+    <Enum value="1" :data="TestEnum"></Enum>
+    <!-- <div>
       <Operate :item="item" :optTypes="optTypes"></Operate>
       <Alter v-model:value="state" :project-id="1" @state="stateVal"></Alter>
     </div>
@@ -99,6 +106,6 @@ onMounted(function() {
         :type="DownloadType.net" 
         name="合同版本翻译.txt" 
         value="C:\\ERP\\FileSYWeb\\2023\\20230303\\fd49cf99-4a7f-43e3-8528-794f16ee7c79" />
-    </div>
+    </div> -->
   </div>
 </template>
