@@ -234,7 +234,7 @@ const operateBtn = computed(() => {
 
 const disabledDel = computed(() => {
   if (props.task) {
-    //解析的双语文件类型不允许删除
+    //解析的双语文件类型不允许删除和下载
     return _.size(props.selected.filter(item => item.type != 5)) < 1
   }
   return props.selectedKeys.length < 1
@@ -245,7 +245,7 @@ const disabledDel = computed(() => {
   <div class="flex justify-between items-center">
     <Space>
       <Button v-if="!disabled && operateBtn.delete" :disabled="disabledDel" @click="onRemoveFile">Delete</Button>
-      <Button v-if="operateBtn.download" :disabled="selectedKeys.length < 1" @click="onDwonload">Download</Button>
+      <Button v-if="operateBtn.download" :disabled="disabledDel" @click="onDwonload">Download</Button>
       <template v-if="!disabled && operateBtn.language">
         <!-- 源文件模式下才启用该功能 -->
         <Button :disabled="selectedKeys.length < 1" @click="onChangePairs">Language pairs</Button>
