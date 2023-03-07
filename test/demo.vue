@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { 
-  Alter, Operate, FileOperate, ExportButton, ExportDownload,
+  Alter, Operate, FileOperate, ExportButton, ExportDownload, FormCheckbox,
   WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery, Enum
 } from "../src/index";
 import { AddLqr } from "../src/components/project/lqr"
@@ -77,10 +77,23 @@ enum TestEnum {
   abcF
 }
 
+const checkboxMeta: any = {
+  list: [
+    { value: "1", name: "A" },
+    { value: "2", name: "B" },
+    { value: "3", name: "C" },
+  ]
+};
+
 </script>
 <template>
   <div>
     <Enum value="1" :data="TestEnum"></Enum>
+
+    <br/>
+
+    <FormCheckbox :meta="checkboxMeta"></FormCheckbox>
+
     <!-- <div>
       <Operate :item="item" :optTypes="optTypes"></Operate>
       <Alter v-model:value="state" :project-id="1" @state="stateVal"></Alter>

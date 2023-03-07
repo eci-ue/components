@@ -83,6 +83,7 @@ const text = computed<Array<string | number>>({
 <style scoped lang="scss">
 %border {
   @apply border-border-color border-solid border;
+  
 }
 .checkbox-contain, .checkbox-vertical {
   .ant-checkbox-wrapper {
