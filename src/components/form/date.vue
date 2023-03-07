@@ -9,6 +9,7 @@ import { computed, PropType } from "vue";
 import { DatePicker } from "ant-design-vue";
 import { date } from "@ue/utils";
 import type { FormItemMeta } from "@ue/form/types/props";
+import dayjs, { Dayjs } from 'dayjs';
 
 const emit = defineEmits(["update:value", "change"]);
 
@@ -34,7 +35,7 @@ const props = defineProps({
   }
 });
 
-const placeholder = computed<string>(function() {
+const placeholder = computed<string>(function () {
   if (props.meta?.placeholder) {
     return props.meta.placeholder;
   }
@@ -51,7 +52,7 @@ const text = computed<string>({
 });
 
 //是否显示时间
-const showTime = computed<boolean>(function() {
+const showTime = computed<boolean>(function () {
   if (props.meta?.showTime) {
     return true;
   }
@@ -59,23 +60,26 @@ const showTime = computed<boolean>(function() {
 });
 
 //时间格式
-const format = computed<date.Template>(function() {
+const format = computed<date.Template>(function () {
   if (props.meta?.showTime) {
     return date.Template.value;
   }
   return date.Template.date
 });
+const disabledDate = (current: Dayjs) => {
+  // Can not select days before today
+  if (props.meta?.disabledBrfore) {
+    return current && current <= dayjs().startOf('day');
+  }
+  return false;
+};
+
 </script>
 <template>
   <div>
-    <DatePicker class="w-full"
-      v-model:value="text" 
-      :disabled="disabled" 
-      :allow-clear="true" 
-      :show-time="showTime"
-      :format="format"
-      :value-format="format"
+    <DatePicker class="w-full" v-model:value="text" :disabled="disabled" :allow-clear="true" :show-time="showTime"
+      :format="format" :value-format="format" :disabled-date="disabledDate"
       :placeholder="placeholder">
     </DatePicker>
-  </div>
+</div>
 </template>
