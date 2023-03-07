@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.2.78-3",
+  "version": "0.2.78-4",
   "type": "module",
   "types": "types/index.d.ts",
   "license": "MIT",

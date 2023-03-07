@@ -26,7 +26,7 @@ const props = defineProps({
 const { state } = useState.data(async function () {
   return api.task.getPreTask(props.projectId)
 });
-const show = computed<Boolean>(() => {
+const disabled = computed<Boolean>(() => {
   if (_.isBoolean(state.value)) {
     $emit("update:value", state.value)
     $emit("state", state.value)
@@ -38,5 +38,5 @@ const show = computed<Boolean>(() => {
 </script>
 
 <template>
-  <Alert v-if="!show" :message="engineeringTip" type="warning" />
+  <Alert v-show="!disabled" :message="engineeringTip" type="warning" />
 </template>
