@@ -4,7 +4,7 @@
  * @author svon.me@gmail.com
  */
 
- import * as _ from "lodash-es";
+import * as _ from "lodash-es";
 import { computed, PropType } from "vue";
 import { CheckboxGroup, Checkbox } from "ant-design-vue";
 import { FormCheckboxSkin as Skin } from "./type";
@@ -82,7 +82,7 @@ const text = computed<Array<string | number>>({
 
 <style scoped lang="scss">
 %border {
-  @apply border-normal-color border-solid border;
+  @apply border-border-color border-solid border;
 }
 .checkbox-contain, .checkbox-vertical {
   .ant-checkbox-wrapper {
@@ -97,7 +97,7 @@ const text = computed<Array<string | number>>({
   }
   .ant-checkbox-wrapper {
     @apply flex-1 py-1 mr-0 px-3;
-    @apply border-l border-normal-color border-solid;
+    @apply border-l border-border-color border-solid;
     @apply first:border-l-0;
   }
 }
