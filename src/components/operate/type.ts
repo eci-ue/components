@@ -12,8 +12,9 @@ export enum DoOperation {
   hedge = "hedge JAS",
   cancel = "cancel",
   partner = "rate partner",
+  submit = "submit",
+  instruction = "instruction",
 }
-
 
 export class ResourceType {
   resourceId!: string | number; //资源id
@@ -33,11 +34,33 @@ export interface RatePartner extends ResourceType {
 
 export enum IconType {
   delete = "delete-outlined",
-  interupt = "file-sync-outlined"
+  interupt = "file-sync-outlined",
+  submit = "send-outlined",
+  instruction = "schedule-outlined"
 }
 
 export interface itemType extends ResourceType {
   taskId: string | number,
   id?: string | number,
+  status?:number,
+  commentRequest?:string,
+  workInstructionList?:string[],
+  attachments?:FileType[],
   [key: string]: any
+}
+
+export class FileType {
+  fileName?: string = ""; // 文件名称
+  fileType?: string = ""; // 文件类型（文件后缀）
+  size?: number;     // 文件大小
+  storagePath?: string = ""; // 文件路径
+}
+export class SubmitType{
+  rate:number=0;
+  taskId!:number;
+  attachment!:FileType[]
+}
+export enum Status {
+  inProgress=2,//2:资源确认接受任务，正在完成
+  interupted,//3:pm发出中断，任务处于中断中
 }

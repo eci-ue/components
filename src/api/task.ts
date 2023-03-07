@@ -6,6 +6,7 @@
 import * as _ from "lodash-es";
 import { $error, $success } from "@ue/message";
 import { validate, required, get, post, tryError } from "@js-lion/api";
+import { $debounce } from "@ue/utils";
 
 export default class Task {
   /**
@@ -102,4 +103,28 @@ export default class Task {
     return { data } as any;
   }
 
+  //议员 页面-任务提交-中断提交按钮接口
+  @tryError(false)
+  @$error()
+  @$success("submit Successfully!")
+  @post("/:task/task/interrupt/submit")
+  @validate
+  interruptSubmit<D>(@required data: D): Promise<boolean> {
+    return { data } as any;
+  }
+
+   /**
+ * 页面-任务提交-详情页submit按钮接口
+ * @param taskId 任务ID
+ */
+   @$debounce()
+   @tryError(false)
+   @$error()
+   @$success("submit Successfully!")
+   @post("/:task/task/submit/:taskId")
+   @validate
+   submit(@required taskId: string | number): Promise<boolean> {
+     const params = { taskId };
+     return { params } as any;
+   }
 }

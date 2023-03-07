@@ -3,12 +3,14 @@ import Icon from "../icon";
 import * as _ from "lodash-es";
 import { api } from "../../api";
 import { form } from "@ue/form";
+import { confirm as modalComfirm } from "@ue/model";
 import { ratePartner, interupt } from "./util";
 import { computed, reactive, PropType } from "vue";
 import * as message from "@ue/message";
 import { Menu, MenuItem, Button, Space, Modal } from "ant-design-vue";
-import { DoOperation, IconType, Skin } from "./type";
+import { DoOperation, IconType, Skin, Status } from "./type";
 import type { RatePartner, itemType } from "./type";
+import { lazyload } from "@ue/utils";
 
 const props = defineProps({
   item: {
@@ -33,7 +35,7 @@ const props = defineProps({
 const emit = defineEmits(["reload"]);
 
 //刷新列表
-const onReload = function (name: string) {
+const onReload = function (name?: string) {
   emit("reload", name);
 }
 
@@ -53,6 +55,10 @@ const handleClick = async (name: string) => {
     cancelTask(name)
   } else if (name == DoOperation.reject) {
     rejectTask(name)
+  } else if (name == DoOperation.submit) {
+    onSubmit(name)
+  } else if (name == DoOperation.instruction) {
+    onInstruction(name)
   }
 };
 
@@ -145,9 +151,48 @@ const onHedge = async function (name: string) {
     }
   }
 }
+//提交
+const onSubmit = async function (name: string) {
+  const Submitwork = lazyload(() => import("./work.vue"));
+  if (props.item.status == Status.inProgress) {
+    const isOk = await message.confirm('Are you sure submit this task.');
+    if (isOk) {
+      try {
+        const status = await api.task.submit(taskId.value);
+        if (status) {
+          onReload(name)
+        }
+      } catch (error) { }
+    }
+  } else {
+    modalComfirm(Submitwork, {
+      title: "Submit Work",
+      width: 408,
+      onOk(flag) {
+        if (flag) {
+          onReload(name)
+        }
+        return flag
+      }
+    }, { taskId: taskId.value });
+  }
+}
+// 中断信息
+const onInstruction = function (name: string) {
+const Instruction = lazyload(() => import("./Instruction.vue"));
+  const data = {
+    commentRequest: props.item.commentRequest,
+    workInstructionList: props.item.workInstructionList,
+    attachments: props.item.attachments,
+  }
+  modalComfirm(Instruction, "Task Instruction", { data });
+}
 
-const typeIcon = function (name: string) {
-  return (IconType as any)[name]
+const typeButton = function (name: string) {
+  return {
+    icon:IconType[name],
+    type:name == DoOperation.submit?"primary":"default"
+  } as any
 }
 </script>
 
@@ -157,12 +202,12 @@ const typeIcon = function (name: string) {
       <MenuItem @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ _.upperFirst(name) }} </MenuItem>
     </Menu>
     <Space size="large" v-else>
-      <Button @click="handleClick(name)" :key="name" v-for="name in optTypes">
+      <Button @click="handleClick(name)" :type="typeButton(name).type" :key="name" v-for="name in optTypes">
         <template #icon>
-          <Icon class="text-base" :type="typeIcon(name)"></Icon>
+          <Icon class="text-base" :type="typeButton(name).icon"></Icon>
         </template>
         <span>{{ _.upperFirst(name) }}</span>
       </Button>
     </Space>
-  </div>
+</div>
 </template>

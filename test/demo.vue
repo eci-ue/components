@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { 
   Alter, Operate, FileOperate, ExportButton, ExportDownload, FormCheckbox,
-  WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery, Enum
+  WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery, Enum,FormDate
 } from "../src/index";
 import { AddLqr } from "../src/components/project/lqr"
 import * as model from "@ue/model";
@@ -21,7 +21,7 @@ import { Download, DownloadType } from "../src";
 
 const state = ref(false)
 
-const optTypes = ref(["cancel","delete","interrupt","confirm","reject","hedge JAS","rate partner"])
+const optTypes = ref(["cancel","delete","interrupt","confirm","reject","hedge JAS","rate partner","submit","instruction"])
 const item = ref({taskId:2,resourceId:1,resourceName:"资源"})
 
 
@@ -48,6 +48,11 @@ const radioMeta = {
     { value: "B", name: "B" },
     { value: "C", name: "C" },
   ]
+};
+const DateValue = ref<string>();
+const dateMeta = {
+  showTime:true,
+  disabledBrfore:true
 };
 
 onMounted(function() {
@@ -93,9 +98,9 @@ const checkboxMeta: any = {
     <br/>
 
     <FormCheckbox :meta="checkboxMeta"></FormCheckbox>
-
-    <!-- <div>
       <Operate :item="item" :optTypes="optTypes"></Operate>
+      <FormDate v-model:value="DateValue" :meta="dateMeta"></FormDate>
+    <!-- <div>
       <Alter v-model:value="state" :project-id="1" @state="stateVal"></Alter>
     </div>
     <br/>
