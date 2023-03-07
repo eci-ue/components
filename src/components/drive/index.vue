@@ -174,7 +174,9 @@ const onDownload = function () {
           <Time :value="text"></Time>
         </template>
         <template v-else-if="column.key === 'size'">
-          <span>{{ fileSize(text) }}</span>
+          <!-- type：5是双语文件且没有size -->
+          <span v-if="record.type != 5">{{ fileSize(text) }}</span>
+          <span v-else>--</span>
         </template>
         <template v-else-if="column.key === 'pairs'">
           <LanguageGroup :more="true" :show-name="false" :list="text"></LanguageGroup>
