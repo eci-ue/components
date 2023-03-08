@@ -101,7 +101,7 @@ defineExpose({ submit: onSubmit });
         label="Language Quality Report:" 
         name="reportPath"
         :rules="rules.text('Please Upload Language Quality Report')">
-        <Upload class="w-full" :drive="true" label="Upload" :multiple="true" :skin="UploadSkin.input" @success="onUpload"></Upload>
+        <Upload class="w-full" :name="formState.fileName" :drive="true" label="Upload" :multiple="true" :skin="UploadSkin.input" @success="onUpload"></Upload>
       </FormItem>
     </Form>
     <div>

@@ -113,18 +113,27 @@ export default class Task {
     return { data } as any;
   }
 
-   /**
- * 页面-任务提交-详情页submit按钮接口
- * @param taskId 任务ID
- */
-   @$debounce()
-   @tryError(false)
-   @$error()
-   @$success("submit Successfully!")
-   @post("/:task/task/submit/:taskId")
-   @validate
-   submit(@required taskId: string | number): Promise<boolean> {
-     const params = { taskId };
-     return { params } as any;
-   }
+  /**
+* 页面-任务提交-详情页submit按钮接口
+* @param taskId 任务ID
+*/
+  @$debounce()
+  @tryError(false)
+  @$error()
+  @$success("submit Successfully!")
+  @post("/:task/task/submit/:taskId")
+  @validate
+  submit(@required taskId: string | number): Promise<boolean> {
+    const params = { taskId };
+    return { params } as any;
+  }
+
+  //页面-获取中断提交的内容
+  @tryError(false)
+  @get("/:task/task/interrupt/submit/info/:taskId")
+  @validate
+  interruptInfo<T>(@required taskId: string | number): Promise<T> {
+    const params = { taskId };
+    return { params } as any;
+  }
 }
