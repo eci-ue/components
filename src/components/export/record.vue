@@ -79,14 +79,18 @@ const onCancel = function(e: Event) {
  * @returns ExportStatus
  */
 const isFinished = function(data: Data): ExportStatus {
+  const status = _.toInteger(data.status);
   if (props.mode === WorkMode.Transdoc) {
-    return _.toInteger(data.status) || ExportStatus.prepare; // 默认为未开始
+    return status || ExportStatus.prepare; // 默认为未开始
   }
   // MemoQ
-  if (_.toInteger(data.statusName) === 1) {
-    return ExportStatus.success;
+  if (status === 1) {
+    return ExportStatus.success;  // 完成
   }
-  return ExportStatus.inPogress;
+  if (status === 2) {
+    return ExportStatus.abnormal; // 失败
+  }
+  return ExportStatus.inPogress;  // 进行中
 }
 
 // 数据兼容, 导出文件明细

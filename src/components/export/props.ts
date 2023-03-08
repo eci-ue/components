@@ -57,7 +57,6 @@ export interface ExportedFile {
 
 export interface Data {
   status: number;
-  statusName: string;
   fileName: string;    // 文件名称
   storagePath: string; // 文件地址
 
