@@ -146,16 +146,22 @@ const onAddLqr = function(e: Event, data: TaskFileItem) {
           <Rate :data="safeGet(record, column.dataIndex)" :mode="mode"></Rate>
         </template>
         <template v-else-if="column.key === 'lqr'">
-          <!-- Lqr Link -->
-          <Link v-if="record.lqrVisitPath" :to="fileDownloadUrl(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
-          <!-- Add Lqr Button -->
-          <Button v-else-if="subType && _.toUpper(subType) === 'E'" type="link" class="text-sm" @click="onAddLqr($event, record)">
-            <span class="flex items-center">
-              <Icon class="flex mr-1" type="icon-a-add"></Icon>
-              <span>Add Lqr</span>
-              <span class="count-item ml-0.5"></span>
-            </span>
-          </Button>
+          <template v-if="pm">
+            <!-- PM 端 Lqr Link -->
+            <Link v-if="record.lqrVisitPath" :to="fileDownloadUrl(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
+          </template>
+          <template v-else>
+            <!-- Lqr Link -->
+            <Link v-if="record.lqrVisitPath" :to="fileDownloadUrl(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
+            <!-- Add Lqr Button -->
+            <Button v-else-if="subType && _.toUpper(subType) === 'E'" type="link" class="text-sm" @click="onAddLqr($event, record)">
+              <span class="flex items-center">
+                <Icon class="flex mr-1" type="icon-a-add"></Icon>
+                <span>Add Lqr</span>
+                <span class="count-item ml-0.5"></span>
+              </span>
+            </Button>
+          </template>
         </template>
         <template v-else>
           <span>{{ text || "--" }}</span>
