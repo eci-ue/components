@@ -100,6 +100,16 @@ const onAddLqr = function(e: Event, data: TaskFileItem) {
   AddLqr(option, { onOk: callback });
 };
 
+const lqrLink = function(value: string): string {
+  if (/^http/.test(value)) {
+    return value;
+  }
+  if (/^\/\//.test(value)) {
+    return value;
+  }
+  return fileDownloadUrl(value);
+}
+
 </script>
 <template>
   <div>
@@ -134,7 +144,11 @@ const onAddLqr = function(e: Event, data: TaskFileItem) {
 
       <template #bodyCell="{ column, record, text }">
         <template v-if="column.key === 'name'">
-          <Space>
+          <Link v-if="record.catUrl && !pm" :to="record.catUrl" target="_blank">
+            <Icon type="link-outlined" class="text-deep-gray"></Icon>
+            <span>{{ text }}</span>
+          </Link>
+          <Space v-else>
             <Icon type="link-outlined" class="text-deep-gray"></Icon>
             <span>{{ text }}</span>
           </Space>
@@ -148,11 +162,11 @@ const onAddLqr = function(e: Event, data: TaskFileItem) {
         <template v-else-if="column.key === 'lqr'">
           <template v-if="pm">
             <!-- PM 端 Lqr Link -->
-            <Link v-if="record.lqrVisitPath" :to="fileDownloadUrl(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
+            <Link v-if="record.lqrVisitPath" :to="lqrLink(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
           </template>
           <template v-else>
             <!-- Lqr Link -->
-            <Link v-if="record.lqrVisitPath" :to="fileDownloadUrl(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
+            <Link v-if="record.lqrVisitPath" :to="lqrLink(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
             <!-- Add Lqr Button -->
             <Button v-else-if="subType && _.toUpper(subType) === 'E'" type="link" class="text-sm" @click="onAddLqr($event, record)">
               <span class="flex items-center">
