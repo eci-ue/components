@@ -4,7 +4,7 @@
  * @author svon.me@gmail.com
  */
 
-import _ from "lodash-es";
+import * as _ from "lodash-es";
 import { api } from "../../../api";
 import { table, fileDownloadUrl } from "@ue/utils";
 import { PropType } from "vue";
@@ -55,6 +55,11 @@ const props = defineProps({
   mode: {
     required: true,
     type: String as PropType<WorkMode>,
+  },
+  // 任务小类
+  subType: {
+    type: String,
+    required: false,
   },
   /** 
    * 是否为外部议员
@@ -144,7 +149,7 @@ const onAddLqr = function(e: Event, data: TaskFileItem) {
           <!-- Lqr Link -->
           <Link v-if="record.lqrVisitPath" :to="fileDownloadUrl(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
           <!-- Add Lqr Button -->
-          <Button v-else type="link" class="text-sm" @click="onAddLqr($event, record)">
+          <Button v-else-if="subType && _.toUpper(subType) === 'E'" type="link" class="text-sm" @click="onAddLqr($event, record)">
             <span class="flex items-center">
               <Icon class="flex mr-1" type="icon-a-add"></Icon>
               <span>Add Lqr</span>
