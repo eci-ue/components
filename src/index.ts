@@ -35,6 +35,8 @@ export * as UploadUtil from "./utils/upload";
 export { default as FileCheckbox } from "./components/file/checkbox";
 export { LanguagePairs, LanguageGroup, LanguageData, LanguagePairsData } from "./components/language";
 
+export { default as Interrputted } from "./components/interrputted/index.vue";
+
 export * from "./components/form";
 
 export default lib;

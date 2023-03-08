@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { 
   Alter, Operate, FileOperate, ExportButton, ExportDownload, FormCheckbox,
-  WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery, Enum,FormDate,
+  WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery, Enum,FormDate,Interrputted
 } from "../src/index";
 import { AddLqr } from "../src/components/project/lqr"
 import * as model from "@ue/model";
@@ -87,6 +87,7 @@ const dateMeta = {
         <FormDate v-model:value="DateValue" :meta="dateMeta"></FormDate>
       </div>
     </div>
+    <Interrputted :taskId="1"></Interrputted>
     <!-- <Enum value="1" :data="TestEnum"></Enum> -->
 
     <!-- <br/> -->
