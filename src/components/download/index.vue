@@ -5,9 +5,9 @@
  */
 
 import Icon from "../icon";
-import { PropType, ref } from "vue";
+import { PropType, computed, ref } from "vue";
 import UrlPattern from "url-pattern";
-import { DownloadType } from "./type";
+import { DownloadType, Env, NetApi, DomainApi } from "./type";
 import * as message from "@ue/message";
 import safeGet from "@fengqiaogang/safe-get";
 import { downloadFile, fileDownloadUrl, path } from "@ue/utils";
@@ -35,8 +35,27 @@ const props = defineProps({
   }
 });
 
-const _r = ref<number>(Math.random());
 const iframe = ref<HTMLIFrameElement>();
+
+const env = computed<Env>(function() {
+  const pattern = new UrlPattern('(http(s)\\://)(:subdomain.):domain.:tld(\\::port)(/*)');
+  const location = pattern.match(window.location.origin);
+  if (location.domain === "eciol-dev") {
+    return Env.dev;
+  }
+  if (location.domain === "eciol-test") {
+    return Env.test;
+  }
+  if (location.domain === "ectranslate") {
+    return Env.ectranslate;
+  }
+  return Env.prod;
+});
+
+const iframeSrc = computed<string>(function() {
+  const r = Math.random();
+  return `/download/${env.value}.html?_r=${r}`;
+});
 
 // 触发文件下载
 const onDownload = function() {
@@ -51,8 +70,6 @@ const onDownload = function() {
     message.success(tips);
     return;
   }
-
-  const pattern = new UrlPattern('(http(s)\\://)(:subdomain.):domain.:tld(\\::port)(/*)');
 
   if (props.type === DownloadType.net) {
     const content = iframe.value?.contentWindow;
@@ -75,25 +92,9 @@ const onDownload = function() {
         }
       );
 
-      let url = "";
-      const location = pattern.match(window.location.origin);
-      switch(location.domain) {
-        case "eciol-dev":
-          url = "http://filebus.eciol-dev.com/signalr";
-          break;
-        case "eciol-test":
-          url = "http://fssyweb.eciol-test.com/signalr";
-          break;
-        case "ectranslate":
-          url = "http://fscommonweb.ectranslate.com/signalr";
-          break;
-        case "eciol":
-          url = "https://fscnweb.eciol.com/signalr";
-          break;
-      }
       const query = {
         ServerFileID: 2,
-        Url: url,
+        Url: NetApi[env.value],
         RealPath: props.value.replace('/\\/g', '\\\\'),
         FullName: `\\${props.name}`
       };
@@ -103,23 +104,7 @@ const onDownload = function() {
   }
 
   if (props.type === DownloadType.file) {
-    let url = "";
-    const location = pattern.match(window.location.origin);
-    switch(location.domain) {
-      case "eciol-dev":
-        url = "http://erpapi.eciol-dev.com/";
-        break;
-      case "eciol-test":
-        url = "http://erpapi.eciol-test.com/";
-        break;
-      case "ectranslate":
-        url = "http://nerpapi.ectranslate.com:9999/";
-        break;
-      case "eciol":
-        url = "https://erpapi.eciol.com/";
-        break;
-    }
-    const link = path.join(url, "service-file", props.value);
+    const link = path.join(DomainApi[env.value], "service-file", props.value);
     downloadFile(link, props.name);
     message.success(tips);
     return;
@@ -133,7 +118,7 @@ const onDownload = function() {
     <div class="relative">
       <template v-if="type === DownloadType.net">
         <div class="absolute left-0 top-0 inline-block w-1 h-1 visible opacity-0">
-          <iframe class="w-full h-full" ref="iframe" :src="`/download/test.html?_r=${_r}`"></iframe>
+          <iframe class="w-full h-full" ref="iframe" :src="iframeSrc"></iframe>
         </div>
       </template>
       <div v-if="value" class="cursor-pointer px-2 py-1" @click="onDownload">
