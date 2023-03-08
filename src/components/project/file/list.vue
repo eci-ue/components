@@ -6,7 +6,7 @@
 
 import _ from "lodash-es";
 import { api } from "../../../api";
-import { table } from "@ue/utils";
+import { table, fileDownloadUrl } from "@ue/utils";
 import { PropType } from "vue";
 import Link from "../../link";
 import Icon from "../../icon";
@@ -142,7 +142,7 @@ const onAddLqr = function(e: Event, data: TaskFileItem) {
         </template>
         <template v-else-if="column.key === 'lqr'">
           <!-- Lqr Link -->
-          <Link v-if="record.lqrVisitPath" :to="record.lqrVisitPath" target="_blank">{{ text }}</Link>
+          <Link v-if="record.lqrVisitPath" :to="fileDownloadUrl(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
           <!-- Add Lqr Button -->
           <Button v-else type="link" class="text-sm" @click="onAddLqr($event, record)">
             <span class="flex items-center">
