@@ -126,7 +126,7 @@ const onDownload = function() {
           <Icon class="text-sm" type="download-outlined"></Icon>
         </slot>
       </div>
-      <div v-else class="px-2 py-1">
+      <div v-else class="cursor-not-allowed px-2 py-1">
         <slot>
           <Icon class="text-sm" type="download-outlined"></Icon>
         </slot>

@@ -5,11 +5,17 @@
  * @description 选择的时间，返回数据时已做时区处理
  */
 
+import { date } from "@ue/utils";
+import dayjs, { Dayjs } from 'dayjs';
 import { computed, PropType } from "vue";
 import { DatePicker } from "ant-design-vue";
-import { date } from "@ue/utils";
+
 import type { FormItemMeta } from "@ue/form/types/props";
-import dayjs, { Dayjs } from 'dayjs';
+
+interface Meta extends FormItemMeta {
+  showTime: boolean;
+  disabledBrfore: boolean;
+}
 
 const emit = defineEmits(["update:value", "change"]);
 
@@ -31,7 +37,7 @@ const props = defineProps({
   },
   meta: {
     required: false,
-    type: Object as PropType<FormItemMeta>,
+    type: Object as PropType<Meta>,
   }
 });
 
@@ -64,12 +70,12 @@ const format = computed<date.Template>(function () {
   if (props.meta?.showTime) {
     return date.Template.value;
   }
-  return date.Template.date
+  return date.Template.date;
 });
 const disabledDate = (current: Dayjs) => {
   // Can not select days before today
   if (props.meta?.disabledBrfore) {
-    return current && current <= dayjs().startOf('day');
+    return current && current <= dayjs().startOf("day");
   }
   return false;
 };

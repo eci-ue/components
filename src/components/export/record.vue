@@ -78,7 +78,7 @@ const onCancel = function(e: Event) {
  * @param status
  * @returns ExportStatus
  */
-const isFinished = function(data: Data): ExportStatus {
+const exportStatus = function(data: Data): ExportStatus {
   const status = _.toInteger(data.status);
   if (props.mode === WorkMode.Transdoc) {
     return status || ExportStatus.prepare; // 默认为未开始
@@ -119,10 +119,10 @@ const expandedList = function(data: Data) {
       <template #bodyCell="{ column, record, text  }">
         <template v-if="column.key ==='operate'">
           <!-- 文件下载 -->
-          <template v-if="isFinished(record) && mode === WorkMode.Memoq">
+          <template v-if="exportStatus(record) === ExportStatus.success && mode === WorkMode.Memoq">
             <Download :value="text" :type="DownloadType.oss"></Download>
           </template>
-          <template v-else-if="isFinished(record) && mode === WorkMode.Transdoc">
+          <template v-else-if="exportStatus(record) === ExportStatus.success && mode === WorkMode.Transdoc">
             <Download :value="text" :name="record.fileName" :type="DownloadType.net"></Download>
           </template>
           <template v-else>
@@ -133,16 +133,16 @@ const expandedList = function(data: Data) {
           <Time :value="text"></Time>
         </template>
         <template v-else-if="column.key ==='status'">
-          <template v-if="isFinished(record) === ExportStatus.prepare">
+          <template v-if="exportStatus(record) === ExportStatus.prepare">
             <span class="border-pending-500 bg-pending-200 text-pending py-1 px-2 inline-block rounded-sm border border-solid">Pending</span>
           </template>
-          <template v-if="isFinished(record) === ExportStatus.inPogress">
+          <template v-if="exportStatus(record) === ExportStatus.inPogress">
             <span class="border-progress-500 bg-progress-200 text-progress py-1 px-2 inline-block rounded-sm border border-solid">In progress</span>
           </template>
-          <template v-if="isFinished(record) === ExportStatus.success">
+          <template v-if="exportStatus(record) === ExportStatus.success">
             <span class="border-primary-500 bg-primary-200 text-primary py-1 px-2 inline-block rounded-sm border border-solid">Finished</span>
           </template>
-          <template v-if="isFinished(record) === ExportStatus.abnormal">
+          <template v-if="exportStatus(record) === ExportStatus.abnormal">
             <span class="border-error-500 bg-error-200 text-error py-1 px-2 inline-block rounded-sm border border-solid">Rejected</span>
           </template>
         </template>
