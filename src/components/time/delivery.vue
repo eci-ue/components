@@ -30,6 +30,11 @@ const props = defineProps({
     type: String,
     default: ""
   },
+  // 是否禁用
+  disabled: {
+    type: Boolean,
+    default: () => false
+  },
   /** 间隔多少小时, 默认24 */
   interval: {
     type: Number,
@@ -38,6 +43,9 @@ const props = defineProps({
 });
 
 const className = computed<string | string[]>(function() {
+  if (props.disabled) {
+    return [];
+  }
   const value = main(props as DeliveryProps);
   if (/^-+$/.test(value)) {
     return [];

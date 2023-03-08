@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { 
   Alter, Operate, FileOperate, ExportButton, ExportDownload, FormCheckbox,
-  WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery, Enum,FormDate
+  WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery, Enum,FormDate,
 } from "../src/index";
 import { AddLqr } from "../src/components/project/lqr"
 import * as model from "@ue/model";
@@ -50,10 +50,7 @@ const radioMeta = {
   ]
 };
 const DateValue = ref<string>();
-const dateMeta = {
-  showTime:true,
-  disabledBrfore:true
-};
+
 
 onMounted(function() {
   // DriveFile("xxx", {
@@ -76,30 +73,25 @@ onMounted(function() {
   // });
 });
 
-enum TestEnum {
-  aBcD = 1,
-  aBcE,
-  abcF
-}
-
-const checkboxMeta: any = {
-  list: [
-    { value: "1", name: "A" },
-    { value: "2", name: "B" },
-    { value: "3", name: "C" },
-  ]
+const dateMeta = {
+  showTime: true,
+  disabledBrfore: true,
+  disabledSameDay: false,
 };
 
 </script>
 <template>
   <div>
-    <Enum value="1" :data="TestEnum"></Enum>
+    <div class="p-4">
+      <div style="width: 150px;">
+        <FormDate v-model:value="DateValue" :meta="dateMeta"></FormDate>
+      </div>
+    </div>
+    <!-- <Enum value="1" :data="TestEnum"></Enum> -->
 
-    <br/>
+    <!-- <br/> -->
 
-    <FormCheckbox :meta="checkboxMeta"></FormCheckbox>
-      <Operate :item="item" :optTypes="optTypes"></Operate>
-      <FormDate v-model:value="DateValue" :meta="dateMeta"></FormDate>
+    <!-- <Operate :item="item" :optTypes="optTypes"></Operate> -->
     <!-- <div>
       <Alter v-model:value="state" :project-id="1" @state="stateVal"></Alter>
     </div>
