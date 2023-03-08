@@ -12,8 +12,10 @@ defineProps({
 });
 
 const onDownload = function (fileName: string, filePath: string) {
-  const url = fileDownloadUrl(filePath);
-  downloadFile(url, fileName);
+  if (filePath) {
+    const url = fileDownloadUrl(filePath);
+    downloadFile(url, fileName);
+  }
 }
 </script>
 
@@ -36,7 +38,7 @@ const onDownload = function (fileName: string, filePath: string) {
           <template #icon>
             <Icon type="link-outlined" class="text-deep-gray"></Icon>
           </template>
-          <span class="link" @click="onDownload(item.fileName,item.filePath)">{{ item.fileName }}</span>
+          <span class="link" :class="{'cursor-not-allowed': !item.filePath}" @click="onDownload(item.fileName,item.filePath)">{{ item.fileName }}</span>
         </Tag>
       </p>
     </FormItem>
