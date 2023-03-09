@@ -4,24 +4,26 @@
  * @author svon.me@gmail.com
  */
 
-import * as _ from "lodash-es";
-import { api } from "../../../api";
-import { table, fileDownloadUrl } from "@ue/utils";
-import { PropType } from "vue";
 import Link from "../../link";
 import Icon from "../../icon";
-import safeGet from "@fengqiaogang/safe-get";
-
+import * as _ from "lodash-es";
+import { PropType } from "vue";
+import { api } from "../../../api";
+import * as message from "@ue/message";
 import { headers, fileList } from "./util";
+import safeGet from "@fengqiaogang/safe-get";
+import { table, fileDownloadUrl } from "@ue/utils";
 
+import { hook } from "@ue/utils";
 import Rate from "./rate.vue";
 import Lqr from "../lqr/lqr.vue";
 import { AddLqr } from "../lqr/index";
 import { Table, Space, Button } from "ant-design-vue";
 import { ExportDownload, ExportButton } from "../../export";
 
-import type { TaskFileItem, View } from "./type";
 import type { WorkMode } from "../../export";
+import type { HookFunction } from "@ue/utils";
+import type { TaskFileItem, View } from "./type";
 
 const $emit = defineEmits(["reload"]);
 
@@ -82,12 +84,41 @@ const props = defineProps({
     required: false,
     default: () => 0
   },
+  /** 触发前钩子 */
+  before: {
+    required: false,
+    type: [Function, Array] as PropType<HookFunction | HookFunction[]>
+  }
 });
 
 const { selectedKeys, rowSelection } = table.useSelection();
 
+const before = async function() {
+  try {
+    return await hook.run(props.before);
+  } catch (error) {
+    const tips: string = error?.message;
+    if (tips) {
+      message.error(tips);
+    }
+    return false;
+  }
+}
+
+const onCheckLqr = async function(value: string) {
+  const status = await before();
+  if (status) {
+    const url = lqrLink(value);
+    window.open(url);
+  }
+}
+
 // 添加 Lqr
-const onAddLqr = function(e: Event, data: TaskFileItem) {
+const onAddLqr = async function(e: Event, data: TaskFileItem) {
+  const status = await before();
+  if (!status) {
+    return false;
+  }
   const option = { id: props.id, file: data.bilingualFileId, partner: props.partner };
   const callback = async function(value: object) {
     const status = await api.project.saveLqr(value, props.partner);
@@ -119,6 +150,7 @@ const lqrLink = function(value: string): string {
         <!-- 下载双语文件 -->
         <ExportDownload 
           placement="bottomLeft" 
+          :before="before"
           :pm="pm"  
           :disabled="selectedKeys.length < 1" 
           :file="selectedKeys">
@@ -161,7 +193,7 @@ const lqrLink = function(value: string): string {
           <template v-if="lqrOper && String(lqrOper) === '3'">
             <!-- 可上传 -->
             <!-- Lqr Link -->
-            <Link v-if="record.lqrVisitPath" :to="lqrLink(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
+            <Button v-if="record.lqrVisitPath" type="link" @click="onCheckLqr(record.lqrVisitPath)">{{ text }}</Button>
             <!-- Add Lqr Button -->
             <Button v-else type="link" class="text-sm" @click="onAddLqr($event, record)">
               <span class="flex items-center">
@@ -171,9 +203,9 @@ const lqrLink = function(value: string): string {
               </span>
             </Button>
           </template>
-          <template v-else-if="lqrOper && String(lqrOper) === '2'">
+          <template v-else-if="lqrOper && String(lqrOper) === '2' && record.lqrVisitPath">
             <!-- Lqr Link -->
-            <Link v-if="record.lqrVisitPath" :to="lqrLink(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
+            <Button type="link" @click="onCheckLqr(record.lqrVisitPath)">{{ text }}</Button>
           </template>
           <template v-else>
             <span>--</span>
