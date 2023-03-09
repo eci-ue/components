@@ -34,12 +34,10 @@ const onDownload = function (fileName: string, filePath: string) {
     </FormItem>
     <FormItem label="File" v-if="_.size(data.attachments) > 0">
       <p v-for="item in data.attachments" class="mb-1">
-        <Tag color="#F0F2F7">
-          <template #icon>
-            <Icon type="link-outlined" class="text-deep-gray"></Icon>
-          </template>
-          <span class="link" :class="{'cursor-not-allowed': !item.filePath}" @click="onDownload(item.fileName,item.filePath)">{{ item.fileName }}</span>
-        </Tag>
+        <span class="link px-2 py-0.5" :class="{'cursor-not-allowed': !item.filePath}" style="background-color: #F0F2F7">
+          <Icon type="link-outlined" class="text-deep-gray mr-1"></Icon>
+          <span @click="onDownload(item.fileName,item.filePath)">{{ item.fileName }}</span>
+        </span>
       </p>
     </FormItem>
 
