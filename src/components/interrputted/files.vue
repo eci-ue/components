@@ -30,7 +30,7 @@ const onDownload = function (fileName: string, filePath: string) {
 <template>
   <div class="flex">
     <div class="text-label-color mr-6">Task process</div>
-    <div>{{ new BigNumber(state.rate || 0).div(100) }} %</div>
+    <div>{{ state.rate }} %</div>
   </div>
   <div class="mt-7 min-h-50">
     <div class="text-label-color">File</div>

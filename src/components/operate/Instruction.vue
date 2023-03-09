@@ -21,10 +21,9 @@ const onDownload = function (fileName: string, filePath: string) {
 
 <template>
   <template v-if="_.size(data.workInstructionList) > 0">
-    <div>
-      <Alert :message="item" :key="index" type="info"
-        class="bg-milk border border-border-color border-b-0 last:border-b-1"
-        v-for="item, index in data.workInstructionList"></Alert>
+    <div class="bg-milk border border-border-color">
+      <p v-for="item, index in data.workInstructionList" :key="index"
+        class="m-0 p-2 border-b border-solid border-border-color last:border-none">{{ item }}</p>
     </div>
     <Divider dashed></Divider>
   </template>
@@ -34,14 +33,13 @@ const onDownload = function (fileName: string, filePath: string) {
     </FormItem>
     <FormItem label="File" v-if="_.size(data.attachments) > 0">
       <p v-for="item in data.attachments" class="mb-1">
-        <span class="link px-2 py-0.5" :class="{'cursor-not-allowed': !item.filePath}" style="background-color: #F0F2F7">
+        <span class="link px-2 py-0.5" :class="{ 'cursor-not-allowed': !item.filePath }" style="background-color: #F0F2F7">
           <Icon type="link-outlined" class="text-deep-gray mr-1"></Icon>
-          <span @click="onDownload(item.fileName,item.filePath)">{{ item.fileName }}</span>
+          <span @click="onDownload(item.fileName, item.filePath)">{{ item.fileName }}</span>
         </span>
       </p>
     </FormItem>
 
   </Form>
-
 </template>
 
