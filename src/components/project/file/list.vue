@@ -93,9 +93,9 @@ const props = defineProps({
 
 const { selectedKeys, rowSelection } = table.useSelection();
 
-const before = async function() {
+const before = async function(...args: any[]) {
   try {
-    return await hook.run(props.before);
+    return await hook.run(props.before, args);
   } catch (error) {
     const tips: string = error?.message;
     if (tips) {
@@ -106,7 +106,7 @@ const before = async function() {
 }
 
 const onCheckLqr = async function(value: string) {
-  const status = await before();
+  const status = await before("lqr");
   if (status) {
     const url = lqrLink(value);
     window.open(url);
@@ -115,7 +115,7 @@ const onCheckLqr = async function(value: string) {
 
 // 添加 Lqr
 const onAddLqr = async function(e: Event, data: TaskFileItem) {
-  const status = await before();
+  const status = await before("addLqr");
   if (!status) {
     return false;
   }
@@ -156,7 +156,7 @@ const lqrLink = function(value: string): string {
           :file="selectedKeys">
         </ExportDownload>
         <!-- 文件下载记录 -->
-        <ExportButton :id="projectId" :language="language"></ExportButton>
+        <ExportButton :id="projectId" :language="language" :before="before"></ExportButton>
       </Space>
       <slot>
         <Space>

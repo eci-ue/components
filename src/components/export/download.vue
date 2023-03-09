@@ -94,7 +94,7 @@ menuTexts.set("2", "Current xliff files");
 /** 文件导出 */
 const onExport = async function (value: number | string) {
   try {
-    const status = await hook.run(props.before);
+    const status = await hook.run(props.before, ["download", value]);
     if (!status) {
       return false;
     }

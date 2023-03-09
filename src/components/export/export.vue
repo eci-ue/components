@@ -84,7 +84,7 @@ const status = computed<boolean>(function() {
 
 const onClick = async function() {
   try {
-    const status = await hook.run(props.before);
+    const status = await hook.run(props.before, ["export", "record"]);
     if (!status) {
       return false;
     }
