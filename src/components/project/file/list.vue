@@ -56,9 +56,9 @@ const props = defineProps({
     required: true,
     type: String as PropType<WorkMode>,
   },
-  // 任务小类
-  subType: {
-    type: String,
+  // lqr 枚举
+  lqrOper: {
+    type: [String, Number],
     required: false,
   },
   /** 
@@ -82,7 +82,6 @@ const props = defineProps({
     required: false,
     default: () => 0
   },
-  
 });
 
 const { selectedKeys, rowSelection } = table.useSelection();
@@ -129,8 +128,7 @@ const lqrLink = function(value: string): string {
       </Space>
       <slot>
         <Space>
-          <span>CAT tools:</span>
-          <span>{{ mode }}</span>
+          <span>CAT tools:</span><span>{{ mode }}</span>
         </Space>
       </slot>
     </div>
@@ -160,21 +158,25 @@ const lqrLink = function(value: string): string {
           <Rate :data="safeGet(record, column.dataIndex)" :mode="mode"></Rate>
         </template>
         <template v-else-if="column.key === 'lqr'">
-          <template v-if="pm">
-            <!-- PM 端 Lqr Link -->
-            <Link v-if="record.lqrVisitPath" :to="lqrLink(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
-          </template>
-          <template v-else>
+          <template v-if="lqrOper && String(lqrOper) === '3'">
+            <!-- 可上传 -->
             <!-- Lqr Link -->
             <Link v-if="record.lqrVisitPath" :to="lqrLink(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
             <!-- Add Lqr Button -->
-            <Button v-else-if="subType && _.toUpper(subType) === 'E'" type="link" class="text-sm" @click="onAddLqr($event, record)">
+            <Button v-else type="link" class="text-sm" @click="onAddLqr($event, record)">
               <span class="flex items-center">
                 <Icon class="flex mr-1" type="icon-a-add"></Icon>
                 <span>Add Lqr</span>
                 <span class="count-item ml-0.5"></span>
               </span>
             </Button>
+          </template>
+          <template v-else-if="lqrOper && String(lqrOper) === '2'">
+            <!-- Lqr Link -->
+            <Link v-if="record.lqrVisitPath" :to="lqrLink(record.lqrVisitPath)" target="_blank">{{ text }}</Link>
+          </template>
+          <template v-else>
+            <span>--</span>
           </template>
         </template>
         <template v-else>
