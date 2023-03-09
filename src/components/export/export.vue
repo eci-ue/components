@@ -6,13 +6,15 @@
 
 import * as _ from "lodash-es";
 import { api } from "../../api";
-import { useState } from "@ue/utils";
+import { WorkMode } from "./props";
 import { ExportFile } from "./util";
 import * as message from "@ue/message";
 import { Button } from "ant-design-vue";
 import { PropType, computed } from "vue";
 
-import { WorkMode } from "./props";
+import { hook } from "@ue/utils";
+import type { HookFunction } from "@ue/utils";
+
 
 const props = defineProps({
   // 项目ID
@@ -47,6 +49,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: () => false
+  },
+  /** 触发前钩子 */
+  before: {
+    required: false,
+    type: [Function, Array] as PropType<HookFunction | HookFunction[]>
   }
 });
 
@@ -76,6 +83,19 @@ const status = computed<boolean>(function() {
 });
 
 const onClick = async function() {
+  try {
+    const status = await hook.run(props.before);
+    if (!status) {
+      return false;
+    }
+  } catch (error) {
+    const tips: string = error?.message;
+    if (tips) {
+      message.error(tips);
+    }
+    return false;
+  }
+  
   if (props.mode) {
     ExportFile({
       id: props.id,

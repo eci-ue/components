@@ -5,11 +5,13 @@
  */
 
 import { api } from "../../api";
+import { hook } from "@ue/utils";
 import * as message from "@ue/message";
 import { PropType, computed } from "vue";
 import { Dropdown, Button, Menu, MenuItem } from "ant-design-vue";
 
 import type { WorkMode } from "./props";
+import type { HookFunction } from "@ue/utils";
 
 const props = defineProps({
   // 功能是否禁用
@@ -66,6 +68,11 @@ const props = defineProps({
     type: String,
     required: false,
   },
+  /** 触发前钩子 */
+  before: {
+    required: false,
+    type: [Function, Array] as PropType<HookFunction | HookFunction[]>
+  }
 });
 
 const toArray = function (value: string | number | Array<string | number>): Array<string | number> {
@@ -85,7 +92,20 @@ menuTexts.set("2", "Current xliff files");
 
 
 /** 文件导出 */
-const onExport = function (value: number | string) {
+const onExport = async function (value: number | string) {
+  try {
+    const status = await hook.run(props.before);
+    if (!status) {
+      return false;
+    }
+  } catch (error) {
+    const tips: string = error?.message;
+    if (tips) {
+      message.error(tips);
+    }
+    return false;
+  }
+
   if (menuTexts.has(String(value))) {
     api.project.fileExport(
       toArray(props.file),

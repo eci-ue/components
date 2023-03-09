@@ -79,6 +79,11 @@ const dateMeta = {
   disabledSameDay: false,
 };
 
+const before = function() {
+  const message = "hello world";
+  return Promise.reject(new Error(message));
+}
+
 </script>
 <template>
   <div>
@@ -88,6 +93,11 @@ const dateMeta = {
       </div>
     </div>
     <Interrputted :taskId="1"></Interrputted>
+
+    <Space>
+      <ExportDownload :file="[1, 2]" :menu="[1, 2]" :before="before"></ExportDownload>
+      <ExportButton :id="12" :language="1" :mode="WorkMode.Transdoc" :pm="false"></ExportButton>
+    </Space>
     <!-- <Enum value="1" :data="TestEnum"></Enum> -->
 
     <!-- <br/> -->
