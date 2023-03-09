@@ -4,7 +4,7 @@
  * @author svon.me@gmail.com
  */
 
-import _ from "lodash-es";
+import * as _ from "lodash-es";
 import { PropType } from "vue";
 import BigNumber from "bignumber.js";
 import { taskPhaseList } from "./type";
@@ -23,7 +23,7 @@ const props = defineProps({
   /** 费用单位 */
   moneyUnit: {
     type: String,
-    required: true,
+    required: false,
   },
   /** work 单位 */
   workUnit: {
@@ -43,7 +43,7 @@ const props = defineProps({
 const task = function<T>(index: number, key: string, autoValue?: T) {
   const value = safeGet<T>(props.list, `[${index}].${key}`);
   return (value || autoValue) as T;
-}
+};
 
 const amount = function(list: AmountItemData[]): string {
   let sum = new BigNumber(0);
@@ -52,7 +52,7 @@ const amount = function(list: AmountItemData[]): string {
     sum = sum.plus(data.subTotal);
   }
   return sum.toFixed(4);
-}
+};
 </script>
 
 <template>
@@ -89,7 +89,7 @@ const amount = function(list: AmountItemData[]): string {
           </thead>
           <tbody class="ant-table-tbody">
             <tr v-for="(name, index) in taskPhaseList" :key="name">
-              <td class="ant-table-cell" rowspan="8" v-if="index < 1">T</td>
+              <td class="ant-table-cell" rowspan="8" v-if="index < 1">{{ _.upperFirst(type) }}</td>
               <td class="ant-table-cell">{{ name }}</td>
               <td class="ant-table-cell text-right">{{ toFixed(task<number>(index, "words"), 0) }}</td>
               <td class="ant-table-cell text-right" rowspan="8" v-if="index < 1">{{ toFixed(task<number>(index, "unitPrice"), 4) }}</td>
