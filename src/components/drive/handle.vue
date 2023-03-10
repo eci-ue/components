@@ -255,7 +255,7 @@ const disabledDel = computed(() => {
         <span class="ant-btn ant-btn-primary">Upload Files</span>
       </Upload>
       <span v-if="operateBtn.downTarget">
-        <ExportDownload :disabled="selectedKeys.length < 1" :file="selectedKeys" :type="subType" :pm="isPm" :menu="[1]"
+        <ExportDownload :disabled="selectedKeys.length < 1" :file="selectedKeys" :type="subType" :pm="isPm" :menu="[2]"
           exportText="Download Target"></ExportDownload>
 
       </span>

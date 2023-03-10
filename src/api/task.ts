@@ -7,6 +7,7 @@ import * as _ from "lodash-es";
 import { $error, $success } from "@ue/message";
 import { validate, required, get, post, tryError } from "@js-lion/api";
 import { $debounce } from "@ue/utils";
+import { TaskInterruptType } from "../components/alert/props";
 
 export default class Task {
   /**
@@ -20,6 +21,18 @@ export default class Task {
   getPreTask(@required projectId: string | number): Promise<Boolean> {
     const params = { projectId };
     return { params } as any;
+  }
+
+  /**
+   * 获取议员端任务是否中断接口
+   * @param taskId 任务ID
+   */
+  @tryError(new TaskInterruptType())
+  @post("/:task/task/isTaskInterrupted")
+  @validate
+  isTaskInterrupted<T>(@required taskId: string | number): Promise<T> {
+    const data = { taskId };
+    return { data } as any;
   }
 
   //合作伙伴评价

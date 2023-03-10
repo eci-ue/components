@@ -87,8 +87,8 @@ const menuItems = computed<string[]>(function () {
 });
 
 const menuTexts = new Map<string, string>();
-menuTexts.set("1", "Current target files");
-menuTexts.set("2", "Current xliff files");
+menuTexts.set("2", "Current target files");
+menuTexts.set("1", "Current xliff files");
 
 
 /** 文件导出 */

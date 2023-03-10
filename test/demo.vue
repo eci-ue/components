@@ -98,13 +98,15 @@ const before = function() {
       <ExportDownload :file="[1, 2]" :menu="[1, 2]" :before="before"></ExportDownload>
       <ExportButton :id="12" :language="1" :mode="WorkMode.Transdoc" :pm="false"></ExportButton>
     </Space>
+
+    <Alter v-model:value="state" :id="1" @state="stateVal"></Alter>
     <!-- <Enum value="1" :data="TestEnum"></Enum> -->
 
     <!-- <br/> -->
 
     <!-- <Operate :item="item" :optTypes="optTypes"></Operate> -->
     <!-- <div>
-      <Alter v-model:value="state" :project-id="1" @state="stateVal"></Alter>
+     
     </div>
     <br/>
     <div>
