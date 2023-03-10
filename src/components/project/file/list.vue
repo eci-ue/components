@@ -138,7 +138,17 @@ const lqrLink = function(value: string): string {
     return value;
   }
   return fileDownloadUrl(value);
-}
+};
+
+// 查看双语文件
+const catFileDetail = async function(value: string): Promise<void> {
+  if (value) {
+    const status = await before("addLqr");
+    if (status) {
+      window.open(value);
+    }
+  }
+};
 
 </script>
 <template>
@@ -174,10 +184,10 @@ const lqrLink = function(value: string): string {
 
       <template #bodyCell="{ column, record, text }">
         <template v-if="column.key === 'name'">
-          <Link v-if="record.catUrl && !pm" :to="record.catUrl" target="_blank">
-            <Icon type="link-outlined" class="text-deep-gray"></Icon>
+          <Space v-if="record.catUrl && !pm" class="link" @click="catFileDetail(record.catUrl)">
+            <Icon type="link-outlined"></Icon>
             <span>{{ text }}</span>
-          </Link>
+          </Space>
           <Space v-else>
             <Icon type="link-outlined" class="text-deep-gray"></Icon>
             <span>{{ text }}</span>
