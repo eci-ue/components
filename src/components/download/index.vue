@@ -54,7 +54,7 @@ const env = computed<Env>(function() {
 
 const iframeSrc = computed<string>(function() {
   const r = Math.random();
-  return `/download/${env.value}.html?_r=${r}`;
+  return `/export/${env.value}.html?_r=${r}`;
 });
 
 // 触发文件下载

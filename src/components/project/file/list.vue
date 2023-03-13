@@ -168,11 +168,20 @@ const catFileDetail = async function(value: string): Promise<void> {
           placement="bottomLeft" 
           :before="before"
           :pm="pm"  
+          :partner="partner" 
+          :mode="mode" 
           :disabled="selectedKeys.length < 1" 
           :file="selectedKeys">
         </ExportDownload>
         <!-- 文件下载记录 -->
-        <ExportButton :id="projectId" :language="language" :before="before"></ExportButton>
+        <ExportButton 
+          :id="projectId" 
+          :language="language" 
+          :before="before" 
+          :pm="pm" 
+          :mode="mode" 
+          :partner="partner">
+        </ExportButton>
       </Space>
       <slot>
         <Space>
