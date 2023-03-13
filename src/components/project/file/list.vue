@@ -105,11 +105,27 @@ const before = async function(...args: any[]) {
   }
 }
 
+// lqr 链接处理
+const lqrLink = function(value: string): string | undefined {
+  if (value && /^http/.test(value)) {
+    return value;
+  }
+  if (value && /^\/\//.test(value)) {
+    return value;
+  }
+  if (value) {
+    return fileDownloadUrl(value);
+  }
+};
+
+// 查看 Lqr
 const onCheckLqr = async function(value: string) {
   const status = await before("lqr");
   if (status) {
     const url = lqrLink(value);
-    window.open(url);
+    if (url) {
+      window.open(url);
+    }
   }
 }
 
@@ -130,26 +146,16 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
   AddLqr(option, { onOk: callback });
 };
 
-const lqrLink = function(value: string): string {
-  if (/^http/.test(value)) {
-    return value;
-  }
-  if (/^\/\//.test(value)) {
-    return value;
-  }
-  return fileDownloadUrl(value);
-};
 
 // 查看双语文件
 const catFileDetail = async function(value: string): Promise<void> {
   if (value) {
-    const status = await before("addLqr");
+    const status = await before("catFile");
     if (status) {
       window.open(value);
     }
   }
 };
-
 </script>
 <template>
   <div>
@@ -174,7 +180,6 @@ const catFileDetail = async function(value: string): Promise<void> {
         </Space>
       </slot>
     </div>
-    
     <Table class="count"
       bordered 
       :pagination="false" 
