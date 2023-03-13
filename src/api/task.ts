@@ -18,7 +18,7 @@ export default class Task {
   @tryError(false)
   @post("/:task/task/getPreTask")
   @validate
-  getPreTask(@required projectId: string | number): Promise<Boolean> {
+  getPreTask(@required projectId: string | number): Promise<boolean> {
     const params = { projectId };
     return { params } as any;
   }
@@ -41,7 +41,7 @@ export default class Task {
   @$success("Saved Successfully!")
   @post("/:task/task/ratePartner/save")
   @validate
-  saveRatePartner<D>(@required data: D): Promise<Boolean> {
+  saveRatePartner<D>(@required data: D): Promise<boolean> {
     return { data } as any;
   }
 
@@ -51,7 +51,7 @@ export default class Task {
   @$success("Saved Successfully!")
   @get("/:task/task/hedgeJAS/:taskId")
   @validate
-  hedgeJAS(@required taskId: string | number): Promise<Boolean> {
+  hedgeJAS(@required taskId: string | number): Promise<boolean> {
     const params = { taskId };
     return { params } as any;
   }
@@ -62,7 +62,7 @@ export default class Task {
   @$success("Confirm Successfully!")
   @get("/:task/task/confirm/:taskId")
   @validate
-  confirm(@required taskId: string | number): Promise<Boolean> {
+  confirm(@required taskId: string | number): Promise<boolean> {
     const params = { taskId };
     return { params } as any;
   }
@@ -73,7 +73,7 @@ export default class Task {
   @$success("Delete Successfully!")
   @post("/:task/task/delete")
   @validate
-  deleteTask(@required taskId: string | number): Promise<Boolean> {
+  deleteTask(@required taskId: string | number): Promise<boolean> {
     const data = { taskId };
     return { data } as any;
   }
@@ -84,7 +84,7 @@ export default class Task {
   @$success("Cancel Successfully!")
   @get("/:task/task/cancel/:taskId")
   @validate
-  cancelTask(@required taskId: string | number): Promise<Boolean> {
+  cancelTask(@required taskId: string | number): Promise<boolean> {
     const params = { taskId };
     return { params } as any;
   }
@@ -95,7 +95,7 @@ export default class Task {
   @$success("Reject Successfully!")
   @get("/:task/task/reject/:taskId")
   @validate
-  rejectTask(@required taskId: string | number): Promise<Boolean> {
+  rejectTask(@required taskId: string | number): Promise<boolean> {
     const params = { taskId };
     return { params } as any;
   }
@@ -111,7 +111,7 @@ export default class Task {
   @$success("Interrupt Successfully!")
   @post("/:task/task/interrupt")
   @validate
-  addInterupt(@required taskId: string | number, reason: string = ""): Promise<Boolean> {
+  addInterupt(@required taskId: string | number, reason: string = ""): Promise<boolean> {
     const data = { id: taskId, reason };
     return { data } as any;
   }
