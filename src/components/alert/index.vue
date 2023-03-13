@@ -31,8 +31,12 @@ const props = defineProps({
 // 获取项目的前置任务是否完成
 const { state } = useState.data<TaskInterruptType>(async function () {
   if (props.isPm) {
-    const status = await api.task.getPreTask(props.id);
-    return new TaskInterruptType("", status);
+    try {
+      const status = await api.task.getPreTask(props.id);
+      return new TaskInterruptType("", status);
+    } catch(e) {
+      return new TaskInterruptType();
+    }
   }
   return api.task.isTaskInterrupted<TaskInterruptType>(props.id);
 });
@@ -44,28 +48,23 @@ const disabled = computed<Boolean>(() => {
     return false;
   }
   return true;
-  // if (props.isPm) {
-  //   if (_.isBoolean(state.value)) {
-  //     $emit("update:value", state.value)
-  //     $emit("state", state.value)
-  //     return state.value
-  //   }
-  //   return true
-  // } else {//议员端
-  //   return !state.value.isInterrupted
-  // }
 });
 
 //提示语
-const interruptedTip = computed(() => {
+const interruptedTip = computed<string>(() => {
+  const text: string[] = [];
   if (props.isPm) {
-    return "Pre-Engineering task is in processing, You can’t assign language task until it done";
+    text.push("Pre-Engineering task is in processing, You can’t assign language task until it done.");
   } else {
-    return `This task was interrupted, please submit your files you have Partially or Fully done. Reason:${state.value.interruptReason || '-'}`
+    text.push("This task was interrupted, please submit your files you have Partially or Fully done.");
   }
-})
+  if (state.value.interruptReason) {
+    text.push(`Reason: ${state.value.interruptReason}`);
+  }
+  return text.join(" ");
+});
 </script>
 
 <template>
-  <Alert v-show="disabled" :message="interruptedTip" type="warning" />
+  <Alert v-show="!disabled" :message="interruptedTip" type="warning" />
 </template>
