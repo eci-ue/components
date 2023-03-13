@@ -5,7 +5,7 @@
  */
 
 import * as _ from "lodash-es";
-import { computed, PropType } from "vue";
+import { computed, PropType, ref } from "vue";
 import Upload, { UploadSkin } from "../upload";
 
 import type { FormItemMeta } from "@ue/form/types/props";
@@ -15,6 +15,7 @@ interface Meta extends FormItemMeta {
   transform?: (value: UploadFile) => any
 }
 
+const name = ref<string>();
 const emit = defineEmits(["update:value", "change"]);
 
 const props = defineProps({
@@ -43,6 +44,7 @@ const label = computed<string | undefined>(function() {
   if (props.value && _.isObject(props.value)) {
     return props.value.name;
   }
+  return name.value;
 });
 const placeholder = computed<string>(function() {
   if (props.meta?.placeholder) {
@@ -52,6 +54,7 @@ const placeholder = computed<string>(function() {
 });
 
 const onSuccess = function(value: UploadFile) {
+  name.value = value.name;
   let data = value ? _.omit(value, ["file"]) : null;
   if (value && props.meta?.transform && typeof props.meta.transform === "function") {
     data = props.meta.transform(value);
@@ -59,7 +62,6 @@ const onSuccess = function(value: UploadFile) {
   emit("update:value", data);
   emit("change", data);
 };
-
 
 </script>
 <template>
@@ -71,6 +73,7 @@ const onSuccess = function(value: UploadFile) {
       :name="label" 
       :placeholder="placeholder" 
       :skin="UploadSkin.input" 
+      :showProgress="false" 
       label="Upload">
     </Upload>
   </div>

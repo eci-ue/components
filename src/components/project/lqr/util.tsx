@@ -117,7 +117,7 @@ export const partnerItems = function(): FormOptionValue {
             <a class="ml-2" target="_blank" href="/assets/project/lqr_template.xlsx" download="lqr_template.xlsx">Download LQR Template</a>
           </span>),
           component: FormUpload,
-          // rules: rules.text("Please Upload LQR File"),
+          rules: rules.text("Please Upload LQR File"),
           meta: {
             placeholder: "Please Upload LQR File",
             transform: function(data: UploadFile): string | undefined {

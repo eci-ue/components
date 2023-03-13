@@ -18,6 +18,7 @@ import type { UploadFile } from "../src/components/upload/props";
 import { FileType} from "../src/components/drive/props";
 
 import { Download, DownloadType } from "../src";
+import { log } from "console";
 
 const state = ref(false)
 
@@ -62,15 +63,16 @@ onMounted(function() {
   //   accept: accept
   // });
 
-  // AddLqr({
-  //   id: 1,
-  //   file: 1,
-  //   partner: true
-  // }, {
-  //   onOk: function(state: object) {
-  //     return api.project.saveLqr(state, true);
-  //   }
-  // });
+  AddLqr({
+    id: 1,
+    file: 1,
+    partner: true
+  }, {
+    onOk: function(state: object) {
+      console.log(state);
+      // return api.project.saveLqr(state, true);
+    }
+  });
 });
 
 const dateMeta = {

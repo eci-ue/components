@@ -189,7 +189,7 @@ const catFileDetail = async function(value: string): Promise<void> {
 
       <template #bodyCell="{ column, record, text }">
         <template v-if="column.key === 'name'">
-          <Space v-if="record.catUrl && !pm" class="link" @click="catFileDetail(record.catUrl)">
+          <Space v-if="record.catUrl && !pm" class="link cursor-pointer" @click="catFileDetail(record.catUrl)">
             <Icon type="link-outlined"></Icon>
             <span>{{ text }}</span>
           </Space>

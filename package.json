@@ -7,7 +7,7 @@
   "license": "MIT",
   "main": "dist/components",
   "scripts": {
-    "test": "vite --clearScreen --port 3000",
+    "test": "vite --clearScreen",
     "build": "vite build",
     "postbuild": "npm run types",
     "types": "node scripts/types.cjs"
