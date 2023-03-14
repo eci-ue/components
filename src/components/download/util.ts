@@ -1,11 +1,14 @@
 import * as _ from "lodash-es";
 import Cookie from "js-cookie";
 import UrlPattern from "url-pattern";
-import { downloadFile, fileDownloadUrl, hook, path } from "@ue/utils";
-import * as message from "@ue/message";
-import { DownloadType, NetApi, Env, DomainApi } from "./type";
-import type { HookFunction } from "@ue/utils";
 import safeGet from "@fengqiaogang/safe-get";
+
+import * as message from "@ue/message";
+import { message as AntdMessage } from "ant-design-vue";
+import { DownloadType, NetApi, Env, DomainApi } from "./type";
+import { downloadFile, fileDownloadUrl, hook, path } from "@ue/utils";
+
+import type { HookFunction } from "@ue/utils";
 
 interface Props {
   /** 文件地址 */
@@ -68,15 +71,28 @@ const netDownload = function(content: any, env: Env, value: string, name: string
     // @ts-ignore
     const Control = safeGet(content, "Eci.Control.DownloadControl");
     if (Control) {
+      const loading = message.loading('Download ...', 0);
       // @ts-ignore
       const download = new Control(
         { IsSingleProgress: false, fileNameSource: ' ' },
         {
           complete: () => {
+            if (loading) {
+              setTimeout(loading, 500);
+            }
+            setTimeout(function() {
+              AntdMessage.destroy();
+            }, 500);
             resolve(true);
           },
           close () {},
           error (err: string) {
+            if (loading) {
+              setTimeout(loading, 500);
+            }
+            setTimeout(function() {
+              AntdMessage.destroy();
+            }, 500);
             if (typeof err === "string") {
               reject(new Error(err));
             } else {
