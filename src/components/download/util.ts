@@ -91,7 +91,6 @@ const netDownload = function(content: any, env: Env, value: string, name: string
         RealPath: value.replace('/\\/g', '\\\\'),
         FullName: `\\${name}`
       };
-      console.log(query);
       download.showDownload([query]);
     }
   });

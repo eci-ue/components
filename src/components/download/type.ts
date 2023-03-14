@@ -14,9 +14,9 @@ export enum Env {
 
 export const NetApi = {
   [Env.dev]: "http://filebus.eciol-dev.com/signalr",
-  [Env.test]: "http://fssyweb.eciol-test.com/signalr",
-  [Env.ectranslate]: "http://fscommonweb.ectranslate.com/signalr",
-  [Env.prod]: "https://fscnweb.eciol.com/signalr"
+  [Env.test]: "http://filebus.eciol-test.com/signalr",
+  [Env.ectranslate]: "http://filebus.ectranslate.com/signalr",
+  [Env.prod]: "https://filebus.eciol.com/signalr"
 };
 
 export const DomainApi = {
