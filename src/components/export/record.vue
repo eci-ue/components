@@ -123,7 +123,12 @@ const expandedList = function(data: Data) {
             <Download :value="text" :type="DownloadType.oss"></Download>
           </template>
           <template v-else-if="exportStatus(record) === ExportStatus.success && mode === WorkMode.Transdoc">
-            <Download :value="text" :name="record.fileName" :type="DownloadType.net"></Download>
+            <template v-if="partner">
+              <Download :value="text" :name="record.fileName" :type="DownloadType.net" :cookie="record.cookie"></Download>
+            </template>
+            <template v-else>
+              <Download :value="text" :name="record.fileName" :type="DownloadType.net"></Download>
+            </template>
           </template>
           <template v-else>
             <Download></Download>

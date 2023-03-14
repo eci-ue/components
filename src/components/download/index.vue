@@ -7,10 +7,9 @@
 import Icon from "../icon";
 import { PropType, computed, ref } from "vue";
 import UrlPattern from "url-pattern";
-import { DownloadType, Env, NetApi, DomainApi } from "./type";
-import * as message from "@ue/message";
-import safeGet from "@fengqiaogang/safe-get";
-import { downloadFile, fileDownloadUrl, path } from "@ue/utils";
+import { DownloadType, Env } from "./type";
+import download from "./util";
+import type { HookFunction } from "@ue/utils";
 
 const props = defineProps({
   /** 文件地址 */
@@ -32,6 +31,21 @@ const props = defineProps({
     default () {
       return DownloadType.oss;
     }
+  },
+  /** 文件下载时身份认证或其余附加数据 */
+  cookie: {
+    type: Object,
+    required: false,
+  },
+  /** 触发前钩子 */
+  before: {
+    required: false,
+    type: [Function, Array] as PropType<HookFunction | HookFunction[]>
+  },
+  /** 触发后钩子 */
+  after: {
+    required: false,
+    type: [Function, Array] as PropType<HookFunction | HookFunction[]>
   }
 });
 
@@ -62,53 +76,8 @@ const onDownload = function() {
   if (!props.value) {
     return false;
   }
-  const tips = "Download success, Please check your browser's download records";
-
-  if (props.type === DownloadType.oss) {
-    const url = fileDownloadUrl(props.value);
-    downloadFile(url, props.name);
-    message.success(tips);
-    return;
-  }
-
-  if (props.type === DownloadType.net) {
-    const content = iframe.value?.contentWindow;
-    // @ts-ignore
-    const Control = safeGet(content, "Eci.Control.DownloadControl");
-    if (Control) {
-      // @ts-ignore
-      const download = new Control(
-        { IsSingleProgress: false, fileNameSource: ' ' },
-        {
-          complete: () => message.success(tips),
-          close () {},
-          error (err: string) {
-            if (typeof err === "string") {
-              message.error(err);
-            } else {
-              message.error("Network error");
-            }
-          }
-        }
-      );
-
-      const query = {
-        ServerFileID: 2,
-        Url: NetApi[env.value],
-        RealPath: props.value.replace('/\\/g', '\\\\'),
-        FullName: `\\${props.name}`
-      };
-      download.showDownload([query]);
-    }
-    return;
-  }
-
-  if (props.type === DownloadType.file) {
-    const link = path.join(DomainApi[env.value], "service-file", props.value);
-    downloadFile(link, props.name);
-    message.success(tips);
-    return;
-  }
+  const content = iframe.value?.contentWindow;
+  download(props as any, content as any, env.value);
 };
 
 </script>

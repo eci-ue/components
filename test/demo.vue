@@ -63,16 +63,16 @@ onMounted(function() {
   //   accept: accept
   // });
 
-  AddLqr({
-    id: 1,
-    file: 1,
-    partner: true
-  }, {
-    onOk: function(state: object) {
-      console.log(state);
-      // return api.project.saveLqr(state, true);
-    }
-  });
+  // AddLqr({
+  //   id: 1,
+  //   file: 1,
+  //   partner: true
+  // }, {
+  //   onOk: function(state: object) {
+  //     console.log(state);
+  //     // return api.project.saveLqr(state, true);
+  //   }
+  // });
 });
 
 const dateMeta = {
@@ -97,11 +97,10 @@ const before = function() {
     <Interrputted :taskId="1"></Interrputted>
 
     <Space>
-      <ExportDownload :file="[1, 2]" :menu="[1, 2]" :before="before"></ExportDownload>
-      <ExportButton :id="12" :language="1" :mode="WorkMode.Transdoc" :pm="false"></ExportButton>
+      <ExportButton :id="100749440" :language="12" :mode="WorkMode.Transdoc" :pm="false" :partner="true"></ExportButton>
     </Space>
 
-    <Alter v-model:value="state" :id="1" @state="stateVal"></Alter>
+    <!-- <Alter v-model:value="state" :id="1" @state="stateVal"></Alter> -->
     <!-- <Enum value="1" :data="TestEnum"></Enum> -->
 
     <!-- <br/> -->

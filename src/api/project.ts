@@ -357,7 +357,12 @@ export default class Project {
     partner: boolean = false,
   ): Promise<PageResult<T>> {
     const params = { projectId, sourceLang: languageId, userType: partner ? 2 : 1 };
-    return { params } as any;
+    const callback = function(data: object) {
+      const list = safeGet<T[]>(data, "taskInfoList") || [];
+      const cookie = safeGet<object[]>(data, "taskPMCookieList") || [];
+      return list.map((item: T) => Object.assign({ cookie }, item));
+    }
+    return { params, callback } as any;
   }
 
 

@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.2.83-7",
+  "version": "0.2.83-8",
   "type": "module",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -35,9 +35,11 @@
     "ali-oss": "^6.17.1",
     "bignumber.js": "^9.1.1",
     "dayjs": "^1.11.7",
-    "url-pattern": "^1.0.3"
+    "url-pattern": "^1.0.3",
+    "js-cookie": "^3.0.1"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.2",
     "@ant-design/icons-vue": "^6.1.0",
     "@js-lion/api": "^0.0.5",
     "@types/ali-oss": "^6.16.7",

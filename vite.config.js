@@ -44,6 +44,7 @@ export default defineConfig({
         /@fengqiaogang/,
         /@js-lion\/api/i,
         /url-pattern/i,
+        /js-cookie/i,
       ],
       output: {
         inlineDynamicImports: true
