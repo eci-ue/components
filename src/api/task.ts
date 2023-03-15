@@ -15,7 +15,7 @@ export default class Task {
     * @param projectId 项目ID
     * @returns 
     */
-  @tryError(false)
+  @tryError(true)
   @post("/:task/task/getPreTask")
   @validate
   getPreTask(@required projectId: string | number): Promise<boolean> {
