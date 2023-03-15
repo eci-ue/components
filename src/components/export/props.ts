@@ -15,7 +15,7 @@ export enum WorkMode {
   Offline = "Offline"
 }
 
-export const headers = function(mode: WorkMode): ColumnsType<object> {
+export const headers = function(mode: WorkMode, pm: boolean = false): ColumnsType<object> {
   const operator = {
     key: "operator", 
     title: 'Operator',
@@ -35,11 +35,20 @@ export const headers = function(mode: WorkMode): ColumnsType<object> {
       { title: 'Operate', dataIndex: "storagePath", key: "operate", align: "center" },
     ];
   }
+  if (pm) {
+    return [
+      { title: 'Task Name', dataIndex: "fileName", key: "name" },
+      { dataIndex: "applyBy", ...operator  },
+      { title: 'Apply Time', dataIndex: "applyOn", key: "date" },
+      { title: 'Finished Time', dataIndex: "finishOn", key: "date" },
+      { title: 'Status', dataIndex: "statusName", key: "status" },
+      { title: 'Operate', dataIndex: "storagePath", key: "operate", align: "center" },
+    ];
+  }
   return [
     { title: 'Task Name', dataIndex: "fileName", key: "name" },
     { dataIndex: "applyBy", ...operator  },
-    { title: 'Apply Time', dataIndex: "applyOn", key: "date" },
-    { title: 'Finished Time', dataIndex: "finishOn", key: "date" },
+    { title: 'Exported On', dataIndex: "applyOn", key: "date" },
     { title: 'Status', dataIndex: "statusName", key: "status" },
     { title: 'Operate', dataIndex: "storagePath", key: "operate", align: "center" },
   ];

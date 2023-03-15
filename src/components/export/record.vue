@@ -115,7 +115,7 @@ const expandedList = function(data: Data) {
 
 <template>
   <div>
-    <Table table-layout="auto" :loading="isLoading" :columns="headers(mode)" :data-source="state.results" :pagination="pagination">
+    <Table table-layout="auto" :loading="isLoading" :columns="headers(mode, pm)" :data-source="state.results" :pagination="pagination">
       <template #bodyCell="{ column, record, text  }">
         <template v-if="column.key ==='operate'">
           <!-- 文件下载 -->

@@ -340,7 +340,13 @@ export default class Project {
     @required languageId: string | number,
   ): Promise<PageResult<T>> {
     const params = { projectId, sourceLang: languageId };
-    return { params } as any;
+    const callback = function(list: T[]) {
+      return list.map((item: T) => {
+        const key = safeGet<string>(item as object, "zipFileId");
+        return Object.assign({ key }, item);
+      });
+    }
+    return { params, callback } as any;
   }
   /**
    * 获取 TransDoc 下载任务列表 （议员）
@@ -360,7 +366,10 @@ export default class Project {
     const callback = function(data: object) {
       const list = safeGet<T[]>(data, "taskInfoList") || [];
       const cookie = safeGet<object[]>(data, "taskPMCookieList") || [];
-      return list.map((item: T) => Object.assign({ cookie }, item));
+      return list.map((item: T) => {
+        const key = safeGet<string>(item as object, "zipFileId");
+        return Object.assign({ cookie, key }, item);
+      });
     }
     return { params, callback } as any;
   }
