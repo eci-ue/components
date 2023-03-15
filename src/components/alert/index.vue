@@ -34,20 +34,17 @@ const { state } = useState.data<TaskInterruptType>(async function () {
     try {
       const status = await api.task.getPreTask(props.id);
       return new TaskInterruptType("", !status);
-    } catch(e) {
+    } catch (e) {
       return new TaskInterruptType();
     }
   }
   return api.task.isTaskInterrupted<TaskInterruptType>(props.id);
 });
 
-const disabled = computed<Boolean>(() => {
-  if (state.value.isInterrupted) {
-    $emit("update:value", state.value.isInterrupted)
-    $emit("state", state.value.isInterrupted)
-    return false;
-  }
-  return true;
+const show = computed<Boolean>(() => {
+  $emit("update:value", state.value.isInterrupted)
+  $emit("state", state.value.isInterrupted)
+  return state.value.isInterrupted;
 });
 
 //提示语
@@ -66,5 +63,5 @@ const interruptedTip = computed<string>(() => {
 </script>
 
 <template>
-  <Alert v-show="!disabled" :message="interruptedTip" type="warning" />
+  <Alert v-show="show" :message="interruptedTip" type="warning" />
 </template>
