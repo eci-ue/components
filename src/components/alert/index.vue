@@ -33,7 +33,7 @@ const { state } = useState.data<TaskInterruptType>(async function () {
   if (props.isPm) {
     try {
       const status = await api.task.getPreTask(props.id);
-      return new TaskInterruptType("", status);
+      return new TaskInterruptType("", !status);
     } catch(e) {
       return new TaskInterruptType();
     }
