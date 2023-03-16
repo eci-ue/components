@@ -1,5 +1,6 @@
 
 import * as _ from "lodash-es";
+import i18n from "../../../utils/i18n";
 import safeGet from "@fengqiaogang/safe-get";
 import { rule as rules } from "@ue/utils";
 import { FormRadio, FormTextarea, FormUpload, FormRadioSkin } from "../../form";
@@ -9,10 +10,10 @@ import type { FormOptionValue } from "@ue/form/types/props";
 import type { ColumnsType } from "ant-design-vue/lib/table";
 
 export const headers: ColumnsType<object> = [
-  { title: "Job", dataIndex: "resourceName", key: "name" },
-  { title: "Task Words", dataIndex: "words", key: "words", align: "right" },
-  { title: "Modify", dataIndex: "modify", key: "modify", align: "right" },
-  { title: "Paid Words", dataIndex: "paidWords", key: "words", align: "right" }
+  { title: i18n.lqr.title.job, dataIndex: "resourceName", key: "name" },
+  { title: i18n.lqr.title.task, dataIndex: "words", key: "words", align: "right" },
+  { title: i18n.lqr.title.modify, dataIndex: "modify", key: "modify", align: "right" },
+  { title: i18n.lqr.title.words, dataIndex: "paidWords", key: "words", align: "right" }
 ];
 
 export const list = function(results: object[]) {
@@ -46,8 +47,8 @@ export const partnerItems = function(): FormOptionValue {
     {
       from: false,
       component: (<div>
-        <p>感谢您抽出宝贵时间填写本质量评估表。本评估表旨在了解 QA 和审校人员对议员译文质量的反馈意见。您的反馈将帮助我们在客观真实评估议员能力和表现的同时，发现并解决潜在的质量问题。</p>
-        <p>请您客观填写以下评估表。</p>
+        <p>{ i18n.lqr.form.description1 }</p>
+        <p>{ i18n.lqr.form.description2 }</p>
       </div>)
     },
     {
@@ -55,57 +56,55 @@ export const partnerItems = function(): FormOptionValue {
       children: [
         {
           key: "rateDocument",
-          lable: "1/4 How would you rate the overall translation quality of the document(s)?",
+          lable: i18n.lqr.form.case1,
           component: FormRadio,
-          rules: rules.text("Please select!"),
+          rules: rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
           meta: {
             skin: FormRadioSkin.normal,
             list: [
-              { value: "1", name: "Ececllent" },
-              { value: "2", name: "Good" },
-              { value: "3", name: "Fair" },
-              { value: "4", name: "Poor" },
-              { value: "5", name: "Very Bad" }
+              { value: "1", name: i18n.lqr.form.option.ececllent },
+              { value: "2", name: i18n.lqr.form.option.good },
+              { value: "3", name: i18n.lqr.form.option.fair },
+              { value: "4", name: i18n.lqr.form.option.poor },
+              { value: "5", name: i18n.lqr.form.option.verybad }
             ]
           }
         },
         {
           key: "rateWork",
-          lable: "2/4 Which item(s) do you think are the main quality issues of the translation work?",
+          lable: i18n.lqr.form.case2,
           component: FormRadio,
-          rules: rules.text("Please select!"),
+          rules: rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
           meta: {
             skin: FormRadioSkin.normal,
             list: [
-              { value: "1", name: "Accuracy(comprehension)" },
-              { value: "2", name: "Readability" },
-              { value: "3", name: "Formatting" },
-              { value: "4", name: "Terminology" },
-              { value: "5", name: "Carelessness(type, Grammatical errors, etc)" }
+              { value: "1", name: i18n.lqr.form.option.accuracy },
+              { value: "2", name: i18n.lqr.form.option.readability },
+              { value: "3", name: i18n.lqr.form.option.formatting },
+              { value: "4", name: i18n.lqr.form.option.terminology },
+              { value: "5", name: i18n.lqr.form.option.carelessness }
             ]
           }
         },
         {
           key: "rateCompliance",
-          lable: `3/4 How would you rate the translator's compliance with the project requirement and consistence with language assets, such as project
-          instructions, style guide, glossaries, translation memories, ets?
-          `,
+          lable: i18n.lqr.form.case3,
           component: FormRadio,
-          rules: rules.text("Please select!"),
+          rules: rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
           meta: {
             skin: FormRadioSkin.normal,
             list: [
-              { value: "1", name: "Good" },
-              { value: "2", name: "Fair" },
-              { value: "3", name: "Poor" },
+              { value: "1", name: i18n.lqr.form.option.good },
+              { value: "2", name: i18n.lqr.form.option.fair },
+              { value: "3", name: i18n.lqr.form.option.poor },
             ]
           }
         },
         {
           key: "advice",
-          lable: `4/4 Would you like to give some specific advice or examples of noteworthy errors?`,
+          lable: i18n.lqr.form.case4,
           component: FormTextarea,
-          rules: rules.text("Please input give some specific advice!"),
+          rules: rules.text(i18n.lqr.form.comment),
           meta: {
             maxLength: 1000
           }
@@ -113,13 +112,13 @@ export const partnerItems = function(): FormOptionValue {
         {
           key: "LQRFileUrl",
           lable: (<span>
-            <span>LQR File</span>
-            <a class="ml-2" target="_blank" href="/assets/project/lqr_template.xlsx" download="lqr_template.xlsx">Download LQR Template</a>
+            <span>{ i18n.lqr.title.lqrFile }</span>
+            <a class="ml-2" target="_blank" href="/assets/project/lqr_template.xlsx" download="lqr_template.xlsx">{ i18n.lqr.form.download }</a>
           </span>),
           component: FormUpload,
-          rules: rules.text("Please Upload LQR File"),
+          rules: rules.text(i18n.lqr.form.upload),
           meta: {
-            placeholder: "Please Upload LQR File",
+            placeholder: i18n.lqr.form.upload,
             transform: function(data: UploadFile): string | undefined {
               if (data) {
                 return data.url;
