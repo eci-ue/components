@@ -5,6 +5,7 @@ import { useState } from "@ue/utils";
 import { Table, Space, Tag } from "ant-design-vue";
 import { headers, list } from "./util";
 import Icon from "../../icon";
+import i18n from "../../../utils/i18n";
 
 const props = defineProps({
   /** 任务ID */
@@ -30,7 +31,7 @@ const { state } = useState.list(api.project.lqrList(props.id));
             </Tag>
           </template>
         </div>
-        <span>Level: {{ data.level }}</span>
+        <span>{{ i18n.template(i18n.lqr.title.lqrLevel, { level: data.level }) }}</span>
       </div>
       <Table class="mt-4" :columns="headers" :data-source="data.list" bordered :pagination="false">
         <template #bodyCell="{ column, text }">

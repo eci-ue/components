@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { confirm } from "@ue/model";
 import { lazyload } from "@ue/utils";
 import { Button } from "ant-design-vue";
+import i18n from "../../../utils/i18n";
 
 const props = defineProps({
   /** 任务ID */
@@ -42,7 +43,9 @@ const className = computed<string[]>(function() {
 
 </script>
 <template>
-  <Button v-if="toNumber(level) > 0" :class="className" @click="onClick">LQR Result: Level {{ level }}</Button>
+  <Button v-if="toNumber(level) > 0" :class="className" @click="onClick">
+    <span>{{ i18n.template(i18n.lqr.title.lqrResult, { level: level }) }}</span>
+  </Button>
 </template>
 <style scoped lang="scss">
 

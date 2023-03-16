@@ -3,6 +3,8 @@ import { form } from "@ue/form";
 import { confirm } from "@ue/model";
 import AddLqrForm from "./add.vue";
 import { partnerItems } from "./util";
+import i18n from "../../../utils/i18n";
+
 import type { Component } from "vue";
 import type { ModalFuncProps } from "ant-design-vue";
 
@@ -28,10 +30,14 @@ export const AddLqr = function<T>(option: Option, config: ModalFuncProps = {}) {
     }
     return form<T>(partnerItems(), Object.assign({
       width: 920,
-      title: "Submit Targeted Quality Report"
+      title: i18n.lqr.title.lqrReport
     }, config || {}));
   }
-  return confirm<Component, T>(AddLqrForm, Object.assign({ 
-    title: "Upload LQR", width: 380, okText: "Save" }, config || {}
+  return confirm<Component, T>(AddLqrForm, Object.assign(
+    { 
+      width: 380, 
+      okText: i18n.common.button.save,
+      title: i18n.lqr.title.lqrUpload
+    }, config || {}
   ), params);
 }
