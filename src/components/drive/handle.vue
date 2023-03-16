@@ -6,6 +6,7 @@
 
 import * as _ from "lodash-es";
 import { api } from "../../api";
+import i18n from "../../utils/i18n";
 import { rule as rules } from "@ue/utils";
 import { form } from "@ue/form"
 import { FileType, FileOperate, FileItem } from "./props";

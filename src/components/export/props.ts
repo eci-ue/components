@@ -1,3 +1,4 @@
+import i18n from "../../utils/i18n";
 import { h as createElement } from "vue";
 import safeGet from "@fengqiaogang/safe-get";
 import type { ColumnsType } from "ant-design-vue/lib/table";
@@ -18,7 +19,7 @@ export enum WorkMode {
 export const headers = function(mode: WorkMode, pm: boolean = false): ColumnsType<object> {
   const operator = {
     key: "operator", 
-    title: 'Operator',
+    title: i18n.project.label.operator,
     "class": "whitespace-nowrap",
     customRender(data: object) {
       const text = safeGet<string>(data, "text");
@@ -27,36 +28,36 @@ export const headers = function(mode: WorkMode, pm: boolean = false): ColumnsTyp
   }
   if (mode === WorkMode.Memoq) {
     return [
-      { title: 'Task Name', dataIndex: "taskName", key: "name" },
+      { title: i18n.project.label.taskName, dataIndex: "taskName", key: "name" },
       { dataIndex: "createUser", ...operator },
-      { title: 'Apply Time', dataIndex: "applyTime", key: "date" },
-      { title: 'Finished Time', dataIndex: "finishTime", key: "date" },
-      { title: 'Status', dataIndex: "status", key: "status" },
-      { title: 'Operate', dataIndex: "storagePath", key: "operate", align: "center" },
+      { title: i18n.project.label.applyTime, dataIndex: "applyTime", key: "date" },
+      { title: i18n.project.label.finishTime, dataIndex: "finishTime", key: "date" },
+      { title: i18n.common.label.status, dataIndex: "status", key: "status" },
+      { title: i18n.project.label.operate, dataIndex: "storagePath", key: "operate", align: "center" },
     ];
   }
   if (pm) {
     return [
-      { title: 'Task Name', dataIndex: "fileName", key: "name" },
+      { title: i18n.project.label.taskName, dataIndex: "fileName", key: "name" },
       { dataIndex: "applyBy", ...operator  },
-      { title: 'Apply Time', dataIndex: "applyOn", key: "date" },
-      { title: 'Finished Time', dataIndex: "finishOn", key: "date" },
-      { title: 'Status', dataIndex: "statusName", key: "status" },
-      { title: 'Operate', dataIndex: "storagePath", key: "operate", align: "center" },
+      { title: i18n.project.label.applyTime, dataIndex: "applyOn", key: "date" },
+      { title: i18n.project.label.finishTime, dataIndex: "finishOn", key: "date" },
+      { title: i18n.common.label.status, dataIndex: "statusName", key: "status" },
+      { title: i18n.project.label.operate, dataIndex: "storagePath", key: "operate", align: "center" },
     ];
   }
   return [
-    { title: 'Task Name', dataIndex: "fileName", key: "name" },
+    { title: i18n.project.label.taskName, dataIndex: "fileName", key: "name" },
     { dataIndex: "applyBy", ...operator  },
-    { title: 'Exported On', dataIndex: "applyOn", key: "date" },
-    { title: 'Status', dataIndex: "statusName", key: "status" },
-    { title: 'Operate', dataIndex: "storagePath", key: "operate", align: "center" },
+    { title: i18n.project.label.exportedOn, dataIndex: "applyOn", key: "date" },
+    { title: i18n.common.label.status, dataIndex: "statusName", key: "status" },
+    { title: i18n.project.label.operate, dataIndex: "storagePath", key: "operate", align: "center" },
   ];
 };
 
 export const expanded = [
   { title: '#', dataIndex: "index", key: "index" },
-  { title: 'File Name', dataIndex: "value", key: "value" },
+  { title: i18n.project.label.fileName, dataIndex: "value", key: "value" },
 ]
 
 export interface ExportedFile {

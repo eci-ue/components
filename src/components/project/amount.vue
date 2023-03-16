@@ -6,6 +6,7 @@
 
 import * as _ from "lodash-es";
 import { PropType } from "vue";
+import i18n from "../../utils/i18n";
 import BigNumber from "bignumber.js";
 import { taskPhaseList } from "./type";
 import safeGet from "@fengqiaogang/safe-get";
@@ -62,26 +63,26 @@ const amount = function(list: AmountItemData[]): string {
         <table class="table-fixed">
           <thead class="ant-table-thead">
             <tr>
-              <th class="ant-table-cell">Service Type</th>
-              <th class="ant-table-cell">Item</th>
+              <th class="ant-table-cell">{{ i18n.project.detail.type }}</th>
+              <th class="ant-table-cell">{{ i18n.project.label.amount }}</th>
               <th class="ant-table-cell">
                 <span class="block text-right">
-                  <span>Workload</span>
+                  <span>{{ i18n.project.detail.workLoad }}</span>
                   <span class="ml-1" v-if="workUnit">({{ workUnit }})</span>
                 </span>
               </th>
               <th class="ant-table-cell">
                 <span class="block text-right">
-                  <span>Unit Price</span>
+                  <span>{{ i18n.project.detail.unitPrice }}</span>
                   <span class="ml-1" v-if="moneyUnit">({{ moneyUnit }})</span>
                 </span>
               </th>
               <th class="ant-table-cell">
-                <span class="block text-right">Discount</span>
+                <span class="block text-right">{{ i18n.project.detail.discount }}</span>
               </th>
               <th class="ant-table-cell">
                 <span class="block text-right">
-                  <span>Subtotal</span>
+                  <span>{{ i18n.project.detail.subtotal }}</span>
                   <span class="ml-1" v-if="moneyUnit">({{ moneyUnit }})</span>
                 </span>
               </th>
@@ -97,7 +98,7 @@ const amount = function(list: AmountItemData[]): string {
               <td class="ant-table-cell text-right">{{ toFixed(task<number>(index, "subTotal"), 4) }}</td>
             </tr>
             <tr>
-              <td class="ant-table-cell">JAS Amount</td>
+              <td class="ant-table-cell">{{ i18n.project.label.amount }}</td>
               <td class="ant-table-cell text-right" colspan="5">{{ amount(list) }}</td>
             </tr>
           </tbody>

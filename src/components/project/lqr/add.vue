@@ -6,11 +6,11 @@
 
  import _ from "lodash-es";
 import { api } from "../../../api";
-import { ref, reactive, toRaw } from "vue";
+import { reactive, toRaw, computed } from "vue";
 import { UploadLqr } from "./type";
 import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
-
+import i18n from "../../../utils/i18n";
 import Upload, { UploadSkin } from "../../upload";
 import { Form, FormItem, Button, RadioGroup, RadioButton, InputNumber } from "ant-design-vue";
 
@@ -30,15 +30,17 @@ const props = defineProps({
 
 const formState = reactive<UploadLqr>(new UploadLqr());
 
-const LevelList = ref([
-  { name: 'Level 1- Perfect', value: 1 },
-  { name: 'Level 2- Excellent', value: 2 },
-  { name: 'Level 3- Good', value: 3 },
-  { name: 'Level 4- OK', value: 4 },
-  { name: 'Level 5- Bad', value: 5 },
-  { name: 'Level 6- Very Bad', value: 6 },
-  { name: 'Level 7- Totally Unacceptable', value: 7 },
-]);
+const LevelList = computed(function() {
+  return [
+    { name: i18n.lqr.level.case1, value: 1 },
+    { name: i18n.lqr.level.case2, value: 2 },
+    { name: i18n.lqr.level.case3, value: 3 },
+    { name: i18n.lqr.level.case4, value: 4 },
+    { name: i18n.lqr.level.case5, value: 5 },
+    { name: i18n.lqr.level.case6, value: 6 },
+    { name: i18n.lqr.level.case7, value: 7 },
+  ];
+});
 
 //计算 memoq penalty point 对应级别接口
 const onCalculate = async function () {
@@ -75,7 +77,7 @@ defineExpose({ submit: onSubmit });
 <template>
   <div>
     <Form ref="formRef" layout="vertical" class="my-4 w-full" :model="formState">
-      <FormItem label="" name="point" :rules="rules.text('Please Calculate Language Quality Level')">
+      <FormItem label="" name="point" :rules="rules.text(i18n.lqr.rule.level)">
         <div class="flex w-full">
           <div class="flex-1">
             <InputNumber class="w-full"
@@ -83,24 +85,24 @@ defineExpose({ submit: onSubmit });
               :precision="0" 
               v-model:value.trim="formState.point" 
               :max="9999999"
-              placeholder="MemoQ penalty point" 
+              :placeholder="i18n.lqr.placeholder.memoq" 
               @pressEnter="onCalculate" 
               @change="changePoint" />
           </div>
-          <Button class="ml-4" type="primary" :disabled="!formState.point" @click="onCalculate">calculate</Button>
+          <Button class="ml-4" type="primary" :disabled="!formState.point" @click="onCalculate">{{ i18n.lqr.title.calculate }}</Button>
         </div>
       </FormItem>
 
-      <FormItem label="Language Quality Level:" name="level" :rules="rules.text('')">
+      <FormItem :label="i18n.lqr.title.LanguageLevel" name="level" :rules="rules.text('')">
         <RadioGroup :value="formState.level" class="level-box">
           <RadioButton :value="item.value" :key="item.value" v-for="item in LevelList">{{ item.name }}</RadioButton>
         </RadioGroup>
       </FormItem>
 
       <FormItem 
-        label="Language Quality Report:" 
+        :label="i18n.lqr.title.languageReport" 
         name="reportPath"
-        :rules="rules.text('Please Upload Language Quality Report')">
+        :rules="rules.text(i18n.lqr.rule.languageReport)">
         <Upload class="w-full" :name="formState.fileName" :drive="true" label="Upload" :multiple="true" :skin="UploadSkin.input" @success="onUpload"></Upload>
       </FormItem>
     </Form>

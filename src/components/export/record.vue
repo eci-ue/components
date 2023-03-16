@@ -5,6 +5,7 @@
  */
 import * as _ from "lodash-es";
 import { api } from "../../api";
+import i18n from "../../utils/i18n";
 import { Table } from "ant-design-vue";
 import { PropType, onMounted } from "vue";
 import Download from "../download/index.vue";
@@ -139,16 +140,24 @@ const expandedList = function(data: Data) {
         </template>
         <template v-else-if="column.key ==='status'">
           <template v-if="exportStatus(record) === ExportStatus.prepare">
-            <span class="border-pending-500 bg-pending-200 text-pending py-1 px-2 inline-block rounded-sm border border-solid">Pending</span>
+            <span class="border-pending-500 bg-pending-200 text-pending py-1 px-2 inline-block rounded-sm border border-solid">
+              {{ i18n.project.status.pending }}
+            </span>
           </template>
           <template v-if="exportStatus(record) === ExportStatus.inPogress">
-            <span class="border-progress-500 bg-progress-200 text-progress py-1 px-2 inline-block rounded-sm border border-solid">In progress</span>
+            <span class="border-progress-500 bg-progress-200 text-progress py-1 px-2 inline-block rounded-sm border border-solid">
+              {{ i18n.project.status.pending }}
+            </span>
           </template>
           <template v-if="exportStatus(record) === ExportStatus.success">
-            <span class="border-primary-500 bg-primary-200 text-primary py-1 px-2 inline-block rounded-sm border border-solid">Finished</span>
+            <span class="border-primary-500 bg-primary-200 text-primary py-1 px-2 inline-block rounded-sm border border-solid">
+              {{ i18n.project.export.status.finished }}
+            </span>
           </template>
           <template v-if="exportStatus(record) === ExportStatus.abnormal">
-            <span class="border-error-500 bg-error-200 text-error py-1 px-2 inline-block rounded-sm border border-solid">Rejected</span>
+            <span class="border-error-500 bg-error-200 text-error py-1 px-2 inline-block rounded-sm border border-solid">
+              {{ i18n.project.export.status.rejected }}
+            </span>
           </template>
         </template>
       </template>
@@ -159,7 +168,7 @@ const expandedList = function(data: Data) {
       </template>
     </Table>
     <div class="text-center mt-3">
-      <Button @click="onCancel">Cancel</Button>
+      <Button @click="onCancel">{{ i18n.common.button.cancel }}</Button>
     </div>
   </div>
 </template>

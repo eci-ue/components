@@ -6,6 +6,7 @@
 
 import * as _ from "lodash-es";
 import { api } from "../../../api";
+import i18n from "../../../utils/i18n";
 import DBlist from "@fengqiaogang/dblist";
 import { ref, onMounted, PropType, computed } from "vue";
 
@@ -76,7 +77,7 @@ const getList = function(id: string | number) {
 
 const getSelectedName = function(): string {
   if (currentFolder.value === props.rootId) {
-    return "All Files";
+    return i18n.project.label.allFile;
   }
   const data = db.selectOne<FileItem>({
     [primaryKey]: currentFolder.value
@@ -90,7 +91,7 @@ const getSelectedName = function(): string {
 const breadcrumbList = function(): FileItem[] {
   const root = {
     id: props.rootId, 
-    name: "All Files"
+    name: i18n.project.label.allFile
   };
   const list = db.parentDeepFlatten<FileItem>({
     [primaryKey]: currentFolder.value
@@ -196,9 +197,7 @@ onMounted(function() {
         </div>
         <div class="text-center">
           <Space class="text-sm text-text-gray">
-            <span>Move to</span>
-            <span>{{ getSelectedName() }}</span>
-            <span>Folder</span>
+            <span>{{ i18n.template(i18n.project.label.moveFile, { name: getSelectedName() }) }}</span>
           </Space>
         </div>
       </div>

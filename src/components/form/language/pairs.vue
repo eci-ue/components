@@ -5,6 +5,7 @@
  */
 
 import * as _ from "lodash-es";
+import i18n from "../../../utils/i18n";
 import { computed, PropType, ref } from "vue";
 import { CheckboxGroup, Checkbox } from "ant-design-vue";
 import { LanguagePairs } from "../../language";
@@ -92,7 +93,7 @@ const allText = computed<string>(function() {
   if (props.meta?.title) {
     return props.meta?.title;
   }
-  return "All Languages";
+  return i18n.project.label.allLanguages;
 });
 </script>
 

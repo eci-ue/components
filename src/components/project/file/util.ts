@@ -1,15 +1,16 @@
 
 import * as _ from "lodash-es";
+import i18n from "../../../utils/i18n";
 import { TaskFileItem, TaskFileStage, View } from "./type";
 
 export const headers = function(fileList: TaskFileItem[] = [], view: View = View.innter) {
   const prev = [{ 
-    title: "Files", 
+    title: i18n.part(i18n.common.label.file, 1), 
     dataIndex: "bilingualFileName", 
     key: "name"
   }];
   const next = [{ 
-    title: "LQR", 
+    title: i18n.lqr.title.lqr, 
     dataIndex: "lqrName", 
     key: "lqr"
   }];

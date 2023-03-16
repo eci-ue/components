@@ -186,7 +186,8 @@ const catFileDetail = async function(value: string): Promise<void> {
       </Space>
       <slot>
         <Space>
-          <span>CAT tools:</span><span>{{ mode }}</span>
+          <span>{{ i18n.project.label.cat }}:</span>
+          <span>{{ mode }}</span>
         </Space>
       </slot>
     </div>

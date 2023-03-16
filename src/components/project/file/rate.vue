@@ -15,7 +15,7 @@ import type { TaskFileStage } from "./type";
 
 defineProps({
   data: {
-    required: true,
+    required: false,
     type: Object as PropType<TaskFileStage>,
   },
   mode: {

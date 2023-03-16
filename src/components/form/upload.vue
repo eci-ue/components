@@ -5,6 +5,7 @@
  */
 
 import * as _ from "lodash-es";
+import i18n from "../../utils/i18n";
 import { computed, PropType, ref } from "vue";
 import Upload, { UploadSkin } from "../upload";
 
@@ -74,7 +75,7 @@ const onSuccess = function(value: UploadFile) {
       :placeholder="placeholder" 
       :skin="UploadSkin.input" 
       :showProgress="false" 
-      label="Upload">
+      :label="i18n.common.button.upload">
     </Upload>
   </div>
 </template>

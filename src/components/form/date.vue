@@ -6,6 +6,7 @@
  */
 
 import { date } from "@ue/utils";
+import i18n from "../../utils/i18n";
 import dayjs, { Dayjs } from 'dayjs';
 import { computed, PropType } from "vue";
 import { DatePicker } from "ant-design-vue";
@@ -46,7 +47,7 @@ const placeholder = computed<string>(function () {
   if (props.meta?.placeholder) {
     return props.meta.placeholder;
   }
-  return "Please select Date";
+  return i18n.template(i18n.common.placeholder.select, { label: i18n.common.label.date });
 });
 
 const text = computed<string>({
