@@ -4,11 +4,11 @@
  * @author svon.me@gmail.com
  */
 
-import Link from "../../link";
 import Icon from "../../icon";
 import * as _ from "lodash-es";
 import { PropType } from "vue";
 import { api } from "../../../api";
+import i18n from "../../../utils/i18n";
 import * as message from "@ue/message";
 import { headers, fileList } from "./util";
 import safeGet from "@fengqiaogang/safe-get";
@@ -24,6 +24,7 @@ import { ExportDownload, ExportButton } from "../../export";
 import type { WorkMode } from "../../export";
 import type { HookFunction } from "@ue/utils";
 import type { TaskFileItem, View } from "./type";
+
 
 const $emit = defineEmits(["reload"]);
 
@@ -222,7 +223,7 @@ const catFileDetail = async function(value: string): Promise<void> {
             <Button v-else type="link" class="text-sm" @click="onAddLqr($event, record)">
               <span class="flex items-center">
                 <Icon class="flex mr-1" type="icon-a-add"></Icon>
-                <span>Add Lqr</span>
+                <span>{{ i18n.common.button.addLqr }}</span>
                 <span class="count-item ml-0.5"></span>
               </span>
             </Button>

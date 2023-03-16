@@ -5,6 +5,7 @@
  */
 
 import * as _ from "lodash-es";
+import i18n from "../../utils/i18n";
 import { PropType, ref, computed } from "vue";
 import { UploadSkin } from "./props";
 import * as upload from "../../utils/upload";
@@ -45,7 +46,7 @@ const props = defineProps({
   // 上传按钮 label 名称
   label: {
     type: String,
-    default: "Upload File"
+    required: false,
   },
   // 上传后的文件名
   name: {
@@ -66,6 +67,10 @@ const emit = defineEmits(["update:progress", "success", "submit"]);
 const visible = ref<boolean>(false);
 
 const fileList = ref<Upload[]>([]);
+
+const labelValue = computed<string>(function() {
+  return props.label || i18n.common.label.fileUpload;
+});
 
 // 上传进度处理
 const onUploadChange = async function (url: string, data: Upload) {
@@ -161,7 +166,7 @@ defineExpose([onflush, onSubmit]);
         <span class="ant-btn" disabled>
           <i class="flex items-center not-italic">
             <Icon type="cloud-upload-outlined"></Icon>
-            <span class="ml-2">{{ label }}</span>
+            <span class="ml-2">{{ labelValue }}</span>
           </i>
         </span>
       </template>
@@ -175,7 +180,7 @@ defineExpose([onflush, onSubmit]);
         <span class="ant-btn ant-btn-primary text-white">
           <i class="flex items-center not-italic">
             <Icon class="text-xl" type="icon-in-file"></Icon>
-            <span class="ml-2">{{ label }}</span>
+            <span class="ml-2">{{ labelValue }}</span>
           </i>
         </span>
       </template>
@@ -185,7 +190,7 @@ defineExpose([onflush, onSubmit]);
         <span class="ant-btn" disabled>
           <i class="flex items-center not-italic">
             <Icon type="icon-a-upload"></Icon>
-            <span class="ml-2">{{ label }}</span>
+            <span class="ml-2">{{ labelValue }}</span>
           </i>
         </span>
       </template>
@@ -199,7 +204,7 @@ defineExpose([onflush, onSubmit]);
         <span class="ant-btn">
           <i class="flex items-center not-italic">
             <Icon type="icon-a-upload"></Icon>
-            <span class="ml-2">{{ label }}</span>
+            <span class="ml-2">{{ labelValue }}</span>
           </i>
         </span>
       </template>
@@ -216,7 +221,7 @@ defineExpose([onflush, onSubmit]);
             </span>
             <span class="flex items-center select-none">
               <Icon type="upload-outlined"></Icon>
-              <span class="ml-1">{{ label }}</span>
+              <span class="ml-1">{{ labelValue }}</span>
             </span>
           </label>
         </template>
@@ -232,8 +237,14 @@ defineExpose([onflush, onSubmit]);
       <slot></slot>
     </label>
     <template v-if="showProgress">
-      <Modal title="Upload Process" v-model:visible="visible" :centered="true" :mask-closable="false" ok-text="Confirm"
-        @ok="onSubmit" @cancel="onCancel">
+      <Modal 
+        title="Upload Process" 
+        v-model:visible="visible" 
+        :centered="true" 
+        :mask-closable="false" 
+        :ok-text="i18n.common.button.confirm"
+        @ok="onSubmit" 
+        @cancel="onCancel">
         <Progress :file-list="fileList"></Progress>
       </Modal>
     </template>

@@ -19,6 +19,8 @@ types/*
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+.yalc
+.yalc.lock
 .idea
 .DS_Store
 *.suo

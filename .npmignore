@@ -3,6 +3,8 @@
 .DS_Store
 .npmrc
 .git
+.yalc
+.yalc.lock
 src
 scripts
 node_modules

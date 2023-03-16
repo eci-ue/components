@@ -6,6 +6,7 @@
 
 import { api } from "../../api";
 import { hook } from "@ue/utils";
+import i18n from "../../utils/i18n";
 import * as message from "@ue/message";
 import { PropType, computed } from "vue";
 import { Dropdown, Button, Menu, MenuItem } from "ant-design-vue";
@@ -87,8 +88,8 @@ const menuItems = computed<string[]>(function () {
 });
 
 const menuTexts = new Map<string, string>();
-menuTexts.set("2", "Current target files");
-menuTexts.set("1", "Current xliff files");
+menuTexts.set("2", i18n.project.export.target);
+menuTexts.set("1", i18n.project.export.xliff);
 
 
 /** 文件导出 */
@@ -115,7 +116,7 @@ const onExport = async function (value: number | string) {
       props.partner ? 2 : 1
     );
   } else {
-    message.error("System Exception !");
+    message.error(i18n.message.SYSTEM_ERROR);
   }
 };
 
@@ -123,7 +124,7 @@ const exportFIle = computed<string>(() => {
   if (props.exportText) {
     return props.exportText
   }
-  return "Export FIle"
+  return i18n.common.label.export
 })
 
 </script>

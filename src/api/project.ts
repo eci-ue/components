@@ -4,6 +4,7 @@
  */
 
 import * as _ from "lodash-es";
+import i18n from "../utils/i18n";
 import { PageResult } from "@ue/utils";
 import { $error, $success } from "@ue/message";
 import { transformPairs } from "../utils";
@@ -58,7 +59,7 @@ export default class Project {
    * @returns 
    */
   @tryError(false)
-  @$error("Added failed, please contact administrator or try again later.")
+  @$error(i18n.message.ADDED_Failed)
   @post("/:project/cat/file/uploud/drive")
   @validate
   uploadDrive(
@@ -73,7 +74,7 @@ export default class Project {
 
   // 直接上传文件
   @tryError(false)
-  @$error("Added failed, please contact administrator or try again later.")
+  @$error(i18n.message.ADDED_Failed)
   @post("/:project/cat/file/uploud/direct")
   @validate
   uploadDirect<D>(
@@ -94,7 +95,7 @@ export default class Project {
 
   // 删除文件
   @tryError(false)
-  @$error("Delete failed, please contact administrator or try again later.")
+  @$error(i18n.message.DELETE_Failed)
   @post("/:project/cat/file/delete/:projectId")
   @validate
   removeFile(
@@ -135,7 +136,7 @@ export default class Project {
 
   // 设置语言对
   @tryError(false)
-  @$error("Edit failed, please contact administrator or try again later.")
+  @$error(i18n.message.EDIT_Failed)
   @post("/:project/cat/file/set-lpairs")
   @validate
   setPairs<D = object>(@required fileIds: Array<string | number>, @required languagePairs: D): Promise<boolean> {
@@ -180,7 +181,7 @@ export default class Project {
   }
   // 设置task语言对
   @tryError(false)
-  @$error("Edit failed, please contact administrator or try again later.")
+  @$error(i18n.message.EDIT_Failed)
   @post("/:task/file/setFileLanguagePair")
   @validate
   setTaskPairs<D>(@required fileIds: Array<string | number>, @required languagePairs: D): Promise<boolean> {
@@ -231,7 +232,7 @@ export default class Project {
 
   // 上传task任务的文件
   @tryError(false)
-  @$error("Added failed, please contact administrator or try again later.")
+  @$error(i18n.message.ADDED_Failed)
   @post("/:task/file/uploadFile")
   @validate
   uploadTaskFile<D>(
@@ -255,7 +256,7 @@ export default class Project {
    * @returns 
    */
   @tryError(false)
-  @$error("Added failed, please contact administrator or try again later.")
+  @$error(i18n.message.ADDED_Failed)
   @post("/:task/file/uploadOssFolder")
   @validate
   uploadTaskDrive(
@@ -269,7 +270,7 @@ export default class Project {
 
   //删除task任务相关文件接口
   @tryError(false)
-  @$error("Delete failed, please contact administrator or try again later.")
+  @$error(i18n.message.DELETE_Failed)
   @post("/:task/file/deleteFile")
   @validate
   deleteTaskFile<D = string | number>(@required fileIds: D[]): Promise<boolean> {
@@ -288,7 +289,7 @@ export default class Project {
    */
   @tryError(false)
   @$error()
-  @$success(`Export process start successfully, check result in "Export Record"`)
+  @$success(i18n.message.export.success)
   @post("/:task/bilingual/export")
   @validate
   fileExport(
@@ -420,7 +421,7 @@ export default class Project {
    */
   @tryError(false)
   @$error()
-  @$success("Saved Successfully")
+  @$success(i18n.message.SAVED_SUCCESSFULLY)
   @validate
   saveLqr<D>(@required data: D, partner: boolean = false): Promise<Boolean> {
     const api = new API();

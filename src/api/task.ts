@@ -4,6 +4,7 @@
  */
 
 import * as _ from "lodash-es";
+import i18n from "../utils/i18n";
 import { $error, $success } from "@ue/message";
 import { validate, required, get, post, tryError } from "@js-lion/api";
 import { $debounce } from "@ue/utils";
@@ -38,7 +39,7 @@ export default class Task {
   //合作伙伴评价
   @tryError(false)
   @$error()
-  @$success("Saved Successfully!")
+  @$success(i18n.message.SAVED_SUCCESSFULLY)
   @post("/:task/task/ratePartner/save")
   @validate
   saveRatePartner<D>(@required data: D): Promise<boolean> {
@@ -48,7 +49,7 @@ export default class Task {
   //生成平账任务
   @tryError(false)
   @$error()
-  @$success("Saved Successfully!")
+  @$success(i18n.message.SAVED_SUCCESSFULLY)
   @get("/:task/task/hedgeJAS/:taskId")
   @validate
   hedgeJAS(@required taskId: string | number): Promise<boolean> {
@@ -59,7 +60,7 @@ export default class Task {
   //confirm
   @tryError(false)
   @$error()
-  @$success("Confirm Successfully!")
+  @$success(i18n.message.CONFIRM_SUCCESSFULLY)
   @get("/:task/task/confirm/:taskId")
   @validate
   confirm(@required taskId: string | number): Promise<boolean> {
@@ -70,7 +71,7 @@ export default class Task {
   //删除任务
   @tryError(false)
   @$error()
-  @$success("Delete Successfully!")
+  @$success(i18n.message.DELETE_SUCCESSFULLY)
   @post("/:task/task/delete")
   @validate
   deleteTask(@required taskId: string | number): Promise<boolean> {
@@ -81,7 +82,7 @@ export default class Task {
   //审批-取消
   @tryError(false)
   @$error()
-  @$success("Cancel Successfully!")
+  @$success(i18n.message.CANCEL_SUCCESSFULLY)
   @get("/:task/task/cancel/:taskId")
   @validate
   cancelTask(@required taskId: string | number): Promise<boolean> {
@@ -92,7 +93,7 @@ export default class Task {
   //任务-审批-拒绝
   @tryError(false)
   @$error()
-  @$success("Reject Successfully!")
+  @$success(i18n.message.REJECT_SUCCESSFULLY)
   @get("/:task/task/reject/:taskId")
   @validate
   rejectTask(@required taskId: string | number): Promise<boolean> {
@@ -108,7 +109,7 @@ export default class Task {
   */
   @tryError(false)
   @$error()
-  @$success("Interrupt Successfully!")
+  @$success(i18n.message.INTERRUPT_SUCCESSFULLY)
   @post("/:task/task/interrupt")
   @validate
   addInterupt(@required taskId: string | number, reason: string = ""): Promise<boolean> {
@@ -119,7 +120,7 @@ export default class Task {
   //议员 页面-任务提交-中断提交按钮接口
   @tryError(false)
   @$error()
-  @$success("submit Successfully!")
+  @$success(i18n.message.SUBMIT_SUCCESSFULLY)
   @post("/:task/task/interrupt/submit")
   @validate
   interruptSubmit<D>(@required data: D): Promise<boolean> {
@@ -133,7 +134,7 @@ export default class Task {
   @$debounce()
   @tryError(false)
   @$error()
-  @$success("submit Successfully!")
+  @$success(i18n.message.SUBMIT_SUCCESSFULLY)
   @post("/:task/task/submit/:taskId")
   @validate
   submit(@required taskId: string | number): Promise<boolean> {

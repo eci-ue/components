@@ -8,6 +8,7 @@ import * as _ from "lodash-es";
 import { api } from "../../api";
 import { WorkMode } from "./props";
 import { ExportFile } from "./util";
+import i18n from "../../utils/i18n";
 import * as message from "@ue/message";
 import { Button } from "ant-design-vue";
 import { PropType, computed } from "vue";
@@ -118,10 +119,10 @@ const onClick = async function() {
       return;
     }
   }
-  message.error("还未设置 Cat Config, 请先设置！");
+  message.error(i18n.message.export.cat);
 };
 </script>
 
 <template>
-  <Button type="primary" :disabled="status" @click.prevent="onClick">Export record</Button>
+  <Button type="primary" :disabled="status" @click.prevent="onClick">{{ i18n.common.label.exportRecord }}</Button>
 </template>

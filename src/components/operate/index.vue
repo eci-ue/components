@@ -3,11 +3,12 @@ import Icon from "../icon";
 import * as _ from "lodash-es";
 import { api } from "../../api";
 import { form } from "@ue/form";
+import i18n from "../../utils/i18n";
 import { confirm as modalComfirm } from "@ue/model";
 import { ratePartner, interupt } from "./util";
 import { computed, reactive, PropType } from "vue";
 import * as message from "@ue/message";
-import { Menu, MenuItem, Button, Space, Modal } from "ant-design-vue";
+import { Menu, MenuItem, Button, Space } from "ant-design-vue";
 import { DoOperation, IconType, Skin, Status } from "./type";
 import type { RatePartner, itemType } from "./type";
 import { lazyload } from "@ue/utils";
@@ -77,8 +78,8 @@ const confirm = async function (name: string) {
 //Rate partner
 const ratePartnerFn = async function (name: string) {
   form(ratePartner(), {
-    okText: "Save",
-    title: "Rate the partner",
+    okText: i18n.common.button.save,
+    title: i18n.operate.title.rate,
     async onOk(data: any) {
       const params = reactive<RatePartner>({
         impression: _.get(data, "impression"),
@@ -99,7 +100,7 @@ const ratePartnerFn = async function (name: string) {
 //interrupts
 const interruptTask = async function (name: string) {
   form(interupt(), {
-    title: "Interupt Reason",
+    title: i18n.operate.title.interupt,
     async onOk(data: any) {
       const status = await api.task.addInterupt(taskId.value, data.reason)
       if (status) {
@@ -111,7 +112,7 @@ const interruptTask = async function (name: string) {
 }
 //delete
 const deleteTask = async function (name: string) {
-  const isOk = await message.confirm('Are you sure delete this task.');
+  const isOk = await message.confirm(i18n.message.task.delete);
   if (isOk) {
     const status = await api.task.deleteTask(taskId.value)
     if (status) {
@@ -121,7 +122,7 @@ const deleteTask = async function (name: string) {
 }
 //cancel
 const cancelTask = async function (name: string) {
-  const isOk = await message.confirm('Are you sure cancel this task.');
+  const isOk = await message.confirm(i18n.message.task.cancel);
   if (isOk) {
     const status = await api.task.cancelTask(taskId.value)
     if (status) {
@@ -132,7 +133,7 @@ const cancelTask = async function (name: string) {
 
 //reject
 const rejectTask = async function (name: string) {
-  const isOk = await message.confirm('Are you sure reject this task.');
+  const isOk = await message.confirm(i18n.message.task.reject);
   if (isOk) {
     const status = await api.task.rejectTask(taskId.value)
     if (status) {
@@ -141,9 +142,8 @@ const rejectTask = async function (name: string) {
   }
 }
 //Hedge Jas
-const tip = `Are you sure you want to create a hedged JAS?The newly created hedging JAS is a JAS with a negative workload that needs to be confirmed by the resource.`
 const onHedge = async function (name: string) {
-  const isOk = await message.confirm(tip);
+  const isOk = await message.confirm(i18n.message.task.hedged);
   if (isOk) {
     const status = await api.task.hedgeJAS(taskId.value)
     if (status) {
@@ -155,7 +155,7 @@ const onHedge = async function (name: string) {
 const onSubmit = async function (name: string) {
   const Submitwork = lazyload(() => import("./work.vue"));
   if (props.item.status == Status.inProgress) {
-    const isOk = await message.confirm('Are you sure submit this task.');
+    const isOk = await message.confirm(i18n.message.task.submit);
     if (isOk) {
       try {
         const status = await api.task.submit(taskId.value);
@@ -166,8 +166,8 @@ const onSubmit = async function (name: string) {
     }
   } else {
     modalComfirm(Submitwork, {
-      title: "Submit Work",
       width: 408,
+      title: i18n.operate.title.work,
       onOk(flag) {
         if (flag) {
           onReload(name)
@@ -185,13 +185,13 @@ const Instruction = lazyload(() => import("./Instruction.vue"));
     workInstructionList: props.item.workInstructionList,
     attachments: props.item.attachments,
   }
-  modalComfirm(Instruction, "Task Instruction", { data });
+  modalComfirm(Instruction, i18n.operate.title.instruction, { data });
 }
 
 const typeButton = function (name: string) {
   return {
     icon:IconType[name],
-    type:name == DoOperation.submit?"primary":"default"
+    type:name == DoOperation.submit ? "primary" : "default"
   } as any
 }
 </script>
