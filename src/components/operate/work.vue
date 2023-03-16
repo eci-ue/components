@@ -9,6 +9,7 @@ import { Form, FormItem, Tag, Slider } from "ant-design-vue";
 import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
 import type { UploadFile } from "../upload/props";
+import i18n from "../../utils/i18n";
 
 const props = defineProps({
   taskId: {
@@ -54,13 +55,13 @@ defineExpose({ submit: onSubmit });
   <div>
     <div>
       <Form ref="formRef" layout="vertical" :model="submitParams">
-        <FormItem label="Percentage of work you have done already">
+        <FormItem :label="i18n.operate.label.percentage">
           <div class="flex items-center">
             <Slider class="flex-1" v-model:value="submitParams.rate" :min="0" :max="100" />
             <span class="ml-2">{{ submitParams.rate }}%</span>
           </div>
         </FormItem>
-        <FormItem label="Attachment" name="attachment" :rules="rules.array('Please Upload Attachment')">
+        <FormItem :label="i18n.operate.label.attachment" name="attachment" :rules="rules.array(i18n.operate.placeholder.attachment)">
           <Upload :drive="true" label="Upload" :skin="UploadSkin.default" @success="onUpload" class="mb-2"></Upload>
           <div class="mb-1" v-for="(file, index) in submitParams.attachment" :key="`${index}-${file.fileName}`">
             <Tag closable @close="deleteFile(index)" class="border-none bg-primary-light">

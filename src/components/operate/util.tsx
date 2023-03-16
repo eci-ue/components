@@ -2,6 +2,7 @@
 import * as _ from "lodash-es";
 import { FormTextarea, FormCheckbox } from "../form/index";
 import type { FormOptionValue, FormItemData } from "@ue/form/types/props";
+import i18n from "../../utils/i18n";
 
 export const ratePartner = function (): FormOptionValue {
   const proactiveCooperation: FormItemData = {
@@ -10,19 +11,19 @@ export const ratePartner = function (): FormOptionValue {
     meta: {
       list: [{
         value: "proactiveCooperation",
-        name: "Proactive Cooperation"
+        name: i18n.operate.list.proactiveCooperation
       }, {
         value: "noQualityAccident",
-        name: "No Quality Accident"
+        name: i18n.operate.list.noQualityAccident
       }, {
         value: "deliveryOnTime",
-        name: "Delivery On Time"
+        name: i18n.operate.list.deliveryOnTime
       }, {
         value: "addToFavorite",
-        name: "Add To Favorite"
+        name: i18n.operate.list.addToFavorite
       }, {
         value: "innerOuterType",
-        name: "Add To This Client’s Resource Pool"
+        name: i18n.operate.list.innerOuterType
       }],
       skin: "vertical"
     }
@@ -30,7 +31,7 @@ export const ratePartner = function (): FormOptionValue {
 
   const comment: FormItemData = {
     key: "impression",
-    lable: "My Impression",
+    lable: i18n.operate.impression,
     component: FormTextarea,
   };
   return [
@@ -41,7 +42,7 @@ export const interupt = function (): FormOptionValue {
   return [
     {
       key: "reason",
-      lable: "Reason",
+      lable: i18n.common.label.reason,
       component: FormTextarea,
     }
   ]

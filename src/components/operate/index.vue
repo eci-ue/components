@@ -179,7 +179,7 @@ const onSubmit = async function (name: string) {
 }
 // 中断信息
 const onInstruction = function (name: string) {
-const Instruction = lazyload(() => import("./Instruction.vue"));
+  const Instruction = lazyload(() => import("./Instruction.vue"));
   const data = {
     commentRequest: props.item.commentRequest,
     workInstructionList: props.item.workInstructionList,
@@ -187,27 +187,64 @@ const Instruction = lazyload(() => import("./Instruction.vue"));
   }
   modalComfirm(Instruction, i18n.operate.title.instruction, { data });
 }
-
-const typeButton = function (name: string) {
+//按钮图标与颜色
+const buttonType = function (name: string) {
   return {
-    icon:IconType[name],
-    type:name == DoOperation.submit ? "primary" : "default"
+    icon: IconType[name],
+    type: name == DoOperation.submit ? "primary" : "default"
   } as any
+}
+//按钮文案
+const buttonName = function (name: string) {
+  let value = "";
+  switch (name) {
+    case DoOperation.cancel:
+      value = i18n.common.button.cancel;
+      break;
+    case DoOperation.delete:
+      value = i18n.common.button.delete;
+      break;
+    case DoOperation.interrupt:
+      value = i18n.common.button.interrupt;
+      break;
+    case DoOperation.confirm:
+      value = i18n.common.button.confirm;
+      break;
+    case DoOperation.reject:
+      value = i18n.common.button.reject;
+      break;
+    case DoOperation.hedge:
+      value = i18n.common.button.hedge;
+      break;
+    case DoOperation.partner:
+      value = i18n.common.button.partner;
+      break;
+    case DoOperation.submit:
+      value = i18n.common.button.submit;
+      break;
+    case DoOperation.instruction:
+      value = i18n.common.button.instruction;
+      break;
+    default:
+      value = name;
+      break;
+  }
+  return value;
 }
 </script>
 
 <template>
   <div>
     <Menu v-if="layout == Skin.vertical">
-      <MenuItem @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ _.upperFirst(name) }} </MenuItem>
+      <MenuItem @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ buttonName(name) }} </MenuItem>
     </Menu>
     <Space size="large" v-else>
-      <Button @click="handleClick(name)" :type="typeButton(name).type" :key="name" v-for="name in optTypes">
+      <Button @click="handleClick(name)" :type="buttonType(name).type" :key="name" v-for="name in optTypes">
         <template #icon>
-          <Icon class="text-base" :type="typeButton(name).icon"></Icon>
+          <Icon class="text-base" :type="buttonType(name).icon"></Icon>
         </template>
-        <span>{{ _.upperFirst(name) }}</span>
+        <span>{{ buttonName(name) }}</span>
       </Button>
     </Space>
-</div>
+  </div>
 </template>

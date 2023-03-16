@@ -10,6 +10,7 @@ import { api } from "../../api";
 import { useState } from "@ue/utils";
 import { computed } from "vue";
 import { TaskInterruptType } from "./props";
+import i18n from "../../utils/i18n";
 
 const $emit = defineEmits(["update:value", "state"]);
 const props = defineProps({
@@ -51,12 +52,12 @@ const show = computed<Boolean>(() => {
 const interruptedTip = computed<string>(() => {
   const text: string[] = [];
   if (props.isPm) {
-    text.push("Pre-Engineering task is in processing, You can’t assign language task until it done.");
+    text.push(i18n.hint.preEngineering);
   } else {
-    text.push("This task was interrupted, please submit your files you have Partially or Fully done.");
+    text.push(i18n.hint.taskInterrupted);
   }
   if (state.value.interruptReason) {
-    text.push(`Reason: ${state.value.interruptReason}`);
+    text.push(`${i18n.common.label.reason}: ${state.value.interruptReason}`);
   }
   return text.join(" ");
 });

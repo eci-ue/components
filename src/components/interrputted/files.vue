@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Icon from "../icon";
 import * as _ from "lodash-es";
-import BigNumber from "bignumber.js";
+import i18n from "../../utils/i18n";
 import { Button } from "ant-design-vue";
 import { api } from "../../api";
 import { useState, downloadFile, fileDownloadUrl } from "@ue/utils";
@@ -29,11 +29,11 @@ const onDownload = function (fileName: string, filePath: string) {
 
 <template>
   <div class="flex">
-    <div class="text-label-color mr-6">Task process</div>
+    <div class="text-label-color mr-6">{{i18n.operate.label.process}}</div>
     <div>{{ state.rate || 0 }} %</div>
   </div>
   <div class="mt-7 min-h-50">
-    <div class="text-label-color">File</div>
+    <div class="text-label-color">{{i18n.part(i18n.common.label.file, 0)}}</div>
     <section v-if="_.size(state.taskFileList) > 0">
       <p class="mt-1.5" v-for="item in state.taskFileList || []">
         <span class="bg-primary-light py-1 px-1.5">
