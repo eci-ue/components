@@ -1,6 +1,6 @@
 {
   "name": "@ue/components",
-  "private": true,
+  "private": false,
   "version": "0.2.86-3",
   "types": "types/index.d.ts",
   "license": "MIT",
