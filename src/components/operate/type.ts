@@ -42,10 +42,10 @@ export enum IconType {
 export interface itemType extends ResourceType {
   taskId: string | number,
   id?: string | number,
-  status?:number,
-  commentRequest?:string,
-  workInstructionList?:string[],
-  attachments?:FileType[],
+  status?: number,
+  commentRequest?: string,
+  workInstructionList?: string[],
+  attachments?: FileType[],
   [key: string]: any
 }
 
@@ -55,12 +55,22 @@ export class FileType {
   size?: number;     // 文件大小
   storagePath?: string = ""; // 文件路径
 }
-export class SubmitType{
-  rate:number=0;
-  taskId!:number;
-  attachment!:FileType[]
+export class SubmitType {
+  rate: number = 0;
+  taskId!: number;
+  attachment!: FileType[];
+  constructor(rate: number = 0, isUse: number = 0) {
+    if (isUse == 1) {
+      this.rate = rate;
+    }
+  }
 }
 export enum Status {
-  inProgress=2,//2:资源确认接受任务，正在完成
+  inProgress = 2,//2:资源确认接受任务，正在完成
   interupted,//3:pm发出中断，任务处于中断中
+}
+
+export class InterruptRate {
+  rate: number = 0;
+  isUse: number = 0; //1=是、0=否
 }
