@@ -9,6 +9,7 @@ import { $error, $success } from "@ue/message";
 import { validate, required, get, post, tryError } from "@js-lion/api";
 import { $debounce } from "@ue/utils";
 import { TaskInterruptType } from "../components/alert/props";
+import { InterruptRate } from "../components/operate/type";
 
 export default class Task {
   /**
@@ -115,6 +116,16 @@ export default class Task {
   addInterupt(@required taskId: string | number, reason: string = ""): Promise<boolean> {
     const data = { id: taskId, reason };
     return { data } as any;
+  }
+
+  //议员 页面-任务提交-中断提交前完成比例获取
+  @tryError(new InterruptRate())
+  @$error()
+  @get("/:task/task/interrupt/rate/:taskId")
+  @validate
+  interruptRate(@required taskId: string | number): Promise<InterruptRate> {
+    const params = { taskId };
+    return { params } as any;
   }
 
   //议员 页面-任务提交-中断提交按钮接口
