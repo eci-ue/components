@@ -10,9 +10,9 @@
     "strict": true,
     "jsx": "preserve",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ES5", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,
     "experimentalDecorators": true,
@@ -26,9 +26,7 @@
     "src/**/*.ts", 
     "src/**/*.tsx",
     "test/**/*.ts",
-    "test/**/*.tsx",
-    "types/*.ts",
-    "types/*..dts",
+    "test/**/*.tsx"
   ],
   "exclude": ["node_modules"]
 }
