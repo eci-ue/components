@@ -4,23 +4,22 @@
  * @author svon.me@gmail.com
  */
 
+import { form } from "@ue/form"
 import * as _ from "lodash-es";
 import { api } from "../../api";
 import i18n from "../../utils/i18n";
 import { rule as rules } from "@ue/utils";
-import { form } from "@ue/form"
 import { FileType, FileOperate, FileItem } from "./props";
 import { Button, Space } from "ant-design-vue";
 import { computed, PropType, toRaw, ref } from "vue";
 
 import Upload from "../upload";
 import FormFile from "../form/file.vue";
+import { ExportDownload } from "../export/index";
 import FormlanguagePairs from "../form/language/pairs.vue";
 
 import type { Upload as UploadData } from "../../utils/upload";
 import type { UploadFile } from "../../components/upload/props";
-import { ExportDownload } from "../export/index";
-
 
 const $emit = defineEmits(["update:progress", "click", "download"]);
 const props = defineProps({
@@ -99,7 +98,7 @@ const uploadFileProgress = computed<UploadData[]>({
 const onSelectDriveFile = async function () {
   const option = {
     width: 460,
-    title: "ECI Drive"
+    title: i18n.drive.label.title
   };
 
   const data = await form<{ fileIds: number[] }>({
@@ -109,7 +108,7 @@ const onSelectDriveFile = async function () {
       all: true,
       multiple: true
     },
-    rules: rules.array("Please select drive file")
+    rules: rules.array(i18n.drive.placeholder.select)
   }, option);
   if (!data) {
     return;
@@ -173,13 +172,17 @@ const onChangePairs = async function () {
   }
   const option = {
     width: 460,
-    title: "Language pairs"
+    title: i18n.common.label.languagePairs
   };
   const data = await form<{ langPairIds: string[] }>({
     key: "langPairIds",
     component: FormlanguagePairs,
     meta: { list: _.concat(list) },
-    rules: rules.array("Please select language pairs")
+    rules: rules.array(
+      i18n.template(i18n.common.placeholder.select, {
+        label: i18n.common.label.languagePairs
+      })
+    )
   }, option);
   if (data) {
     const fileIds: Array<string | number> = [...toRaw(props.selectedKeys)];
@@ -245,22 +248,34 @@ const disabledDel = computed(() => {
 <template>
   <div class="flex justify-between items-center">
     <Space>
-      <Button v-if="!disabled && operateBtn.delete" :disabled="disabledDel" @click="onRemoveFile">Delete</Button>
-      <Button v-if="operateBtn.download" :disabled="disabledDel" @click="onDwonload">Download</Button>
+      <Button v-if="!disabled && operateBtn.delete" :disabled="disabledDel" @click="onRemoveFile">{{ i18n.common.button.delete }}</Button>
+      <Button v-if="operateBtn.download" :disabled="disabledDel" @click="onDwonload">{{ i18n.common.button.download }}</Button>
       <template v-if="!disabled && operateBtn.language">
         <!-- 源文件模式下才启用该功能 -->
-        <Button :disabled="selectedKeys.length < 1" @click="onChangePairs">Language pairs</Button>
+        <Button :disabled="selectedKeys.length < 1" @click="onChangePairs">{{ i18n.common.label.languagePairs }}</Button>
       </template>
-      <Upload v-if="!disabled && operateBtn.upload" ref="uploadBox" :accept="accept" :disabled="disabled" :show-progress="false" :multiple="true"
-        v-model:progress="uploadFileProgress" @success="onUpload">
-        <span class="ant-btn ant-btn-primary">Upload Files</span>
+      <Upload 
+        v-if="!disabled && operateBtn.upload" 
+        ref="uploadBox" 
+        :accept="accept" 
+        :disabled="disabled" 
+        :show-progress="false" 
+        :multiple="true"
+        v-model:progress="uploadFileProgress" 
+        @success="onUpload">
+        <span class="ant-btn ant-btn-primary">{{ i18n.common.label.fileUpload }}</span>
       </Upload>
       <span v-if="operateBtn.downTarget">
-        <ExportDownload :disabled="selectedKeys.length < 1" :file="selectedKeys" :type="subType" :pm="isPm" :menu="[2]"
-          exportText="Download Target"></ExportDownload>
-
+        <ExportDownload 
+          :disabled="selectedKeys.length < 1" 
+          :file="selectedKeys" 
+          :type="subType" 
+          :pm="isPm" 
+          :menu="[2]"
+          exportText="Download Target">
+        </ExportDownload>
       </span>
     </Space>
-    <Button v-if="!disabled && operateBtn.large" type="link" @click="onSelectDriveFile">Large files entry</Button>
+    <Button v-if="!disabled && operateBtn.large" type="link" @click="onSelectDriveFile">{{ i18n.drive.label.largefiles }}</Button>
 </div>
 </template>

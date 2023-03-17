@@ -8,6 +8,9 @@ export default {
     cancel: "Are you sure cancel this task.",
     reject: "Are you sure reject this task.",
     submit: "Are you sure submit this task.",
-    hedged: "Are you sure you want to create a hedged JAS?The newly created hedging JAS is a JAS with a negative workload that needs to be confirmed by the resource.",
+    hedged: "Are you sure you want to create a hedged JAS? The newly created hedging JAS is a JAS with a negative workload that needs to be confirmed by the resource.",
+  },
+  download: {
+    success: "Download success, Please check your browser's download records"
   },
 };

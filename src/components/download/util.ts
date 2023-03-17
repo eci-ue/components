@@ -1,7 +1,9 @@
 import * as _ from "lodash-es";
 import Cookie from "js-cookie";
+import i18n from "../../utils/i18n";
 import UrlPattern from "url-pattern";
 import safeGet from "@fengqiaogang/safe-get";
+
 
 import * as message from "@ue/message";
 import { message as AntdMessage } from "ant-design-vue";
@@ -71,7 +73,7 @@ const netDownload = function(content: any, env: Env, value: string, name: string
     // @ts-ignore
     const Control = safeGet(content, "Eci.Control.DownloadControl");
     if (Control) {
-      const loading = message.loading('Download ...', 0);
+      const loading = message.loading(i18n.message.DOWNLOAD_ING, 0);
       // @ts-ignore
       const download = new Control(
         { IsSingleProgress: false, fileNameSource: ' ' },
@@ -96,7 +98,7 @@ const netDownload = function(content: any, env: Env, value: string, name: string
             if (typeof err === "string") {
               reject(new Error(err));
             } else {
-              reject(new Error("Network error"));
+              reject(new Error(i18n.message.NETWORK_ERROR));
             }
           }
         }
@@ -142,10 +144,12 @@ const download = async function(props: Props, content: any, env: Env) {
       const location = pattern.match(window.location.origin);
       _.each(props.cookie, function(item: object) {
         const key = safeGet<string>(item, "keyStr");
-        Cookie.remove(key, {
-          path: "/",
-          domain: `${location.domain}.${location.tld}`,
-        });
+        if (key) {
+          Cookie.remove(key, {
+            path: "/",
+            domain: `${location.domain}.${location.tld}`,
+          });
+        }
       });
     }
     return true;
@@ -178,7 +182,7 @@ const download = async function(props: Props, content: any, env: Env) {
       status = fileDownload(env, props.value, props.name);
     }
     if (status) {
-      message.success("Download success, Please check your browser's download records");
+      message.success(i18n.message.download.success);
     }
   }
   return await after(status, remove, props.after);

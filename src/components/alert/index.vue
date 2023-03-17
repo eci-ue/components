@@ -50,16 +50,14 @@ const show = computed<Boolean>(() => {
 
 //提示语
 const interruptedTip = computed<string>(() => {
-  const text: string[] = [];
   if (props.isPm) {
-    text.push(i18n.hint.preEngineering);
-  } else {
-    text.push(i18n.hint.taskInterrupted);
+    return i18n.template(i18n.hint.preEngineering, {
+      reason: state.value.interruptReason
+    });
   }
-  if (state.value.interruptReason) {
-    text.push(`${i18n.common.label.reason}: ${state.value.interruptReason}`);
-  }
-  return text.join(" ");
+  return i18n.template(i18n.hint.taskInterrupted, {
+    reason: state.value.interruptReason
+  });
 });
 </script>
 
