@@ -28,7 +28,7 @@ export default defineConfig({
     lib: {
       entry: "src/index",
       name: "components",
-      formats: ["es", "umd"],
+      formats: ["es"],
       fileName: "components"
     },
     sourcemap: true,
