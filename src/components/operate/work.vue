@@ -9,8 +9,9 @@ import { SubmitType,InterruptRate } from "./type";
 import { Form, FormItem, Tag, Slider } from "ant-design-vue";
 import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
-import type { UploadFile } from "../upload/props";
 import i18n from "../../utils/i18n";
+
+import type { UploadFile } from "../upload/props";
 
 const props = defineProps({
   taskId: {
