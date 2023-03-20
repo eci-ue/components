@@ -1,8 +1,8 @@
 
 import * as _ from "lodash-es";
-import { FormTextarea, FormCheckbox } from "../form/index";
-import type { FormOptionValue, FormItemData } from "@ue/form/types/props";
 import i18n from "../../utils/i18n";
+import { FormTextarea, FormCheckbox } from "../form/index";
+import type { FormOptionValue, FormItemData } from "@ue/form";
 
 export const ratePartner = function (): FormOptionValue {
   const proactiveCooperation: FormItemData = {

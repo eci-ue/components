@@ -10,20 +10,7 @@ import { FormRadioSkin as Skin } from "./type";
 import Icon from "../icon";
 import { RadioGroup, Radio, RadioButton, Space } from "ant-design-vue";
 
-import type { FormItemMeta } from "@ue/form/types/props";
-
-interface Item {
-  value: string | number;
-  name: string;
-  text?: string;
-  disabled?: boolean
-}
-
-interface Meta extends FormItemMeta{
-  color?: string;
-  skin?: Skin;
-  list?: Array<Item>
-}
+import type { RadioMeta as Meta } from "./props";
 
 const emit = defineEmits(["update:value", "change"]);
 

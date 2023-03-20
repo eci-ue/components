@@ -11,13 +11,8 @@ import dayjs, { Dayjs } from 'dayjs';
 import { computed, PropType } from "vue";
 import { DatePicker } from "ant-design-vue";
 
-import type { FormItemMeta } from "@ue/form/types/props";
+import type { DateMeta as Meta } from "./props";
 
-interface Meta extends FormItemMeta {
-  showTime: boolean;        // 时分秒
-  disabledBrfore: boolean;  // 禁用之前的时间
-  disabledSameDay: boolean; // 禁用当天，默认不禁用
-}
 
 const emit = defineEmits(["update:value", "change"]);
 

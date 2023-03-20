@@ -1,5 +1,5 @@
 
-import { form } from "@ue/form";
+import { form } from "@ue/model";
 import { confirm } from "@ue/model";
 import AddLqrForm from "./add.vue";
 import { partnerItems } from "./util";

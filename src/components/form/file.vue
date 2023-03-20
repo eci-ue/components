@@ -6,14 +6,8 @@
 
 import { computed, PropType } from "vue";
 import Checkbox from "../file/checkbox";
-import type { FormItemMeta } from "@ue/form/types/props";
 
-class Meta implements FormItemMeta{
-  rootId: string | number = 0; // 跟节点 ID
-  disable: Array<string | number> = []; // 不允许选择的文件
-  all: boolean = false; // 是否查询所有文件，包括个人文件与收到的分享文件
-  multiple: boolean = false; // 是否多选？为 false 不展示文件，只展示文件夹
-}
+import type { FileMeta as Meta } from "./props";
 
 const emit = defineEmits(["update:value", "change"]);
 

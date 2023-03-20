@@ -6,7 +6,7 @@ import { rule as rules } from "@ue/utils";
 import { FormRadio, FormTextarea, FormUpload, FormRadioSkin } from "../../form";
 
 import type { UploadFile } from "../../upload/props";
-import type { FormOptionValue } from "@ue/form/types/props";
+import type { FormOptionValue } from "@ue/form";
 import type { ColumnsType } from "ant-design-vue/lib/table";
 
 export const headers: ColumnsType<object> = [

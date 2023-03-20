@@ -2,7 +2,7 @@
 import Icon from "../icon";
 import * as _ from "lodash-es";
 import { api } from "../../api";
-import { form } from "@ue/form";
+import { form } from "@ue/model";
 import i18n from "../../utils/i18n";
 import { confirm as modalComfirm } from "@ue/model";
 import { ratePartner, interupt } from "./util";

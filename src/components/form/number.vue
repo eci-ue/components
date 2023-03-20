@@ -7,13 +7,7 @@
 import * as _ from "lodash-es";
 import { computed, PropType } from "vue";
 import { InputNumber } from "ant-design-vue";
-import type { FormItemMeta } from "@ue/form/types/props";
-
-
-interface Meta extends FormItemMeta {
-  max?: number;
-  afterIcon?: any;
-}
+import type { NumberMeta as Meta } from "./props";
 
 const emit = defineEmits(["update:value", "change"]);
 

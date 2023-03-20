@@ -9,12 +9,8 @@ import i18n from "../../utils/i18n";
 import { computed, PropType, ref } from "vue";
 import Upload, { UploadSkin } from "../upload";
 
-import type { FormItemMeta } from "@ue/form/types/props";
+import type { UploadMeta as Meta } from "./props";
 import type { UploadFile } from "../upload/props";
-
-interface Meta extends FormItemMeta {
-  transform?: (value: UploadFile) => any
-}
 
 const name = ref<string>();
 const emit = defineEmits(["update:value", "change"]);

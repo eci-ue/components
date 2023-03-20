@@ -6,11 +6,8 @@
 
 import { computed, PropType } from "vue";
 import { Input } from "ant-design-vue";
-import type { FormItemMeta } from "@ue/form/types/props";
 
-interface Meta extends FormItemMeta{
-  maxLength?: number;
-}
+import type { TextMeta as Meta } from "./props";
 
 const emit = defineEmits(["update:value", "change"]);
 

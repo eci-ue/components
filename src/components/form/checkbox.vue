@@ -9,20 +9,7 @@ import { computed, PropType } from "vue";
 import { CheckboxGroup, Checkbox } from "ant-design-vue";
 import { FormCheckboxSkin as Skin } from "./type";
 
-import type { FormItemMeta } from "@ue/form/types/props";
-
-interface Item {
-  value: string | number;
-  name: string;
-  text?: string;
-  disabled?: boolean
-}
-
-interface Meta extends FormItemMeta{
-  skin: Skin;
-  mode: string;
-  list: Array<Item>
-}
+import type { CheckboxItem as Item, CheckboxMeta as Meta } from "./props";
 
 const emit = defineEmits(["update:value", "change"]);
 
