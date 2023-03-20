@@ -38,5 +38,5 @@ API.addResponse(responseCallback, function(error: any) {
 // 设置全局变量
 API.setEnv(API_Server);
 API.setConfig({
-  baseURL: "//erpapi.eciol-dev.com/"
+  baseURL: "//erpapi.eciol-test.com/"
 });

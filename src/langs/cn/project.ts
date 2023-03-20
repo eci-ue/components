@@ -20,6 +20,8 @@ export default {
     finishTime: "Finished Time",
     operate: "Operate",
     exportedOn: "Exported On",
-    fileName: "File Name"
+    fileName: "File Name",
+    completed: "完成",
+    notStarted: "未开始"
   },
 };

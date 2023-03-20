@@ -1,9 +1,28 @@
 
+import { View } from "./type";
 import * as _ from "lodash-es";
+import { hook } from "@ue/utils";
 import i18n from "../../../utils/i18n";
-import { TaskFileItem, TaskFileStage, View } from "./type";
+import * as message from "@ue/message";
+import safeGet from "@fengqiaogang/safe-get";
+import Words from "./words.vue";
+import { h as createElement } from "vue";
 
-export const headers = function(fileList: TaskFileItem[] = [], view: View = View.innter) {
+import type { HookFunction } from "@ue/utils";
+import type { TaskFileItem, TaskFileStage } from "./type";
+
+const wordRender = function(result: object, rate: boolean, props: any) {
+  const key = safeGet<string>(result, "column.dataIndex");
+  const value = key ? safeGet<TaskFileStage>(result, ["record", key]) : undefined;
+  return createElement(Words as any, {
+    rate,
+    data: value,
+    pm: props.pm,
+    mode: props.mode,
+  });
+}
+
+export const headers = function(fileList: TaskFileItem[] = [], props: any) {
   const prev = [{ 
     title: i18n.part(i18n.common.label.file, 1), 
     dataIndex: "bilingualFileName", 
@@ -29,21 +48,28 @@ export const headers = function(fileList: TaskFileItem[] = [], view: View = View
         key: "words",
         title: `For ${_.toUpper(subType)} words`,
         width: "120px",
-        dataIndex: `taskBilingualFileStageRspList[${index}].workLoad`,
+        dataIndex: `taskBilingualFileStageRspList[${index}]`,
+        className: "word-content",
+        customRender: function(result: object) {
+          return wordRender(result, false, props);
+        }
       },
       {
-        className: current ? "text-yellow bg-yellow bg-opacity-10" : "",
+        className: current ? "word-content text-yellow bg-yellow bg-opacity-10" : "word-content",
         key: "resourceName",
         title: _.toUpper(subType),
         width: "200px",
         dataIndex: `taskBilingualFileStageRspList[${index}]`,
+        customRender: function(result: object) {
+          return wordRender(result, true, props);
+        }
       });
     });
     _.forEach<object>(temp, function(item: object, index: number) {
       list[index + prev.length] = item;
     });
   }
-  if (showLqr && view === View.innter) {
+  if (showLqr && props.view === View.innter) {
     return [...list, ...next];
   }
   return list;
@@ -56,3 +82,16 @@ export const fileList = function(fileList: TaskFileItem[]) {
     return { key, ...item };
   });
 };
+
+export const before = async function(callback?: HookFunction | HookFunction[], ...args: any[]) {
+  try {
+    return await hook.run(callback, args);
+  } catch (error) {
+    // @ts-ignore
+    const tips: string = error?.message;
+    if (tips) {
+      message.error(tips);
+    }
+    return false;
+  }
+}

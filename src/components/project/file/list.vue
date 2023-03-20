@@ -9,12 +9,10 @@ import * as _ from "lodash-es";
 import { PropType } from "vue";
 import { api } from "../../../api";
 import i18n from "../../../utils/i18n";
-import * as message from "@ue/message";
-import { headers, fileList } from "./util";
-import safeGet from "@fengqiaogang/safe-get";
+import { headers, fileList, before } from "./util";
 import { table, fileDownloadUrl } from "@ue/utils";
 
-import { hook } from "@ue/utils";
+
 import Rate from "./rate.vue";
 import Lqr from "../lqr/lqr.vue";
 import { AddLqr } from "../lqr/index";
@@ -94,18 +92,6 @@ const props = defineProps({
 
 const { selectedKeys, rowSelection } = table.useSelection();
 
-const before = async function(...args: any[]) {
-  try {
-    return await hook.run(props.before, args);
-  } catch (error) {
-    const tips: string = error?.message;
-    if (tips) {
-      message.error(tips);
-    }
-    return false;
-  }
-}
-
 // lqr 链接处理
 const lqrLink = function(value: string): string | undefined {
   if (value && /^http/.test(value)) {
@@ -121,7 +107,7 @@ const lqrLink = function(value: string): string | undefined {
 
 // 查看 Lqr
 const onCheckLqr = async function(value: string) {
-  const status = await before("lqr");
+  const status = await before(props.before ,"lqr");
   if (status) {
     const url = lqrLink(value);
     if (url) {
@@ -132,7 +118,7 @@ const onCheckLqr = async function(value: string) {
 
 // 添加 Lqr
 const onAddLqr = async function(e: Event, data: TaskFileItem) {
-  const status = await before("addLqr");
+  const status = await before(props.before, "addLqr");
   if (!status) {
     return false;
   }
@@ -147,16 +133,6 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
   AddLqr(option, { onOk: callback });
 };
 
-
-// 查看双语文件
-const catFileDetail = async function(value: string): Promise<void> {
-  if (value) {
-    const status = await before("catFile");
-    if (status) {
-      window.open(value);
-    }
-  }
-};
 </script>
 <template>
   <div>
@@ -195,26 +171,27 @@ const catFileDetail = async function(value: string): Promise<void> {
       bordered 
       :pagination="false" 
       :row-selection="rowSelection" 
-      :columns="headers(list, innerOuterType)" 
+      :columns="headers(list, props)" 
       :data-source="fileList(list)">
 
       <template #bodyCell="{ column, record, text }">
         <template v-if="column.key === 'name'">
-          <Space v-if="record.catUrl && !pm" class="link cursor-pointer" @click="catFileDetail(record.catUrl)">
+          <!-- <Space v-if="record.catUrl && !pm" class="link cursor-pointer" @click="catFileDetail(record.catUrl)">
             <Icon type="link-outlined"></Icon>
             <span>{{ text }}</span>
           </Space>
           <Space v-else>
             <Icon type="link-outlined" class="text-deep-gray"></Icon>
-            <span>{{ text }}</span>
-          </Space>
+            
+          </Space> -->
+          <span>{{ text }}</span>
         </template>
-        <template v-else-if="column.key === 'words'">
-          <span v-number.integer="safeGet(record, column.dataIndex)"></span>
-        </template>
-        <template v-else-if="column.key === 'resourceName'">
-          <Rate :data="safeGet(record, column.dataIndex)" :mode="mode"></Rate>
-        </template>
+        <!-- <template v-else-if="column.key === 'words'">
+          <span>{{ column.get(record) }}</span>
+        </template> -->
+        <!-- <template v-else-if="column.key === 'resourceName'">
+          <Rate :data="column.get(record)" :mode="mode"></Rate>
+        </template> -->
         <template v-else-if="column.key === 'lqr'">
           <template v-if="lqrOper && String(lqrOper) === '3'">
             <!-- 可上传 -->
@@ -237,10 +214,15 @@ const catFileDetail = async function(value: string): Promise<void> {
             <span>--</span>
           </template>
         </template>
-        <template v-else>
-          <span>{{ text || "--" }}</span>
-        </template>
       </template>
     </Table>
   </div>
 </template>
+
+<style lang="scss">
+.ant-table .word-content {
+  &:not(th) {
+    @apply p-0;
+  }  
+}
+</style>

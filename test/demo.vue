@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { API } from "@js-lion/api";
 import { 
   Alter, Operate, FileOperate, ExportButton, ExportDownload, FormCheckbox,
-  WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery, Enum,FormDate,Interrputted
+  WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery, Enum,FormDate,Interrputted,
+  FileInformation
 } from "../src/index";
 import { AddLqr } from "../src/components/project/lqr"
 import * as model from "@ue/model";
 import { check } from "@ue/utils";
 import Upload from "../src/components/upload";
 import { api } from "../src/api"
+import { useState } from "@ue/utils";
 
 import { Space } from "ant-design-vue";
 
@@ -73,7 +76,12 @@ onMounted(function() {
   //     // return api.project.saveLqr(state, true);
   //   }
   // });
+
+  
 });
+
+const http = new API();
+const { state: taskState } = useState.data<any>(http.post("/tbms-task/detail/pmTranslationTaskDetail", {taskId: 538}));
 
 const dateMeta = {
   showTime: true,
@@ -94,11 +102,11 @@ const before = function() {
         <FormDate v-model:value="DateValue" :meta="dateMeta"></FormDate>
       </div>
     </div>
-    <Interrputted :taskId="1"></Interrputted>
+    <!-- <Interrputted :taskId="1"></Interrputted>
 
     <Space>
       <ExportButton :id="100749440" :language="12" :mode="WorkMode.Transdoc" :pm="false" :partner="true"></ExportButton>
-    </Space>
+    </Space> -->
 
     <!-- <Alter v-model:value="state" :id="1" @state="stateVal"></Alter> -->
     <!-- <Enum value="1" :data="TestEnum"></Enum> -->
@@ -131,5 +139,13 @@ const before = function() {
         name="合同版本翻译.txt" 
         value="C:\\ERP\\FileSYWeb\\2023\\20230303\\fd49cf99-4a7f-43e3-8528-794f16ee7c79" />
     </div> -->
+
+    <FileInformation 
+      :list="taskState.taskBilingualFileRspList" 
+      id="538" 
+      projectId="10075979" 
+      :mode="WorkMode.Transdoc" 
+      language="7">
+    </FileInformation>
   </div>
 </template>

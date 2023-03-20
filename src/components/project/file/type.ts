@@ -4,6 +4,7 @@ export enum View {
 }
 
 export class TaskFileStage {
+  catUrl: string = "";
   rate: number = 0; // 完成进度
   current: boolean = false;
   online: boolean = false;

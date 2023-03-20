@@ -28,7 +28,7 @@ export const headers = function(mode: WorkMode, pm: boolean = false): ColumnsTyp
   }
   if (mode === WorkMode.Memoq) {
     return [
-      { title: i18n.project.label.taskName, dataIndex: "taskName", key: "name" },
+      // { title: i18n.project.label.taskName, dataIndex: "taskName", key: "name" },
       { dataIndex: "createUser", ...operator },
       { title: i18n.project.label.applyTime, dataIndex: "applyTime", key: "date" },
       { title: i18n.project.label.finishTime, dataIndex: "finishTime", key: "date" },
@@ -38,7 +38,7 @@ export const headers = function(mode: WorkMode, pm: boolean = false): ColumnsTyp
   }
   if (pm) {
     return [
-      { title: i18n.project.label.taskName, dataIndex: "fileName", key: "name" },
+      // { title: i18n.project.label.taskName, dataIndex: "fileName", key: "name" },
       { dataIndex: "applyBy", ...operator  },
       { title: i18n.project.label.applyTime, dataIndex: "applyOn", key: "date" },
       { title: i18n.project.label.finishTime, dataIndex: "finishOn", key: "date" },
@@ -47,7 +47,7 @@ export const headers = function(mode: WorkMode, pm: boolean = false): ColumnsTyp
     ];
   }
   return [
-    { title: i18n.project.label.taskName, dataIndex: "fileName", key: "name" },
+    // { title: i18n.project.label.taskName, dataIndex: "fileName", key: "name" },
     { dataIndex: "applyBy", ...operator  },
     { title: i18n.project.label.exportedOn, dataIndex: "applyOn", key: "date" },
     { title: i18n.common.label.status, dataIndex: "statusName", key: "status" },
