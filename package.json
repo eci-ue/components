@@ -11,7 +11,8 @@
     "build": "vite build",
     "postbuild": "npm run types",
     "types": "node scripts/types.cjs",
-    "export": "node scripts/export"
+    "export": "node scripts/export",
+    "update": "sh scripts/update.sh"
   },
   "keywords": [],
   "author": {
@@ -28,7 +29,7 @@
     "@fengqiaogang/dblist": "^0.3.98",
     "@fengqiaogang/safe-get": "^0.1.4",
     "@fengqiaogang/safe-set": "^0.1.3",
-    "@ue/form": "^0.1.2",
+    "@ue/form": "^0.1.4",
     "@ue/i18n": "^0.1.62",
     "@ue/message": "^0.0.4",
     "@ue/model": "^0.1.2",
