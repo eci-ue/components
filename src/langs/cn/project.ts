@@ -22,6 +22,7 @@ export default {
     exportedOn: "Exported On",
     fileName: "File Name",
     completed: "完成",
-    notStarted: "未开始"
+    notStarted: "未开始",
+    openFile: "查看",
   },
 };

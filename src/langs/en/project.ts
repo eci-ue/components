@@ -22,6 +22,7 @@ export default {
     exportedOn: "Exported On",
     fileName: "File Name",
     completed: "Completed",
-    notStarted: "Not Started"
+    notStarted: "Not Started",
+    openFile: "Open File",
   },
 };

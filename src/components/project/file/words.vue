@@ -1,8 +1,14 @@
 <script setup lang="ts">
+/**
+ * @file 任务节点
+ * @author svon.me@gmail.com
+ */
+
 import Rate from "./rate.vue";
 import * as _ from "lodash-es";
 import Icon from "../../icon";
 import { before } from "./util";
+import i18n from "../../../utils/i18n";
 import { WorkMode } from "../../export";
 import { PropType, computed } from "vue";
 import type { TaskFileStage } from './type';
@@ -63,10 +69,10 @@ const url = computed<string>(function() {
     <template v-if="rate">
       <Rate :data="data" :mode="mode"></Rate>
     </template>
-    <div v-else class="flex items-center justify-between whitespace-nowrap link">
+    <div v-else class="flex items-center justify-between whitespace-nowrap" :class="{'link': !!url}">
       <span>{{ _.toInteger(data?.workLoad) }}</span>
-      <span class="flex items-center ml-2">
-        <span>Open File</span>
+      <span class="flex items-center ml-2" v-show="url">
+        <span>{{ i18n.project.label.openFile }}</span>
         <Icon class="flex text-sm ml-1" type="right-outlined"></Icon>
       </span>
     </div>

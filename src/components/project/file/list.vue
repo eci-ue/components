@@ -176,22 +176,8 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
 
       <template #bodyCell="{ column, record, text }">
         <template v-if="column.key === 'name'">
-          <!-- <Space v-if="record.catUrl && !pm" class="link cursor-pointer" @click="catFileDetail(record.catUrl)">
-            <Icon type="link-outlined"></Icon>
-            <span>{{ text }}</span>
-          </Space>
-          <Space v-else>
-            <Icon type="link-outlined" class="text-deep-gray"></Icon>
-            
-          </Space> -->
           <span>{{ text }}</span>
         </template>
-        <!-- <template v-else-if="column.key === 'words'">
-          <span>{{ column.get(record) }}</span>
-        </template> -->
-        <!-- <template v-else-if="column.key === 'resourceName'">
-          <Rate :data="column.get(record)" :mode="mode"></Rate>
-        </template> -->
         <template v-else-if="column.key === 'lqr'">
           <template v-if="lqrOper && String(lqrOper) === '3'">
             <!-- 可上传 -->

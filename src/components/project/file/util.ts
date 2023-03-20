@@ -1,3 +1,7 @@
+/**
+ * @file 工具
+ * @author svon.me@gmail.com
+ */
 
 import { View } from "./type";
 import * as _ from "lodash-es";
@@ -14,7 +18,7 @@ import type { TaskFileItem, TaskFileStage } from "./type";
 const wordRender = function(result: object, rate: boolean, props: any) {
   const key = safeGet<string>(result, "column.dataIndex");
   const value = key ? safeGet<TaskFileStage>(result, ["record", key]) : undefined;
-  return createElement(Words as any, {
+  return createElement(Words, {
     rate,
     data: value,
     pm: props.pm,
