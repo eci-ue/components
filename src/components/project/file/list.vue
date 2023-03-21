@@ -175,15 +175,12 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
       :data-source="fileList(list)">
 
       <template #bodyCell="{ column, record, text }">
-        <template v-if="column.key === 'name'">
-          <span>{{ text }}</span>
-        </template>
-        <template v-else-if="column.key === 'lqr'">
+        <template v-if="column.key === 'lqr'">
           <template v-if="lqrOper && String(lqrOper) === '3'">
             <!-- 可上传 -->
-            <!-- Lqr Link -->
+            <!-- 如果有 lqr 链接 -->
             <Button v-if="record.lqrVisitPath" type="link" @click="onCheckLqr(record.lqrVisitPath)">{{ text }}</Button>
-            <!-- Add Lqr Button -->
+            <!-- 无链接时展示添加按钮 -->
             <Button v-else type="link" class="text-sm" @click="onAddLqr($event, record)">
               <span class="flex items-center">
                 <Icon class="flex mr-1" type="icon-a-add"></Icon>

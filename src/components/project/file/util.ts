@@ -73,10 +73,7 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
       list[index + prev.length] = item;
     });
   }
-  if (showLqr && props.view === View.innter) {
-    return [...list, ...next];
-  }
-  return list;
+  return [...list, ...next];
 };
 
 
