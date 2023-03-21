@@ -100,6 +100,7 @@ const onExport = async function (value: number | string) {
       return false;
     }
   } catch (error) {
+    // @ts-ignore
     const tips: string = error?.message;
     if (tips) {
       message.error(tips);

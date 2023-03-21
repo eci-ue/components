@@ -142,8 +142,9 @@ const before = function() {
 
     <FileInformation 
       :list="taskState.taskBilingualFileRspList" 
-      id="538" 
-      projectId="10075979" 
+      id="545" 
+      :lqr-level="3"
+      projectId="10075985" 
       :mode="WorkMode.Transdoc" 
       language="7">
     </FileInformation>

@@ -4,19 +4,17 @@
  * @author svon.me@gmail.com
  */
 
-import Icon from "../../icon";
 import * as _ from "lodash-es";
 import { PropType } from "vue";
-import { api } from "../../../api";
 import i18n from "../../../utils/i18n";
 import { headers, fileList, before } from "./util";
-import { table, fileDownloadUrl } from "@ue/utils";
+import { table } from "@ue/utils";
 
 
-import Rate from "./rate.vue";
+import LqrLink from "./lqr.vue";
 import Lqr from "../lqr/lqr.vue";
-import { AddLqr } from "../lqr/index";
-import { Table, Space, Button } from "ant-design-vue";
+
+import { Table, Space } from "ant-design-vue";
 import { ExportDownload, ExportButton } from "../../export";
 
 import type { WorkMode } from "../../export";
@@ -92,45 +90,8 @@ const props = defineProps({
 
 const { selectedKeys, rowSelection } = table.useSelection();
 
-// lqr 链接处理
-const lqrLink = function(value: string): string | undefined {
-  if (value && /^http/.test(value)) {
-    return value;
-  }
-  if (value && /^\/\//.test(value)) {
-    return value;
-  }
-  if (value) {
-    return fileDownloadUrl(value);
-  }
-};
-
-// 查看 Lqr
-const onCheckLqr = async function(value: string) {
-  const status = await before(props.before ,"lqr");
-  if (status) {
-    const url = lqrLink(value);
-    if (url) {
-      window.open(url);
-    }
-  }
-}
-
-// 添加 Lqr
-const onAddLqr = async function(e: Event, data: TaskFileItem) {
-  const status = await before(props.before, "addLqr");
-  if (!status) {
-    return false;
-  }
-  const option = { id: props.id, file: data.bilingualFileId, partner: props.partner };
-  const callback = async function(value: object) {
-    const status = await api.project.saveLqr(value, props.partner);
-    if (status) {
-      $emit("reload", e, data);
-    }
-    return status;
-  };
-  AddLqr(option, { onOk: callback });
+const onReload = function() {
+  $emit("reload");
 };
 
 </script>
@@ -173,29 +134,9 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
       :row-selection="rowSelection" 
       :columns="headers(list, props)" 
       :data-source="fileList(list)">
-
-      <template #bodyCell="{ column, record, text }">
+      <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'lqr'">
-          <template v-if="lqrOper && String(lqrOper) === '3'">
-            <!-- 可上传 -->
-            <!-- 如果有 lqr 链接 -->
-            <Button v-if="record.lqrVisitPath" type="link" @click="onCheckLqr(record.lqrVisitPath)">{{ text }}</Button>
-            <!-- 无链接时展示添加按钮 -->
-            <Button v-else type="link" class="text-sm" @click="onAddLqr($event, record)">
-              <span class="flex items-center">
-                <Icon class="flex mr-1" type="icon-a-add"></Icon>
-                <span>{{ i18n.common.button.addLqr }}</span>
-                <span class="count-item ml-0.5"></span>
-              </span>
-            </Button>
-          </template>
-          <template v-else-if="lqrOper && String(lqrOper) === '2' && record.lqrVisitPath">
-            <!-- Lqr Link -->
-            <Button type="link" @click="onCheckLqr(record.lqrVisitPath)">{{ text }}</Button>
-          </template>
-          <template v-else>
-            <span>--</span>
-          </template>
+          <LqrLink :data="record" :id="id" :before="before" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqrLink>
         </template>
       </template>
     </Table>

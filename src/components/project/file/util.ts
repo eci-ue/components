@@ -44,13 +44,14 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
   for (const data of fileList) {
     const temp: object[] = [];
     _.forEach<TaskFileStage>(data.taskBilingualFileStageRspList || [], function(item: TaskFileStage, index: number) {
-      const { subType = "", current = false } = item;
+      let { subType = "", current = false } = item;
+      subType = _.toUpper(subType);
       if (subType === "T" || subType === "E") {
         showLqr = true;
       }
       temp.push({
         key: "words",
-        title: `For ${_.toUpper(subType)} words`,
+        title: `For ${subType} words`,
         width: "120px",
         dataIndex: `taskBilingualFileStageRspList[${index}]`,
         className: "word-content",
@@ -61,7 +62,7 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
       {
         className: current ? "word-content text-yellow bg-yellow bg-opacity-10" : "word-content",
         key: "resourceName",
-        title: _.toUpper(subType),
+        title: subType,
         width: "200px",
         dataIndex: `taskBilingualFileStageRspList[${index}]`,
         customRender: function(result: object) {
@@ -73,7 +74,10 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
       list[index + prev.length] = item;
     });
   }
-  return [...list, ...next];
+  if (showLqr) {
+    return [...list, ...next];
+  }
+  return list;
 };
 
 

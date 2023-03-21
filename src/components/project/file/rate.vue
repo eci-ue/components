@@ -32,13 +32,19 @@ const rate = computed<number>(function() {
   return _.toNumber(props.data?.rate || 0);
 });
 
+const isQa = function(type: string): boolean {
+  if(_.toUpper(type) === "QA") {
+    return true;
+  }
+  return false;
+}
 </script>
 
 <template>
   <div>
     <template v-if="data && data.resourceName">
       <p class="mb-0 text-sm">{{ data.resourceName }}</p>
-      <template v-if="mode === WorkMode.Transdoc">
+      <template v-if="mode === WorkMode.Transdoc && isQa(data.subType)">
         <Space v-if="rate === 3">
           <Icon class="flex text-primary" type="check-circle-filled"></Icon>
           <span>{{ i18n.project.label.completed }}</span>
