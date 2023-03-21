@@ -90,6 +90,7 @@ const onClick = async function() {
       return false;
     }
   } catch (error) {
+    // @ts-ignore
     const tips: string = error?.message;
     if (tips) {
       message.error(tips);
