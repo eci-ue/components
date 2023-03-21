@@ -6,9 +6,9 @@
 import * as _ from "lodash-es";
 import { api } from "../../api";
 import i18n from "../../utils/i18n";
-import { Table } from "ant-design-vue";
 import { PropType, onMounted } from "vue";
 import Download from "../download/index.vue";
+import { Table, Button } from "ant-design-vue";
 import { DownloadType } from "../download/type";
 import { PageResult, table, useState } from "@ue/utils";
 import { WorkMode, headers, expanded, ExportStatus } from "./props";
