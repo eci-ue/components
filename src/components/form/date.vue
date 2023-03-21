@@ -48,7 +48,8 @@ const placeholder = computed<string>(function () {
 const text = computed<string>({
   get: () => props.value,
   set: (value: string) => {
-    const time = value ? date.format(value, !showTime.value) : "";
+    const data = value ? date._format(value, !showTime.value) : "";
+    const time = data ? data.date.format(data.template) : "";
     emit("update:value", time);
     emit("change", time);
   }
