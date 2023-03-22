@@ -52,10 +52,8 @@ const checkedValue = computed<Array<string | number>>({
   }
 });
 
-const primaryKey = "id";
-const foreignKey = "parentId";
 const currentFolder = ref<string | number>(props.rootId); // 当前文件夹ID
-const db = new DBlist([], primaryKey, foreignKey, props.rootId);
+const db = new DBlist<FileItem>([], "id", "parentId", props.rootId);
 
 const selectedChildren = ref<FileItem[]>([]);
 const setSelectedChildren = function(selectedValue: string | number, list: FileItem[]) {
@@ -71,21 +69,22 @@ const setSelectedChildren = function(selectedValue: string | number, list: FileI
 }
 
 const getList = function(id: string | number) {
-  const where = { [foreignKey]: id };
-  return db.select<FileItem>(where);
+  const where = { [db.foreign]: id };
+  return db.select(where);
 };
 
 const getSelectedName = function(): string {
   if (currentFolder.value === props.rootId) {
     return i18n.project.label.allFile;
   }
-  const data = db.selectOne<FileItem>({
-    [primaryKey]: currentFolder.value
-  });
-  if (data.name && data.name.length > 30) {
-    return data.name.replace(/^(.{10}).+(.{10})$/, "$1...$2");
+  const data = db.selectOne({[db.primary]: currentFolder.value });
+  if (data) {
+    if (data.name && data.name.length > 30) {
+      return data.name.replace(/^(.{10}).+(.{10})$/, "$1...$2");
+    }
+    return data.name;
   }
-  return data.name;
+  return "";
 }
 
 const breadcrumbList = function(): FileItem[] {
@@ -93,9 +92,7 @@ const breadcrumbList = function(): FileItem[] {
     id: props.rootId, 
     name: i18n.project.label.allFile
   };
-  const list = db.parentDeepFlatten<FileItem>({
-    [primaryKey]: currentFolder.value
-  });
+  const list = db.parentDeepFlatten({ [db.primary]: currentFolder.value });
   return _.concat<FileItem>(root as FileItem, list);
 };
 
