@@ -59,11 +59,6 @@ export class SubmitType {
   rate: number = 0;
   taskId!: number;
   attachment!: FileType[];
-  constructor(rate: number = 0, isUse: number = 0) {
-    if (isUse == 1) {
-      this.rate = rate;
-    }
-  }
 }
 export enum Status {
   inProgress = 2,//2:资源确认接受任务，正在完成

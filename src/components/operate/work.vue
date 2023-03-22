@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import * as _ from "lodash-es";
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import { api } from "../../api";
 import { useState } from "@ue/utils";
-import Upload,{ UploadSkin } from "../upload";
+import Upload, { UploadSkin } from "../upload";
 import Icon from "../icon";
-import { SubmitType,InterruptRate } from "./type";
+import { SubmitType, InterruptRate } from "./type";
 import { Form, FormItem, Tag, Slider } from "ant-design-vue";
 import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
@@ -20,11 +20,10 @@ const props = defineProps({
   }
 });
 // 中断提交前完成比例获取
-const { state } = useState.data<InterruptRate>(async function () {
+const { state, execute } = useState.dataExecute<InterruptRate>(async function () {
   return api.task.interruptRate(props.taskId);
 });
-
-let submitParams = reactive(new SubmitType(state.value.rate,state.value.isUse))
+let submitParams = reactive(new SubmitType())
 
 //上传文件
 const onUpload = function (data: UploadFile) {
@@ -54,6 +53,14 @@ const onSubmit = async function () {
   return false;
 
 }
+
+onMounted(async () => {
+  await execute()
+  if (state.value.isUse == 1) {
+    submitParams.rate = state.value.rate
+  }
+
+})
 defineExpose({ submit: onSubmit });
 </script>
 
@@ -67,7 +74,8 @@ defineExpose({ submit: onSubmit });
             <span class="ml-2">{{ submitParams.rate }}%</span>
           </div>
         </FormItem>
-        <FormItem v-if="!state.isUse" :label="i18n.operate.label.attachment" name="attachment" :rules="rules.array(i18n.operate.placeholder.attachment)">
+        <FormItem v-if="!state.isUse" :label="i18n.operate.label.attachment" name="attachment"
+          :rules="rules.array(i18n.operate.placeholder.attachment)">
           <Upload :drive="true" label="Upload" :skin="UploadSkin.default" @success="onUpload" class="mb-2"></Upload>
           <div class="mb-1" v-for="(file, index) in submitParams.attachment" :key="`${index}-${file.fileName}`">
             <Tag closable @close="deleteFile(index)" class="border-none bg-primary-light">
@@ -87,5 +95,4 @@ defineExpose({ submit: onSubmit });
       <slot name="buttons"></slot>
     </div>
   </div>
-
 </template>
