@@ -51,7 +51,7 @@ const isQa = function(type: string): boolean {
         </Space>
         <Space v-else-if="rate === 2">
           <Icon class="flex text-yellow" type="clock-circle-filled"></Icon>
-          <span>{{ i18n.project.label.completed }}</span>
+          <span>{{ i18n.project.status.inProgress }}</span>
         </Space>
         <Space v-else>
           <Icon class="flex text-red" type="close-circle-filled"></Icon>
