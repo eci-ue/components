@@ -29,8 +29,7 @@ const props = defineProps({
   /** work 单位 */
   workUnit: {
     type: String,
-    required: true,
-    default: "Word",
+    required: false,
   },
   /** taskOuterDetailRspArrayList */
   list: {
