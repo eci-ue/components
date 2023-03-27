@@ -52,13 +52,16 @@ const props = defineProps({
 const iframe = ref<HTMLIFrameElement>();
 
 const env = computed<Env>(function() {
-  const pattern = new UrlPattern('(http(s)\\://)(:subdomain.):domain.:tld(\\::port)(/*)');
+  const pattern = new UrlPattern('(http(s)\\://)(:subdomain.):domain.*(\\::port)(/*)');
   const location = pattern.match(window.location.origin);
   if (location.domain === "eciol-dev") {
     return Env.dev;
   }
   if (location.domain === "eciol-test") {
     return Env.test;
+  }
+  if (location.domain === "ecinnovations") {
+    return Env.ecinnovations;
   }
   if (location.domain === "ectranslate") {
     return Env.ectranslate;

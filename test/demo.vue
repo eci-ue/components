@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { API } from "@js-lion/api";
 import { 
-  Alter, Operate, FileOperate, ExportButton, ExportDownload, FormCheckbox,
+  Alter, Operate, FileOperate, ExportButton, ExportDownload, FormCheckbox, ExportRecord,
   WorkMode, LqrAdd, FormRadio, FormRadioSkin, TimeDelivery, Enum,FormDate,Interrputted,
   FileInformation
 } from "../src/index";
@@ -76,8 +76,6 @@ onMounted(function() {
   //     // return api.project.saveLqr(state, true);
   //   }
   // });
-
-  
 });
 
 const http = new API();
@@ -102,6 +100,9 @@ const before = function() {
         <FormDate v-model:value="DateValue" :meta="dateMeta"></FormDate>
       </div>
     </div>
+
+    <ExportRecord :id="10075967" language="12" :mode="WorkMode.Transdoc" :pm="true"></ExportRecord>
+
     <!-- <Interrputted :taskId="1"></Interrputted>
 
     <Space>
@@ -140,13 +141,13 @@ const before = function() {
         value="C:\\ERP\\FileSYWeb\\2023\\20230303\\fd49cf99-4a7f-43e3-8528-794f16ee7c79" />
     </div> -->
 
-    <FileInformation 
+    <!-- <FileInformation 
       :list="taskState.taskBilingualFileRspList" 
       id="545" 
       :lqr-level="3"
       projectId="10075985" 
       :mode="WorkMode.Transdoc" 
       language="7">
-    </FileInformation>
+    </FileInformation> -->
   </div>
 </template>

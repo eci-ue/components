@@ -1,13 +1,10 @@
 import * as _ from "lodash-es";
 import Cookie from "js-cookie";
 import i18n from "../../utils/i18n";
-import UrlPattern from "url-pattern";
 import safeGet from "@fengqiaogang/safe-get";
 
-
 import * as message from "@ue/message";
-import { message as AntdMessage } from "ant-design-vue";
-import { DownloadType, NetApi, Env, DomainApi } from "./type";
+import { DownloadType, NetApi, Env, DomainApi, Domain } from "./type";
 import { downloadFile, fileDownloadUrl, hook, path } from "@ue/utils";
 
 import type { HookFunction } from "@ue/utils";
@@ -83,7 +80,8 @@ const netDownload = function(content: any, env: Env, value: string, name: string
               setTimeout(loading, 500);
             }
             setTimeout(function() {
-              AntdMessage.destroy();
+              const tips = message.noConflict();
+              tips.destroy();
             }, 500);
             resolve(true);
           },
@@ -93,7 +91,8 @@ const netDownload = function(content: any, env: Env, value: string, name: string
               setTimeout(loading, 500);
             }
             setTimeout(function() {
-              AntdMessage.destroy();
+              const tips = message.noConflict();
+              tips.destroy();
             }, 500);
             if (typeof err === "string") {
               reject(new Error(err));
@@ -123,15 +122,13 @@ const fileDownload = function(env: Env, value: string, name: string = "") {
 const download = async function(props: Props, content: any, env: Env) {
   const append = function() {
     if (props.cookie) {
-      const pattern = new UrlPattern('(http(s)\\://)(:subdomain.):domain.:tld(\\::port)(/*)');
-      const location = pattern.match(window.location.origin);
       _.each(props.cookie, function(item: object) {
         const key = safeGet<string>(item, "keyStr");
         const value = safeGet<string>(item, "valueStr");
         if (key && value) {
           Cookie.set(key, value, {
             path: "/",
-            domain: `${location.domain}.${location.tld}`,
+            domain: Domain[env],
           });
         }
       });
@@ -140,14 +137,12 @@ const download = async function(props: Props, content: any, env: Env) {
   }
   const remove = function() {
     if (props.cookie) {
-      const pattern = new UrlPattern('(http(s)\\://)(:subdomain.):domain.:tld(\\::port)(/*)');
-      const location = pattern.match(window.location.origin);
       _.each(props.cookie, function(item: object) {
         const key = safeGet<string>(item, "keyStr");
         if (key) {
           Cookie.remove(key, {
             path: "/",
-            domain: `${location.domain}.${location.tld}`,
+            domain: Domain[env],
           });
         }
       });
@@ -161,7 +156,6 @@ const download = async function(props: Props, content: any, env: Env) {
       status = ossDownload(props.value, props.name);
       return;
     }
-
     if (props.type === DownloadType.net && props.value) {
       try {
         status = await netDownload(content, env, props.value, props.name);
