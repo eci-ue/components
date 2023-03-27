@@ -1,13 +1,13 @@
 export default {
   title: {
-    rate: "Rate the partner",
-    interupt: "Interupt Reason",
+    rate: "Rate the Partner",
+    interupt: "Interrupt Reason",
     work: "Submit Work",
     instruction: "Task Instruction",
-    interrputted: "Submit Interrputted",
+    interrputted: "Submit Interrupted",
   },
   label:{
-    percentage:"Percentage of work you have done already",
+    percentage:"Percentage of work you have already done.",
     attachment:"Attachment",
     impression:"My Impression",
     process:"Task process",
@@ -20,6 +20,6 @@ export default {
     innerOuterType:"Add To This Client’s Resource Pool",
   },
   placeholder: {
-    attachment: "Please upload attachment",
+    attachment: "Please upload the attachment",
   },
 };

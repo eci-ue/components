@@ -4,13 +4,13 @@ export default {
     cat: "还未设置 Cat Config, 请先设置！"
   },
   task: {
-    delete: "Are you sure delete this task.",
-    cancel: "Are you sure cancel this task.",
-    reject: "Are you sure reject this task.",
-    submit: "Are you sure submit this task.",
-    hedged: "Are you sure you want to create a hedged JAS? The newly created hedging JAS is a JAS with a negative workload that needs to be confirmed by the resource.",
+    delete: "您确定要删除这个任务吗？",
+    cancel: "您确定要取消这个任务吗？",
+    reject: "您确定要拒绝这个任务吗？",
+    submit: "您确定要提交这个任务吗？",
+    hedged: "您确定要创建一个对冲JAS吗？",
   },
   download: {
-    success: "Download success, Please check your browser's download records"
+    success: "下载成功，请查看您浏览器的下载记录。"
   },
 };

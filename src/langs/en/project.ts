@@ -1,7 +1,7 @@
 export default {
   export: {
     target: "Current target files",
-    xliff: "Current xliff files",
+    xliff: "Current XLIFF files",
     task: "Automated Tasks",
     status: {
       finished: "Finished",

@@ -1,8 +1,8 @@
 export default {
   button: {
-    addLqr: "Add Lqr",
-    hedge: "Hedge JAS",
-    partner: "Rate Partner",
-    instruction: "Instruction",
+    addLqr: "添加LQR",
+    hedge: "对冲JAS",
+    partner: "评价合作伙伴",
+    instruction: "说明",
   },
 };

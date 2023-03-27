@@ -1,26 +1,26 @@
 export default {
   export: {
-    target: "Current target files",
-    xliff: "Current xliff files",
-    task: "Automated Tasks",
+    target: "当前目标文件",
+    xliff: "当前xliff文件",
+    task: "自动任务",
     status: {
-      finished: "Finished",
-      rejected: "Rejected"
+      finished: "已完成",
+      rejected: "已拒绝"
     }
   },
   label: {
-    item: "Item",
-    amount: "JAS Amount",
-    allFile: "All Files",
-    moveFile: "Move to {name} Folder",
-    allLanguages: "All Languages",
-    operator: "Operator",
-    taskName: "Task Name",
-    applyTime: "Apply Time",
-    finishTime: "Finished Time",
-    operate: "Operate",
-    exportedOn: "Exported On",
-    fileName: "File Name",
+    item: "项目",
+    amount: "JAS金额",
+    allFile: "所有文件",
+    moveFile: "移动到{name}文件夹",
+    allLanguages: "所有语言",
+    operator: "操作员",
+    taskName: "任务名称",
+    applyTime: "申请时间",
+    finishTime: "完成时间",
+    operate: "操作",
+    exportedOn: "导出日期",
+    fileName: "文件名",
     completed: "完成",
     notStarted: "未开始",
     openFile: "查看",

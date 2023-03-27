@@ -1,9 +1,9 @@
 export default {
   label: {
     title: "ECI Drive",
-    largefiles: "Large files entry"
+    largefiles: "大文件入口"
   },
   placeholder: {
-    select: "Please select drive file"
+    select: "请选择驱动文件"
   }
 };

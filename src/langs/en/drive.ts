@@ -4,6 +4,6 @@ export default {
     largefiles: "Large files entry"
   },
   placeholder: {
-    select: "Please select drive file"
+    select: "Please select a drive file"
   }
 };

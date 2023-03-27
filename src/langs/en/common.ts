@@ -1,6 +1,6 @@
 export default {
   button: {
-    addLqr: "Add Lqr",
+    addLqr: "Add LQR",
     hedge: "Hedge JAS",
     partner: "Rate Partner",
     instruction: "Instruction",
