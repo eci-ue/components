@@ -3,13 +3,19 @@ import { asyncCheck } from "./response";
 import Authorization from "./authorization";
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 
+
+// 调试时使用，临时 token value
+// 配置文件 src/config/.env.local
+// VITE_API = xxx
+// @ts-ignore
+export const apiBasis =  import.meta.env.VITE_API;
+
 const API_Server = {
   admin: "/system-admin", // 公共
   drive: "/tbms-drive", // 网盘
   cat: "/tbms-cat",     // CAT
   project: "/tbms-project", // 项目
   task: "/tbms-task", // task
-  signalr: "http://fssyweb.eciol-test.com/signalr"
 }
 // 处理请求前的数据
 const requestCallback = function(req: AxiosRequestConfig): AxiosRequestConfig {
@@ -38,5 +44,5 @@ API.addResponse(responseCallback, function(error: any) {
 // 设置全局变量
 API.setEnv(API_Server);
 API.setConfig({
-  baseURL: "//erpapi.eciol-test.com/"
+  baseURL: apiBasis
 });
