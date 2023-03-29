@@ -15,6 +15,7 @@ dist-ssr
 types/*
 !types/shims-vue.d.ts
 *.local
+*.xlsx
 
 # Editor directories and files
 .vscode/*
