@@ -102,5 +102,5 @@ const disabledDate = (time: Dayjs) => {
       :disabled-date="disabledDate" 
       :placeholder="placeholder">
     </DatePicker>
-</div>
+  </div>
 </template>

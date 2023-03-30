@@ -7,7 +7,7 @@
 import { computed, PropType } from "vue";
 import Checkbox from "../file/checkbox";
 
-import type { FileMeta as Meta } from "./props";
+import { FileMeta as Meta } from "./props";
 
 const emit = defineEmits(["update:value", "change"]);
 
