@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.2.94",
+  "version": "0.2.94-1",
   "type": "module",
   "license": "MIT",
   "main": "./dist/components.js",
@@ -25,11 +25,11 @@
     "url": "git+https://github.com/eci-ue/components.git"
   },
   "dependencies": {
-    "@fengqiaogang/dblist": "^0.4.0",
+    "@fengqiaogang/dblist": "^0.4.1",
     "@fengqiaogang/safe-get": "^0.1.4",
     "@fengqiaogang/safe-set": "^0.1.3",
     "@ue/form": "^0.1.7",
-    "@ue/i18n": "^0.1.64",
+    "@ue/i18n": "^0.1.65",
     "@ue/message": "^0.0.5",
     "@ue/model": "^0.1.5",
     "@ue/style": "^0.1.2",
@@ -42,8 +42,8 @@
   },
   "devDependencies": {
     "@ant-design/icons-vue": "^6.1.0",
-    "@js-lion/i18n-tools": "^1.0.2",
     "@js-lion/api": "^0.0.5",
+    "@js-lion/i18n-tools": "^1.0.2",
     "@types/ali-oss": "^6.16.7",
     "@types/js-cookie": "^3.0.2",
     "@types/lodash-es": "^4.17.6",
