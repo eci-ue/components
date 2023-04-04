@@ -16,6 +16,7 @@ import { LanguageGroup } from "../language";
 
 import type { Upload } from "../../utils/upload";
 import type { FileType, FileItem, FileOperate } from "./props";
+import Download from "../download/index.vue";
 
 const $emit = defineEmits(["change"]);
 
@@ -142,30 +143,23 @@ const onDownload = function () {
   <div>
     <div>
       <!-- 操作按钮 -->
-      <Handle :id="id" :isPm="isPm" :language="language" :type="type" :fileOperate="fileOperate" :task="task" :accept="accept"
-        :disabled="disabled" :selectedKeys="selectedKeys" :selected="selected" v-model:progress="uploadFileProgress" :subType="subType"
-        @click="onReload" @download="onDownload"></Handle>
+      <Handle :id="id" :isPm="isPm" :language="language" :type="type" :fileOperate="fileOperate" :task="task"
+        :accept="accept" :disabled="disabled" :selectedKeys="selectedKeys" :selected="selected"
+        v-model:progress="uploadFileProgress" :subType="subType" @click="onReload" @download="onDownload"></Handle>
     </div>
 
     <!-- 资源文件列表 -->
-    <Table 
-      class="drive-list mt-5" 
-      table-layout="auto" 
-      :custom-row="customRow" 
-      :loading="isLoading"
-      :row-selection="rowSelection" 
-      :columns="headers(task,subType)" 
-      :data-source="fileList" 
-      :scroll="tableScroll"
+    <Table class="drive-list mt-5" table-layout="auto" :custom-row="customRow" :loading="isLoading"
+      :row-selection="rowSelection" :columns="headers(task, subType)" :data-source="fileList" :scroll="tableScroll"
       :pagination="false">
 
       <template #bodyCell="{ column, record, text }">
         <template v-if="column.key === 'name'">
-          <Button type="link">
-            <FileIcon :value="text" :max-size="24">
+          <Download :value="record.type != 5 ? record.filePath : ''">
+            <FileIcon :value="text" :class="record.type != 5 ? 'link' : ''" :max-size="24">
               <Icon type="link-outlined"></Icon>
             </FileIcon>
-          </Button>
+          </Download>
         </template>
         <template v-else-if="column.key === 'type'">
           <span>{{ _.toUpper(text) || "--" }}</span>
