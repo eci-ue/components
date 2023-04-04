@@ -11,6 +11,7 @@ import Icon from "../icon";
 import { RadioGroup, Radio, RadioButton, Space } from "ant-design-vue";
 
 import type { RadioMeta as Meta, RadioItem as Item } from "./props";
+import safeGet from "@fengqiaogang/safe-get";
 
 const emit = defineEmits(["update:value", "change"]);
 
@@ -37,8 +38,9 @@ const props = defineProps({
 });
 
 const radioPrimaryColor = computed<string>(function() {
-  if (props.meta?.color) {
-    return props.meta.color;
+  const color = safeGet<string>(props.meta, "color");
+  if (color && typeof color === "string") {
+    return color;
   }
   return "#3c6cfe";
 });
