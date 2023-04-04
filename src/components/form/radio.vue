@@ -136,6 +136,7 @@ const text = computed<string>({
   &.active {
     @apply text-white;
     background-color: var(--radio-color);
+    border-color: var(--radio-color) !important;
     .eci-icon {
       @apply visible;
     }
