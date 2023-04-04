@@ -113,13 +113,28 @@ const netDownload = function(content: any, env: Env, value: string, name: string
   });
 };
 
+export const downloadName = function(value: string = ""): string | undefined {
+  if (value) {
+    const list = value.split("/");
+    const [ name, suffix] = list[list.length - 1].split(".");
+    if (name && suffix && suffix.length > 1) {
+      return list[list.length - 1];
+    }
+  }
+  return void 0;
+}
+
+export const ossFileDownloadLink = function(env: Env, value: string) {
+  return path.join(DomainApi[env], "service-file", value);
+}
+
 const fileDownload = function(env: Env, value: string, name: string = "") {
-  const link = path.join(DomainApi[env], "service-file", value);
+  const link = ossFileDownloadLink(env, value);
   downloadFile(link, name);
   return true;
 }
 
-const download = async function(props: Props, content: any, env: Env) {
+export const download = async function(props: Props, content: any, env: Env) {
   const append = function() {
     if (props.cookie) {
       _.each(props.cookie, function(item: object) {
@@ -181,5 +196,3 @@ const download = async function(props: Props, content: any, env: Env) {
   }
   return await after(status, remove, props.after);
 }
-
-export default download;

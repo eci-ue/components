@@ -8,7 +8,7 @@ import Icon from "../icon";
 import { PropType, computed, ref } from "vue";
 import UrlPattern from "url-pattern";
 import { DownloadType, Env } from "./type";
-import download from "./util";
+import { download, ossFileDownloadLink, downloadName } from "./util";
 import type { HookFunction } from "@ue/utils";
 
 const props = defineProps({
@@ -93,7 +93,12 @@ const onDownload = function() {
           <iframe class="w-full h-full" ref="iframe" :src="iframeSrc"></iframe>
         </div>
       </template>
-      <div v-if="value" class="cursor-pointer px-2 py-1" @click="onDownload">
+      <a class="block" v-if="value && type === DownloadType.oss" :href="ossFileDownloadLink(env, value)" :download="downloadName(value)">
+        <slot>
+          <Icon class="text-sm" type="download-outlined"></Icon>
+        </slot>
+      </a>
+      <div v-else-if="value" class="cursor-pointer px-2 py-1" @click="onDownload">
         <slot>
           <Icon class="text-sm" type="download-outlined"></Icon>
         </slot>
