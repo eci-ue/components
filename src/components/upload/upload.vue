@@ -109,16 +109,12 @@ const fileAccept = computed<string>(function() {
   return "*";
 });
 
-const onChange = function (e: Event) {
-  const input: HTMLInputElement = e.target as HTMLInputElement;
-  const files = [].slice.call(input.files);
-  // 重置上传按钮
-  input.value = "";
+const __fileChange = async function(files: File[]) {
   let status = true;
   if (typeof props.accept === "function") {
     for (const file of files) {
       // 判断选择的文件格式
-      status = props.accept(file);
+      status = await Promise.resolve(props.accept(file));
       if (!status) {
         break;
       }
@@ -132,6 +128,14 @@ const onChange = function (e: Event) {
     // 上传文件记录
     fileList.value = _.concat(list, fileList.value);
   }
+}
+
+const onChange = function (e: Event) {
+  const input: HTMLInputElement = e.target as HTMLInputElement;
+  const files = [].slice.call(input.files);
+  __fileChange(files);
+  // 重置上传按钮
+  input.value = "";
   return false;
 }
 
