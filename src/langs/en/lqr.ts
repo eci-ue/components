@@ -19,7 +19,7 @@ export default {
   },
   rule: {
     level: "Please calculate the Language Quality Level.",
-    languageReport: "Please upload the Language Quality Report.."
+    languageReport: "Please upload the Language Quality Report."
   },
   level: {
     case1: 'Level 1- Excellent',
