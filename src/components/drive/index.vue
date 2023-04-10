@@ -66,7 +66,13 @@ const props = defineProps({
   isPm: {
     type: Boolean,
     default: () => false
-  }
+  },
+  // 是否为外部任务
+  partner: {
+    type: Boolean,
+    required: false,
+    default: () => false
+  },
 });
 
 const uploadFileProgress = ref<Upload[]>([]);
@@ -143,9 +149,23 @@ const onDownload = function () {
   <div>
     <div>
       <!-- 操作按钮 -->
-      <Handle :id="id" :isPm="isPm" :language="language" :type="type" :fileOperate="fileOperate" :task="task"
-        :accept="accept" :disabled="disabled" :selectedKeys="selectedKeys" :selected="selected"
-        v-model:progress="uploadFileProgress" :subType="subType" @click="onReload" @download="onDownload"></Handle>
+      <Handle 
+        :id="id" 
+        :isPm="isPm" 
+        :language="language" 
+        :type="type" 
+        :fileOperate="fileOperate" 
+        :task="task" 
+        :partner="partner"
+        :accept="accept" 
+        :disabled="disabled" 
+        :selectedKeys="selectedKeys" 
+        :selected="selected"
+        v-model:progress="uploadFileProgress" 
+        :subType="subType" 
+        @click="onReload" 
+        @download="onDownload">
+      </Handle>
     </div>
 
     <!-- 资源文件列表 -->

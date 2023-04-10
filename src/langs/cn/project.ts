@@ -12,6 +12,7 @@ export default {
     item: "项目",
     amount: "JAS金额",
     allFile: "所有文件",
+    uploadDrive: "网盘上传",
     moveFile: "移动到{name}文件夹",
     allLanguages: "所有语言",
     operator: "操作员",

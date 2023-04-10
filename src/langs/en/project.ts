@@ -12,6 +12,7 @@ export default {
     item: "Item",
     amount: "JAS Amount",
     allFile: "All Files",
+    uploadDrive: "Upload in Drive",
     moveFile: "Move to {name} Folder",
     allLanguages: "All Languages",
     operator: "Operator",

@@ -11,9 +11,10 @@ import i18n from "../../utils/i18n";
 import { rule as rules } from "@ue/utils";
 import { FileType, FileOperate, FileItem } from "./props";
 import { Button, Space } from "ant-design-vue";
-import { computed, PropType, toRaw, ref } from "vue";
+import { computed, PropType, toRaw, ref,h as createElement } from "vue";
 
 import Upload from "../upload";
+import Head from "./head.vue";
 import FormFile from "../form/file.vue";
 import { ExportDownload } from "../export/index";
 import FormlanguagePairs from "../form/language/pairs.vue";
@@ -82,7 +83,13 @@ const props = defineProps({
   isPm: {
     type: Boolean,
     default: false
-  }
+  },
+  // 是否为外部任务
+  partner: {
+    type: Boolean,
+    required: false,
+    default: () => false
+  },
 });
 
 const uploadBox = ref<any>();
@@ -98,7 +105,7 @@ const uploadFileProgress = computed<UploadData[]>({
 const onSelectDriveFile = async function () {
   const option = {
     width: 460,
-    title: i18n.drive.label.title
+    title: props.partner?i18n.drive.label.title:createElement(Head)
   };
 
   const data = await form<{ fileIds: number[] }>({
