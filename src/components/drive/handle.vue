@@ -11,7 +11,7 @@ import i18n from "../../utils/i18n";
 import { rule as rules } from "@ue/utils";
 import { FileType, FileOperate, FileItem } from "./props";
 import { Button, Space } from "ant-design-vue";
-import { computed, PropType, toRaw, ref,h as createElement } from "vue";
+import { computed, PropType, toRaw, ref, h as createElement } from "vue";
 
 import Upload from "../upload";
 import Head from "./head.vue";
@@ -105,7 +105,7 @@ const uploadFileProgress = computed<UploadData[]>({
 const onSelectDriveFile = async function () {
   const option = {
     width: 460,
-    title: props.partner?i18n.drive.label.title:createElement(Head)
+    title: props.partner ? i18n.drive.label.title : createElement(Head)
   };
 
   const data = await form<{ fileIds: number[] }>({

@@ -18,6 +18,7 @@ export interface Props {
   task?: boolean;            // 是否为 task 任务
   subType?:string;           // 任务节点(小类)
   isPm?: boolean;            // 是否为 PM
+  partner?: boolean;         // 是否为外部任务
   onChange?: (fileCount: number) => void
 }
 
