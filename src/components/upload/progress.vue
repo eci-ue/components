@@ -7,7 +7,7 @@
 import { PropType } from "vue";
 import BigNumber from "bignumber.js";
 import { Progress } from "ant-design-vue";
-import FileIcon from "../icon/file.vue";
+import { FileIcon } from "@ue/icon";
 import { Status } from "../../utils/upload";
 
 import type { Upload } from "../../utils/upload";

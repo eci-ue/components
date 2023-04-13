@@ -4,7 +4,7 @@ import { api } from "../../../api";
 import { useState } from "@ue/utils";
 import { Table, Space, Tag } from "ant-design-vue";
 import { headers, list } from "./util";
-import Icon from "../../icon";
+import { Icon } from "@ue/icon";
 import i18n from "../../../utils/i18n";
 
 const props = defineProps({

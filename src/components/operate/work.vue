@@ -4,7 +4,7 @@ import { onMounted, reactive } from "vue";
 import { api } from "../../api";
 import { useState } from "@ue/utils";
 import Upload, { UploadSkin } from "../upload";
-import Icon from "../icon";
+import { Icon } from "@ue/icon";
 import { SubmitType, InterruptRate } from "./type";
 import { Form, FormItem, Tag, Slider } from "ant-design-vue";
 import { useValidate } from "@ue/form";

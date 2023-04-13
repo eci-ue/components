@@ -5,7 +5,7 @@
  */
 
 import * as _ from "lodash-es";
-import Icon from "../../icon";
+import { Icon } from "@ue/icon";
 import { PropType, computed } from "vue";
 import i18n from "../../../utils/i18n";
 import { Progress, Space } from "ant-design-vue";

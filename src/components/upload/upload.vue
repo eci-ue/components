@@ -10,7 +10,7 @@ import { PropType, ref, computed } from "vue";
 import { UploadSkin } from "./props";
 import * as upload from "../../utils/upload";
 
-import Icon from "../icon";
+import { Icon } from "@ue/icon";
 import Progress from "./progress.vue";
 import { Modal, Input } from "ant-design-vue";
 

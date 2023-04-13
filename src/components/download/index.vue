@@ -4,7 +4,7 @@
  * @author svon.me@gmail.com
  */
 
-import Icon from "../icon";
+import { Icon } from "@ue/icon";
 import { PropType, computed, ref } from "vue";
 import UrlPattern from "url-pattern";
 import { DownloadType, Env } from "./type";

@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import Icon from "../icon";
 import * as _ from "lodash-es";
 import { api } from "../../api";
 import { some } from "../../utils";
 import BigNumber from "bignumber.js";
-import FileIcon from "../icon/file.vue";
 import { ref, computed, PropType } from "vue";
-import { Button, Table } from "ant-design-vue";
+import { Table } from "ant-design-vue";
 import Time from "../time";
-import { table, useState, date, downloadFile, fileDownloadUrl, fileSize } from "@ue/utils";
+import { Icon, FileIcon } from "@ue/icon";
+import { table, useState, downloadFile, fileDownloadUrl, fileSize } from "@ue/utils";
 
 import Handle from "./handle.vue";
 import { headers } from "./heder";
