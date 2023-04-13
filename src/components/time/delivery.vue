@@ -28,7 +28,7 @@ const props = defineProps({
   /** 默认时间格式规则 */
   format: {
     type: String,
-    default: ""
+    default: "YYYY-MM-DD HH:mm"
   },
   // 是否禁用
   disabled: {
