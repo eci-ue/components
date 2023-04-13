@@ -144,7 +144,7 @@ const onDownload = function () {
 
       <template #bodyCell="{ column, record, text }">
         <template v-if="column.key === 'name'">
-          <Download :value="record.type != 5 ? record.filePath : ''">
+          <Download class="w-full" :value="record.type != 5 ? record.filePath : ''">
             <FileIcon :value="text" :class="record.type != 5 ? 'link' : ''" :max-size="24">
               <Icon type="link-outlined"></Icon>
             </FileIcon>
