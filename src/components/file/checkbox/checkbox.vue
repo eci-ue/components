@@ -11,7 +11,7 @@ import DBlist from "@fengqiaogang/dblist";
 import { ref, onMounted, PropType, computed } from "vue";
 
 import File from "./file.vue";
-import Icon from "../../icon";
+import { Icon } from "@ue/icon";
 import { Space, Breadcrumb, BreadcrumbItem, CheckboxGroup, Empty } from "ant-design-vue";
 
 import type { FileItem } from "../props";

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Icon from "../../icon";
+import { Icon } from "@ue/icon";
 import { PropType } from "vue";
 import { before } from "./util";
 import { api } from "../../../api";

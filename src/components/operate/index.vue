@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Icon from "../icon";
+import { Icon } from "@ue/icon";
 import * as _ from "lodash-es";
 import { api } from "../../api";
 import { form } from "@ue/model";

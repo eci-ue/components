@@ -4,7 +4,7 @@
  */
 
 import { PropType } from "vue";
-import Icon from "../../icon/file.vue";
+import { FileIcon as Icon } from "@ue/icon";
 import { Checkbox } from "ant-design-vue";
 import type { FileItem } from "../props";
 

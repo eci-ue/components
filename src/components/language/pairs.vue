@@ -2,7 +2,7 @@
 import * as _ from "lodash-es";
 import { PropType } from "vue";
 import Item from "./item.vue";
-import Icon from "../icon";
+import { Icon } from "@ue/icon";
 
 import type { LanguageData } from "./props";
 

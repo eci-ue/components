@@ -4,7 +4,7 @@
  * @author theresia@eci.com
  */
 
-import Icon from "../icon";
+import { Icon } from "@ue/icon";
 import * as _ from "lodash-es";
 import { confirm } from "@ue/model";
 import { lazyload } from "@ue/utils";
@@ -25,5 +25,5 @@ const onChangeFile = function () {
 </script>
 
 <template>
-    <Icon @click="onChangeFile" type="question-circle-filled" class="text-base cursor-pointer" color="#A9B5C9"></Icon>
+  <Icon @click="onChangeFile" type="question-circle-filled" class="text-base cursor-pointer" color="#A9B5C9"></Icon>
 </template>

@@ -7,7 +7,7 @@
 import { computed, PropType } from "vue";
 import { FormRadioSkin as Skin } from "./type";
 
-import Icon from "../icon";
+import { Icon } from "@ue/icon";
 import { RadioGroup, Radio, RadioButton, Space } from "ant-design-vue";
 
 import type { RadioMeta as Meta, RadioItem as Item } from "./props";

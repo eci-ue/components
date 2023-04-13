@@ -3,15 +3,15 @@ import * as _ from "lodash-es";
 import { onMounted, reactive } from "vue";
 import { api } from "../../api";
 import { useState } from "@ue/utils";
-import Upload, { UploadSkin } from "../upload";
-import Icon from "../icon";
+import { UploadOSS, SkinView } from "@ue/upload";
+import { Icon } from "@ue/icon";
 import { SubmitType, InterruptRate } from "./type";
 import { Form, FormItem, Tag, Slider } from "ant-design-vue";
 import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
 import i18n from "../../utils/i18n";
 
-import type { UploadFile } from "../upload/props";
+import type { UploadFile, FileData } from "@ue/upload";
 
 const props = defineProps({
   taskId: {
@@ -26,7 +26,8 @@ const { state, execute } = useState.dataExecute<InterruptRate>(async function ()
 let submitParams = reactive(new SubmitType())
 
 //上传文件
-const onUpload = function (data: UploadFile) {
+const onUpload = function (file: FileData) {
+  const data: UploadFile = file.value;
   const value = {
     fileName: data.name,
     fileType: _.last(data.name.split(".")),
@@ -35,6 +36,7 @@ const onUpload = function (data: UploadFile) {
   };
   submitParams.attachment = _.concat(submitParams.attachment || [], value);
 };
+
 //删除文件
 const deleteFile = function (index: number) {
   submitParams.attachment.splice(index, 1);
@@ -76,7 +78,11 @@ defineExpose({ submit: onSubmit });
         </FormItem>
         <FormItem v-if="!state.isUse" :label="i18n.operate.label.attachment" name="attachment"
           :rules="rules.array(i18n.operate.placeholder.attachment)">
-          <Upload :drive="true" label="Upload" :skin="UploadSkin.default" @success="onUpload" class="mb-2"></Upload>
+
+          <UploadOSS class="mb-2" :success="onUpload">
+            <SkinView.Auto value="Upload"></SkinView.Auto>
+          </UploadOSS>
+
           <div class="mb-1" v-for="(file, index) in submitParams.attachment" :key="`${index}-${file.fileName}`">
             <Tag closable @close="deleteFile(index)" class="border-none bg-primary-light">
               <template #icon>

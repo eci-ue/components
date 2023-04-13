@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import Icon from "../icon";
+/**
+ * @file 资源文件列表
+ * @author svon.me@gmail.com
+ */
+
 import * as _ from "lodash-es";
 import { api } from "../../api";
-import { some } from "../../utils";
-import BigNumber from "bignumber.js";
-import FileIcon from "../icon/file.vue";
-import { ref, computed, PropType } from "vue";
-import { Button, Table } from "ant-design-vue";
+import { computed, PropType } from "vue";
 import Time from "../time";
-import { table, useState, date, downloadFile, fileDownloadUrl, fileSize } from "@ue/utils";
+import { Table } from "ant-design-vue";
+import { Icon, FileIcon } from "@ue/icon";
+import { table, useState, downloadFile, fileDownloadUrl, fileSize } from "@ue/utils";
 
 import Handle from "./handle.vue";
 import { headers } from "./heder";
 import { LanguageGroup } from "../language";
-
-import type { Upload } from "../../utils/upload";
-import type { FileType, FileItem, FileOperate } from "./props";
 import Download from "../download/index.vue";
+
+import type { FileType, FileItem, FileOperate } from "./props";
 
 const $emit = defineEmits(["change"]);
 
@@ -75,7 +76,6 @@ const props = defineProps({
   },
 });
 
-const uploadFileProgress = ref<Upload[]>([]);
 const { selected, selectedKeys, rowSelection, onClearSelected } = table.useSelection<FileItem>();
 
 const { state, isLoading, execute } = useState.list<FileItem>(() => {
@@ -92,27 +92,9 @@ const onReload = async function () {
   $emit("change", state.value.total);
 };
 
-
 const fileList = computed<FileItem[]>(function () {
-  const uploadList: FileItem[] = [];
   const list: FileItem[] = state.value.results;
-  for (const upload of uploadFileProgress.value) {
-    const value = some(list, upload.key);
-    if (value) {
-      value.progress = upload.progress;
-      value.filePath = upload.url;
-    } else {
-      uploadList.push({
-        key: upload.key,
-        progress: upload.progress,
-        fileExt: _.last(upload.name?.split(".")) as string,
-        fileName: upload.name,
-        fileSize: upload.file.size,
-        filePath: upload.url,
-      });
-    }
-  }
-  return _.concat(uploadList, list);
+  return [...list];
 });
 
 const tableScroll = computed(function () {
@@ -121,18 +103,6 @@ const tableScroll = computed(function () {
   }
   return {};
 });
-
-const customRow = function (data: FileItem) {
-  if (data.key) {
-    const number = new BigNumber(data.progress).times(100).toFixed(0);
-    return {
-      "class": ["upload-progress"],
-      "style": `--eci-upload-progress: ${Number(number)}%;`
-    };
-  }
-  return {};
-};
-
 
 const onDownload = function () {
   for (const item of selected.value) {
@@ -161,7 +131,6 @@ const onDownload = function () {
         :disabled="disabled" 
         :selectedKeys="selectedKeys" 
         :selected="selected"
-        v-model:progress="uploadFileProgress" 
         :subType="subType" 
         @click="onReload" 
         @download="onDownload">
@@ -169,7 +138,7 @@ const onDownload = function () {
     </div>
 
     <!-- 资源文件列表 -->
-    <Table class="drive-list mt-5" table-layout="auto" :custom-row="customRow" :loading="isLoading"
+    <Table class="mt-5" table-layout="auto" :loading="isLoading"
       :row-selection="rowSelection" :columns="headers(task, subType)" :data-source="fileList" :scroll="tableScroll"
       :pagination="false">
 
@@ -202,22 +171,3 @@ const onDownload = function () {
     </Table>
   </div>
 </template>
-
-<style scoped lang="scss">
-.drive-list {
-  ::v-deep(tbody tr) {
-    &.upload-progress {
-      background-repeat: no-repeat;
-      background-position: left center;
-      background-size: var(--eci-upload-progress) 100%;
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAwCAYAAADQMxCBAAAABHNCSVQICAgIfAhkiAAAABFJREFUCFtjePL+3z+GkUMAAK6zttH3E4MqAAAAAElFTkSuQmCC");
-    }
-
-    &:hover {
-      td {
-        background: none !important;
-      }
-    }
-  }
-}
-</style>
