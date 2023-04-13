@@ -5,7 +5,7 @@ import safeGet from "@fengqiaogang/safe-get";
 import { rule as rules } from "@ue/utils";
 import { FormRadio, FormTextarea, FormUpload, FormRadioSkin } from "../../form";
 
-import type { UploadFile } from "../../upload/props";
+import type { UploadFile } from "@ue/upload";
 import type { FormOptionValue } from "@ue/form";
 import type { ColumnsType } from "ant-design-vue/lib/table";
 
@@ -120,7 +120,7 @@ export const partnerItems = function(): FormOptionValue {
           meta: {
             placeholder: i18n.lqr.form.upload,
             transform: function(data: UploadFile): string | undefined {
-              if (data) {
+              if (data && data.url) {
                 return data.url;
               }
             }

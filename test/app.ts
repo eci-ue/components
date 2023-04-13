@@ -12,6 +12,7 @@ import "./tailwind.css";
 import "ant-design-vue/dist/antd.css";
 
 import "@ue/model/dist/index.css";
+import "@ue/upload/dist/index.css";
 
 import type { App } from "vue";
 

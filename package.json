@@ -34,7 +34,7 @@
     "@ue/message": "^0.0.5",
     "@ue/model": "^0.1.6",
     "@ue/style": "^0.1.2",
-    "@ue/upload": "^0.1.1",
+    "@ue/upload": "0.1.2-1",
     "@ue/utils": "0.2.24-4",
     "ali-oss": "^6.17.1",
     "bignumber.js": "^9.1.1",

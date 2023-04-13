@@ -11,16 +11,15 @@ import i18n from "../../utils/i18n";
 import { rule as rules } from "@ue/utils";
 import { FileType, FileOperate, FileItem } from "./props";
 import { Button, Space } from "ant-design-vue";
-import { computed, PropType, toRaw, ref, h as createElement } from "vue";
+import { computed, PropType, toRaw, h as createElement } from "vue";
 
-import Upload from "../upload";
 import Head from "./head.vue";
+import { UploadOSS } from "@ue/upload";
 import FormFile from "../form/file.vue";
 import { ExportDownload } from "../export/index";
 import FormlanguagePairs from "../form/language/pairs.vue";
 
-import type { Upload as UploadData } from "../../utils/upload";
-import type { UploadFile } from "../../components/upload/props";
+import type { UploadFile, FileData } from "@ue/upload";
 
 const $emit = defineEmits(["update:progress", "click", "download"]);
 const props = defineProps({
@@ -92,15 +91,6 @@ const props = defineProps({
   },
 });
 
-const uploadBox = ref<any>();
-// 上传中的文件
-const uploadFileProgress = computed<UploadData[]>({
-  get: () => props.progress,
-  set: (value: UploadData[]) => {
-    $emit("update:progress", value);
-  }
-});
-
 // 选择网盘文件
 const onSelectDriveFile = async function () {
   const option = {
@@ -142,18 +132,18 @@ const onSelectDriveFile = async function () {
 };
 
 // 直接上传文件
-const onUpload = async function (data: UploadFile) {
-  // 刷新上传记录
-  if (uploadBox.value && uploadBox.value.onflush) {
-    uploadBox.value.onflush();
-  }
+const onUpload = async function (fileData: FileData) {
+  const data: UploadFile = fileData.value;
+
   const file = {
-    fileName: data.name,
+    fileName: fileData.name(),
     filePath: data.url,
     fileSize: data.file?.size,
     fileExt: _.last(data.name.split(".")),
   };
+
   let status: boolean = false;
+
   if (props.task) {
     status = await api.project.uploadTaskFile(file, props.id, props.type);
   } else {
@@ -164,8 +154,12 @@ const onUpload = async function (data: UploadFile) {
       props.language
     );
   }
-  if (status) {
-    $emit("click");
+  try {
+    if (status) {
+      $emit("click");
+    }
+  } catch (error) {
+    // todo
   }
 }
 
@@ -261,17 +255,16 @@ const disabledDel = computed(() => {
         <!-- 源文件模式下才启用该功能 -->
         <Button :disabled="selectedKeys.length < 1" @click="onChangePairs">{{ i18n.common.label.languagePairs }}</Button>
       </template>
-      <Upload 
+
+      <UploadOSS 
         v-if="!disabled && operateBtn.upload" 
-        ref="uploadBox" 
         :accept="accept" 
         :disabled="disabled" 
-        :show-progress="false" 
         :multiple="true"
-        v-model:progress="uploadFileProgress" 
-        @success="onUpload">
+        :success="onUpload">
         <span class="ant-btn ant-btn-primary">{{ i18n.common.label.fileUpload }}</span>
-      </Upload>
+      </UploadOSS>
+
       <span v-if="operateBtn.downTarget">
         <ExportDownload 
           :disabled="selectedKeys.length < 1" 

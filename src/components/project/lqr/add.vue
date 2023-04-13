@@ -11,10 +11,10 @@ import { UploadLqr } from "./type";
 import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
 import i18n from "../../../utils/i18n";
-import Upload, { UploadSkin } from "../../upload";
+import { UploadOSS, SkinView } from "@ue/upload";
 import { Form, FormItem, Button, RadioGroup, RadioButton, InputNumber } from "ant-design-vue";
 
-import type { UploadFile } from "../../upload/props";
+import type { FileData, UploadFile } from "@ue/upload";
 
 
 const props = defineProps({
@@ -57,8 +57,9 @@ const changePoint = function () {
 };
 
 //上传文件
-const onUpload = function (data?: UploadFile) {
-  formState.fileName = data?.name || "";
+const onUpload = function (file: FileData) {
+  const data: UploadFile = file.value;
+  formState.fileName = file.name() || "";
   formState.reportPath = data?.url || "";
 };
 
@@ -103,7 +104,10 @@ defineExpose({ submit: onSubmit });
         :label="i18n.lqr.title.languageReport" 
         name="reportPath"
         :rules="rules.text(i18n.lqr.rule.languageReport)">
-        <Upload class="w-full" :name="formState.fileName" :drive="true" label="Upload" :multiple="true" :skin="UploadSkin.input" @success="onUpload"></Upload>
+
+        <UploadOSS class="w-full" :multiple="true" :success="onUpload">
+          <SkinView.Input label="Upload" :name="formState.fileName"></SkinView.Input>
+        </UploadOSS>
       </FormItem>
     </Form>
     <div>

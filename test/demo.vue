@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { 
-  DriveFile, FileOperate, FileType
+  DriveFile, FileOperate, FileType, Operate
 } from "../src/index";
 
 onMounted(function() {
-  DriveFile("xxx", {
-    id: 10076054,
-    language: 12,
-    type: FileType.source,
-    task: false,
-    fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large,FileOperate.downTarget],
-    accept: "*"
-  });
+  // DriveFile("xxx", {
+  //   id: 10076054,
+  //   language: 12,
+  //   type: FileType.source,
+  //   task: false,
+  //   fileOperate:[FileOperate.upload,FileOperate.delete,FileOperate.language,FileOperate.download,FileOperate.large,FileOperate.downTarget],
+  //   accept: "*"
+  // });
 
   // AddLqr({
   //   id: 1,
@@ -29,5 +29,6 @@ onMounted(function() {
 </script>
 <template>
   <div>
+    <!-- <Operate :item="{}" :opt-types="['submit']"></Operate> -->
   </div>
 </template>

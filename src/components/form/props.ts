@@ -1,6 +1,6 @@
 
 import type { FormItemMeta } from "@ue/form";
-import type { UploadFile } from "../upload/props";
+import type { UploadFile } from "@ue/upload";
 import type { FormCheckboxSkin, FormRadioSkin } from "./type";
 
 export interface CheckboxItem {

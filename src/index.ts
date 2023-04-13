@@ -31,8 +31,8 @@ export { default as Download } from "./components/download/index.vue";
 export { ExportDownload, ExportRecord, ExportFile, WorkMode, ExportButton } from "./components/export";
 
 
-export { default as Upload, UploadSkin } from "./components/upload";
-export * as UploadUtil from "./utils/upload";
+// export { default as Upload, UploadSkin } from "./components/upload";
+// export * as UploadUtil from "./utils/upload";
 
 export { default as FileCheckbox } from "./components/file/checkbox";
 export { LanguagePairs, LanguageGroup, LanguageData, LanguagePairsData } from "./components/language";
