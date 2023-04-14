@@ -54,9 +54,9 @@ const text = computed<string>({
 });
 
 //是否显示时间
-const showTime = computed<boolean | object>(function () {
+const showTime = computed<boolean>(function () {
   if (props.meta?.showTime) {
-    return { defaultValue: dayjs('00:00', 'HH:mm') };
+    return true;
   }
   return false
 });
