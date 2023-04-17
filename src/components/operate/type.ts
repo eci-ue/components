@@ -34,7 +34,7 @@ export interface RatePartner extends ResourceType {
 
 export enum IconType {
   delete = "delete-outlined",
-  interupt = "file-sync-outlined",
+  interrupt = "file-sync-outlined",
   submit = "send-outlined",
   instruction = "schedule-outlined"
 }

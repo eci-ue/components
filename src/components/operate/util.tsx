@@ -31,7 +31,7 @@ export const ratePartner = function (): FormOptionValue {
 
   const comment: FormItemData = {
     key: "impression",
-    lable: i18n.operate.impression,
+    lable: i18n.operate.label.impression,
     component: FormTextarea,
   };
   return [
