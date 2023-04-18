@@ -19,16 +19,13 @@ const props = defineProps({
   },
   /** 是否按日期形式格式化 */
   date: {
-    type: Boolean as PropType<boolean | undefined>,
+    type: [Boolean, String] as PropType<boolean | string>,
     required: false,
-    default () {
-      return undefined;
-    }
   },
   /** 默认时间格式规则 */
   format: {
     type: String,
-    default: "YYYY-MM-DD HH:mm"
+    required: false,
   },
   // 是否禁用
   disabled: {
@@ -65,5 +62,5 @@ const className = computed<string | string[]>(function() {
 </script>
 
 <template>
-  <Time :class="className" :value="value" :date="date ? true : false" :format="format"></Time>
+  <Time :class="className" :value="value" :date="date" :format="format"></Time>
 </template>
