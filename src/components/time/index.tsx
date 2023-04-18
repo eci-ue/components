@@ -17,15 +17,12 @@ export default defineComponent({
       type: [Number, String] as PropType<date.DateValue>
     },
     date: {
-      type: Boolean as PropType<boolean | undefined>,
+      type: [Boolean, String] as PropType<boolean | string>,
       required: false,
-      default () {
-        return undefined;
-      }
     },
     format: {
       type: String,
-      default: ""
+      required: false,
     }
   },
   setup (props: Readonly<Props>) {
