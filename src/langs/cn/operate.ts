@@ -17,7 +17,7 @@ export default {
     noQualityAccident:"无质量事故",
     deliveryOnTime:"按时交付",
     addToFavorite:"添加到收藏",
-    innerOuterType:"添加到该客户的资源库",
+    addToClientResourcePool:"添加到该客户的资源库",
   },
   placeholder: {
     attachment: "请上传附件",

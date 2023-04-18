@@ -28,6 +28,7 @@ export interface RatePartner extends ResourceType {
   innerOuterType?: number, //任务类型 0-内部，1-外部
   noQualityAccident?: number, //无质量问题 0-否，1-是
   proactiveCooperation?: number, //积极合作 0-否，1-是
+  addToClientResourcePool?: number, //是否添加客户资源池 0-否，1-是
   impression?: string, //评价/印象
   taskId?: string | number, //任务id
 }
@@ -40,8 +41,9 @@ export enum IconType {
 }
 
 export interface itemType extends ResourceType {
-  taskId: string | number,
+  taskId: string | number,//任务ID
   id?: string | number,
+  innerOuterType?: number,//任务类型 0-内部，1-外部
   status?: number,
   commentRequest?: string,
   workInstructionList?: string[],
