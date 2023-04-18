@@ -21,6 +21,18 @@ const props = defineProps({
     default: "T",
     required: true,
   },
+  /** 费用 */
+  money: {
+    type: String,
+    required: false,
+    default: () => 0
+  },
+  /** 费用保留小数后几位 */
+  fixed: {
+    type: Number,
+    required: false,
+    default: () => 4
+  },
   /** 费用单位 */
   moneyUnit: {
     type: String,
@@ -40,7 +52,7 @@ const props = defineProps({
 });
 
 
-const task = function<T>(index: number, key: string, autoValue?: T) {
+const task = function<T = number>(index: number, key: string, autoValue?: T) {
   const value = safeGet<T>(props.list, `[${index}].${key}`);
   return (value || autoValue) as T;
 };
@@ -91,10 +103,10 @@ const amount = function(list: AmountItemData[]): string {
             <tr v-for="(name, index) in taskPhaseList" :key="name">
               <td class="ant-table-cell" rowspan="8" v-if="index < 1">{{ _.upperFirst(type) }}</td>
               <td class="ant-table-cell">{{ name }}</td>
-              <td class="ant-table-cell text-right">{{ toFixed(task<number>(index, "words"), 0) }}</td>
-              <td class="ant-table-cell text-right" rowspan="8" v-if="index < 1">{{ toFixed(task<number>(index, "unitPrice"), 4) }}</td>
-              <td class="ant-table-cell text-right">{{ valueFormat(toFixed(task<number>(index, "discount", 0) * 100, 0), "%") }}</td>
-              <td class="ant-table-cell text-right">{{ toFixed(task<number>(index, "subTotal"), 4) }}</td>
+              <td class="ant-table-cell text-right">{{ toFixed(task(index, "words"), 0) }}</td>
+              <td class="ant-table-cell text-right" rowspan="8" v-if="index < 1">{{ toFixed(money, fixed) }}</td>
+              <td class="ant-table-cell text-right">{{ valueFormat(toFixed(task(index, "discount", 0) * 100, 0), "%") }}</td>
+              <td class="ant-table-cell text-right">{{ toFixed(task(index, "subTotal"), fixed) }}</td>
             </tr>
             <tr>
               <td class="ant-table-cell">{{ i18n.project.label.amount }}</td>
