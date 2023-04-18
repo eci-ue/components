@@ -155,11 +155,11 @@ export default class Task {
   @tryError(false)
   @$error()
   @$success(i18n.message.SUBMIT_SUCCESSFULLY)
-  @post("/:task/task/submit/:taskId")
+  @post("/:task/task/submit")
   @validate
   submit(@required taskId: string | number): Promise<boolean> {
-    const params = { taskId };
-    return { params } as any;
+    const data = { taskIds:[taskId] };
+    return { data } as any;
   }
 
   //页面-获取中断提交的内容
