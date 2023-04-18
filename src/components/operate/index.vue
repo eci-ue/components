@@ -5,7 +5,7 @@ import { api } from "../../api";
 import { form } from "@ue/model";
 import i18n from "../../utils/i18n";
 import { confirm as modalComfirm } from "@ue/model";
-import { ratePartner, interupt } from "./util";
+import { ratePartnerForm, interupt } from "./util";
 import { computed, reactive, PropType } from "vue";
 import * as message from "@ue/message";
 import { Menu, MenuItem, Button, Space } from "ant-design-vue";
@@ -77,7 +77,8 @@ const confirm = async function (name: string) {
 
 //Rate partner
 const ratePartnerFn = async function (name: string) {
-  form(ratePartner(), {
+  const data  = await api.task.ratePartnerDetail<RatePartner>(taskId.value)
+  form(ratePartnerForm(data), {
     okText: i18n.common.button.save,
     title: i18n.operate.title.rate,
     async onOk(data: any) {
@@ -85,7 +86,8 @@ const ratePartnerFn = async function (name: string) {
         impression: _.get(data, "impression"),
         resourceId: props.item.resourceId,
         resourceName: props.item.resourceName,
-        taskId: taskId.value
+        taskId: taskId.value,
+        innerOuterType:props.item.innerOuterType
       })
       _.forEach(data.partner, item => {
         (params as any)[item] = 1

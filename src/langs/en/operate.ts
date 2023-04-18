@@ -17,7 +17,7 @@ export default {
     noQualityAccident:"No Quality Accident",
     deliveryOnTime:"Delivery On Time",
     addToFavorite:"Add To Favorite",
-    innerOuterType:"Add To This Client’s Resource Pool",
+    addToClientResourcePool:"Add To This Client’s Resource Pool",
   },
   placeholder: {
     attachment: "Please upload the attachment",

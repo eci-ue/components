@@ -37,6 +37,15 @@ export default class Task {
     return { data } as any;
   }
 
+  //合作伙伴评价详情
+  @tryError({})
+  @post("/:task/task/ratePartner/detail")
+  @validate
+  ratePartnerDetail<T>(@required taskId: string | number): Promise<T> {
+    const data = {taskId}
+    return { data } as any;
+  }
+
   //合作伙伴评价
   @tryError(false)
   @$error()
