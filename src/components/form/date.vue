@@ -46,7 +46,7 @@ const placeholder = computed<string>(function () {
 const text = computed<string>({
   get: () => props.value,
   set: (value: string) => {
-    const data = value ? date._format(value, !showTime.value) : "";
+    const data = value ? date._format(value, showTime.value?date.Template.YYYYMMDDhhmmss:true) : "";
     const time = data ? data.date.format(data.template) : "";
     emit("update:value", time);
     emit("change", time);
@@ -64,14 +64,14 @@ const showTime = computed<boolean>(function () {
 //时间格式
 const format = computed(function () {
   if (props.meta?.showTime) {
-    return "YYYY-MM-DD HH:mm";
+    return date.Template.YYYYMMDDhhmm;
   }
   return date.Template.date;
 });
 //日期值格式
 const formatValue = computed<date.Template>(function () {
   if (props.meta?.showTime) {
-    return date.Template.value;
+    return date.Template.YYYYMMDDhhmmss;
   }
   return date.Template.date;
 });
