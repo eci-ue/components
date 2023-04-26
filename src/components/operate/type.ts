@@ -52,10 +52,10 @@ export interface itemType extends ResourceType {
 }
 
 export class FileType {
-  fileName?: string = ""; // 文件名称
+  fileName: string = ""; // 文件名称
   fileType?: string = ""; // 文件类型（文件后缀）
   size?: number;     // 文件大小
-  storagePath?: string = ""; // 文件路径
+  storagePath: string = ""; // 文件路径
 }
 export class SubmitType {
   rate: number = 0;

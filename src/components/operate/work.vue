@@ -2,14 +2,13 @@
 import * as _ from "lodash-es";
 import { onMounted, reactive } from "vue";
 import { api } from "../../api";
-import { useState } from "@ue/utils";
 import { UploadOSS, SkinView } from "@ue/upload";
 import { Icon } from "@ue/icon";
 import { SubmitType, InterruptRate } from "./type";
 import { Form, FormItem, Tag, Slider } from "ant-design-vue";
 import { useValidate } from "@ue/form";
-import { rule as rules } from "@ue/utils";
 import i18n from "../../utils/i18n";
+import { useState, downloadFile, fileDownloadUrl,rule as rules } from "@ue/utils";
 
 import type { UploadFile, FileData } from "@ue/upload";
 
@@ -55,7 +54,12 @@ const onSubmit = async function () {
   return false;
 
 }
-
+const onDownload = function (fileName: string, filePath: string) {
+  if (filePath) {
+    const url = fileDownloadUrl(filePath);
+    downloadFile(url, fileName);
+  }
+}
 onMounted(async () => {
   await execute()
   if (state.value.isUse == 1) {
@@ -82,16 +86,13 @@ defineExpose({ submit: onSubmit });
           <UploadOSS class="mb-2" :success="onUpload">
             <SkinView.Auto value="Upload"></SkinView.Auto>
           </UploadOSS>
-
           <div class="mb-1" v-for="(file, index) in submitParams.attachment" :key="`${index}-${file.fileName}`">
-            <Tag closable @close="deleteFile(index)" class="border-none bg-primary-light">
-              <template #icon>
-                <Icon type="link-outlined" class="text-deep-gray"></Icon>
-              </template>
-              <template #closeIcon>
-                <Icon type="close-outlined" class="text-black-light ml-1"></Icon>
-              </template>
-              <a class="text-info-color">{{ file.fileName }}</a>
+            <Tag class="border-none bg-primary-light max-w-full">
+              <div class="flex items-center w-full">
+                <Icon type="link-outlined" class="text-deep-gray block"></Icon>
+                <div class="link w-full mx-1 overflow-ellipsis overflow-hidden" @click="onDownload(file.fileName,file.storagePath)">{{ file.fileName }}</div>
+                <Icon type="close-outlined" class="text-black-light ml-1 block cursor-pointer"  @click="deleteFile(index)"></Icon>
+              </div>
             </Tag>
           </div>
         </FormItem>
