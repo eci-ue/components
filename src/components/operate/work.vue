@@ -8,7 +8,7 @@ import { SubmitType, InterruptRate } from "./type";
 import { Form, FormItem, Tag, Slider } from "ant-design-vue";
 import { useValidate } from "@ue/form";
 import i18n from "../../utils/i18n";
-import { useState, downloadFile, fileDownloadUrl,rule as rules } from "@ue/utils";
+import { useState, rule as rules } from "@ue/utils";
 
 import type { UploadFile, FileData } from "@ue/upload";
 
@@ -54,12 +54,6 @@ const onSubmit = async function () {
   return false;
 
 }
-const onDownload = function (fileName: string, filePath: string) {
-  if (filePath) {
-    const url = fileDownloadUrl(filePath);
-    downloadFile(url, fileName);
-  }
-}
 onMounted(async () => {
   await execute()
   if (state.value.isUse == 1) {
@@ -90,7 +84,7 @@ defineExpose({ submit: onSubmit });
             <Tag class="border-none bg-primary-light max-w-full">
               <div class="flex items-center w-full">
                 <Icon type="link-outlined" class="text-deep-gray block"></Icon>
-                <div class="link w-full mx-1 overflow-ellipsis overflow-hidden" @click="onDownload(file.fileName,file.storagePath)">{{ file.fileName }}</div>
+                <div class="text-info-color w-full mx-1 overflow-ellipsis overflow-hidden">{{ file.fileName }}</div>
                 <Icon type="close-outlined" class="text-black-light ml-1 block cursor-pointer"  @click="deleteFile(index)"></Icon>
               </div>
             </Tag>
