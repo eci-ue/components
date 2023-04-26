@@ -1,4 +1,3 @@
-
 import type { FormItemMeta } from "@ue/form";
 import type { UploadFile } from "@ue/upload";
 import type { FormCheckboxSkin, FormRadioSkin } from "./type";
@@ -43,7 +42,10 @@ export interface RadioItem {
   disabled?: boolean
 }
 
+export type RadioSize = "small" | "default" | "large";
+
 export interface RadioMeta extends FormItemMeta{
+  size?: RadioSize; 
   color?: string;
   skin?: FormRadioSkin;
   list?: Array<RadioItem>

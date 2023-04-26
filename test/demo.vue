@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { 
-  DriveFile, FileOperate, FileType, Operate
+  DriveFile, FileOperate, FileType, Operate, FormRadio, FormRadioSkin
 } from "../src/index";
 
 onMounted(function() {
@@ -26,9 +26,20 @@ onMounted(function() {
   // });
 });
 
+const radioMeta = {
+  size: "large",
+  skin: FormRadioSkin.mark,
+  list: [
+    { text: "1", value: "1" },
+    { text: "2", value: "2" },
+    { text: "3", value: "3" }
+  ]
+};
+
 </script>
 <template>
   <div>
     <!-- <Operate :item="{}" :opt-types="['submit']"></Operate> -->
+    <FormRadio :meta="radioMeta"></FormRadio>
   </div>
 </template>

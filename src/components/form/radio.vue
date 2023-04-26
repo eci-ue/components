@@ -12,6 +12,7 @@ import { RadioGroup, Radio, RadioButton, Space } from "ant-design-vue";
 
 import type { RadioMeta as Meta, RadioItem as Item } from "./props";
 import safeGet from "@fengqiaogang/safe-get";
+import safeSet from "@fengqiaogang/safe-set";
 
 const emit = defineEmits(["update:value", "change"]);
 
@@ -58,6 +59,61 @@ const skin = computed<Skin>(function() {
   return Skin.cover; // 默认效果
 });
 
+const SizeRatio = 3.6;
+const __ButtonSizeComputed = function(size: string | number | object): object {
+  let height: string | number | undefined;
+  let width: string | number | undefined;
+  if (size && (typeof size === "string" || typeof size === "number")) {
+    let base = 4;
+    let unit = "rem";
+    if (/\.px$/.test(String(size)) === false) {
+      base = 1;
+      unit = String(size).replace(/[\d.]/ig, "");
+    }
+    size = String(size).replace(/[^\d.]/ig, "");
+
+    if (/^\d+(\.\d+)?$/.test(String(size))) {
+      width = parseFloat(String(size)) / base;
+      height = `${(width / SizeRatio).toFixed(4)}${unit}`;
+      width = `${width.toFixed(4)}${unit}`;
+    }
+  } else if (size && typeof size === "object") {
+    width = safeGet<string>(size, "width");
+    height = safeGet<string>(size, "height");
+  }
+  const data = {};
+  if (height || height === 0) {
+    safeSet(data, "--button-size-height", height);
+  } else {
+    safeSet(data, "--button-size-height", "initial");
+  }
+  if (width || width === 0) {
+    safeSet(data, "--button-size-width", width);
+  } else {
+    safeSet(data, "--button-size-width", "initial");
+  }
+  return data;
+}
+
+const buttonSize = computed<object>(function() {
+  const size = props.meta?.size ? props.meta.size : "default";
+  if (size === "small") {
+    // height = "1.75rem";
+    // width = "initial";
+    return __ButtonSizeComputed(`${1.75 * SizeRatio}rem`);
+  } else if (size === "default") {
+    // height = "2.25rem";
+    // width = "initial";
+    return __ButtonSizeComputed(`${2.25 * SizeRatio}rem`);
+  } else if (size === "large") {
+    return __ButtonSizeComputed({
+      height: "3.125rem",
+      width: "11.25rem"
+    });
+  }
+  return __ButtonSizeComputed(size);
+});
+
 const text = computed<string>({
   get: () => props.value,
   set: (value: string) => {
@@ -73,7 +129,7 @@ const text = computed<string>({
       <template v-if="(skin === Skin.mark)">
         <Space>
           <template v-for="item in radioList" :key="item.key">
-            <RadioButton class="radio-button" :class="{'active': text === item.value}" :disabled="!!(disabled || item.disabled)" :value="item.value">
+            <RadioButton class="radio-button" :style="buttonSize" :class="{'active': text === item.value}" :disabled="!!(disabled || item.disabled)" :value="item.value">
               <span class="box">
                 <span></span>
                 <span class="mx-2 whitespace-nowrap">{{ item.name || item.text }}</span>
@@ -121,7 +177,9 @@ const text = computed<string>({
 
 .radio-mark .radio-button{
   transition: all 0.3s;
-  @apply leading-9 h-9;
+  // @apply leading-9 h-9;
+  height: var(--button-size-height);
+  line-height: var(--button-size-height);
   @apply px-2 lg:px-4;
   ::v-deep(.ant-radio-button) {
     @apply hidden;
@@ -131,6 +189,9 @@ const text = computed<string>({
   }
   .box {
     @apply flex items-center justify-between h-full;
+    width: var(--button-size-width);
+    min-width: var(--button-size-width);
+    max-width: 100%;
   }
   .eci-icon {
     @apply invisible;
