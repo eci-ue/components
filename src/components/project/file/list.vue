@@ -128,8 +128,7 @@ const onReload = function() {
         </Space>
       </slot>
     </div>
-    <Table class="count"
-      bordered 
+    <Table bordered 
       :pagination="false" 
       :row-selection="rowSelection" 
       :columns="headers(list, props)" 

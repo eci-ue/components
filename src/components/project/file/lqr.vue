@@ -100,7 +100,7 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
         <span class="flex items-center">
           <Icon class="flex mr-1" type="icon-a-add"></Icon>
           <span>{{ i18n.common.button.addLqr }}</span>
-          <span class="count-item ml-0.5"></span>
+          <span class="ml-0.5">{{ data.lqrIndex }}</span>
         </span>
       </Button>
     </template>
