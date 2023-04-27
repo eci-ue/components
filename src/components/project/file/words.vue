@@ -53,9 +53,6 @@ const catFileDetail = async function(value?: string): Promise<void> {
 };
 
 const url = computed<string>(function() {
-  if (props.pm) {
-    return "";
-  };
   const url = props.data?.catUrl;
   if (url) {
     return url;
