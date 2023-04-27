@@ -29,10 +29,12 @@ export const ratePartnerForm = function (data:RatePartner): FormOptionValue {
       }, {
         value: "addToFavorite",
         name: i18n.operate.list.addToFavorite
-      }, {
-        value: "addToClientResourcePool",
-        name: i18n.operate.list.addToClientResourcePool
-      }],
+      },
+      //  {
+      //   value: "addToClientResourcePool",
+      //   name: i18n.operate.list.addToClientResourcePool
+      // }
+    ],
       skin: "vertical"
     }
   };
