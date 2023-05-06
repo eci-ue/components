@@ -93,12 +93,12 @@ const onDownload = function() {
           <iframe class="w-full h-full" ref="iframe" :src="iframeSrc"></iframe>
         </div>
       </template>
-      <a class="block" v-if="value && type === DownloadType.oss" :href="ossFileDownloadLink(env, value)" :download="downloadName(value)">
+      <a class="block" v-if="value && type === DownloadType.oss" :href="ossFileDownloadLink(value)" :download="downloadName(value)">
         <slot>
           <Icon class="text-sm" type="download-outlined"></Icon>
         </slot>
       </a>
-      <div v-else-if="value" class="cursor-pointer px-2 py-1" @click="onDownload">
+      <div v-else-if="value" class="cursor-pointer px-2 py-1 link" @click="onDownload">
         <slot>
           <Icon class="text-sm" type="download-outlined"></Icon>
         </slot>

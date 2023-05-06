@@ -124,13 +124,14 @@ export const downloadName = function(value: string = ""): string | undefined {
   return void 0;
 }
 
-export const ossFileDownloadLink = function(env: Env, value: string) {
-  return path.join(DomainApi[env], "service-file", value);
+export const ossFileDownloadLink = function(value: string) {
+  return fileDownloadUrl(value);
 }
 
 const fileDownload = function(env: Env, value: string, name: string = "") {
-  const link = ossFileDownloadLink(env, value);
-  downloadFile(link, name);
+  const domain = DomainApi[env];
+  const url = path.join("service-file", value);
+  downloadFile(`${domain}${url}`, name);
   return true;
 }
 

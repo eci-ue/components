@@ -11,6 +11,8 @@ import { UploadLqr } from "./type";
 import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
 import i18n from "../../../utils/i18n";
+import Download from "../../download/index.vue";
+import { DownloadType } from "../../download/type";
 import { UploadOSS, SkinView } from "@ue/upload";
 import { Form, FormItem, Button, RadioGroup, RadioButton, InputNumber } from "ant-design-vue";
 
@@ -26,9 +28,19 @@ const props = defineProps({
     type: [Number, String],
     default: true,
   },
+  disabled: {
+    type: Boolean,
+    default: () => false
+  },
+  value: {
+    type: Object,
+    default () {
+      return {};
+    }
+  }
 });
 
-const formState = reactive<UploadLqr>(new UploadLqr());
+const formState = reactive<UploadLqr>(new UploadLqr(props.value));
 
 const LevelList = computed(function() {
   return [
@@ -65,6 +77,9 @@ const onUpload = function (file: FileData) {
 
 const { formRef, validate } = useValidate();
 const onSubmit = function () {
+  if (props.disabled) {
+    return true;
+  }
   return validate(function() {
     return Object.assign(toRaw(formState), {
       fileId: props.fileId,
@@ -87,6 +102,7 @@ defineExpose({ submit: onSubmit });
               v-model:value.trim="formState.point" 
               :max="9999999"
               :placeholder="i18n.lqr.placeholder.memoq" 
+              :disabled="disabled" 
               @pressEnter="onCalculate" 
               @change="changePoint" />
           </div>
@@ -96,7 +112,7 @@ defineExpose({ submit: onSubmit });
 
       <FormItem :label="i18n.lqr.title.LanguageLevel" name="level" :rules="rules.text('')">
         <RadioGroup :value="formState.level" class="level-box">
-          <RadioButton :value="item.value" :key="item.value" v-for="item in LevelList">{{ item.name }}</RadioButton>
+          <RadioButton :disabled="disabled" :value="item.value" :key="item.value" v-for="item in LevelList">{{ item.name }}</RadioButton>
         </RadioGroup>
       </FormItem>
 
@@ -105,9 +121,14 @@ defineExpose({ submit: onSubmit });
         name="reportPath"
         :rules="rules.text(i18n.lqr.rule.languageReport)">
 
-        <UploadOSS class="w-full" :multiple="true" :success="onUpload">
-          <SkinView.Input label="Upload" :name="formState.fileName"></SkinView.Input>
+        <UploadOSS class="w-full" :disabled="disabled" :multiple="true" :success="onUpload">
+          <SkinView.Input label="Upload" :disabled="disabled" :name="formState.fileName"></SkinView.Input>
         </UploadOSS>
+        <div class="mt-2">
+          <Download :value="formState.reportPath" :type="DownloadType.oss">
+            <span>{{ formState.fileName }}</span>
+          </Download>
+        </div>
       </FormItem>
     </Form>
     <div>

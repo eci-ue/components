@@ -8,9 +8,12 @@ import * as _ from "lodash-es";
 import i18n from "../../utils/i18n";
 import { computed, PropType, ref } from "vue";
 import { UploadOSS, SkinView } from "@ue/upload";
+import Download from "../download/index.vue";
+import { DownloadType } from "../download/type";
 
 import type { UploadMeta as Meta } from "./props";
 import type { UploadFile, FileData } from "@ue/upload";
+import safeGet from "@fengqiaogang/safe-get";
 
 const name = ref<string>();
 const emit = defineEmits(["update:value", "change"]);
@@ -41,6 +44,10 @@ const label = computed<string | undefined>(function() {
   if (props.value && _.isObject(props.value)) {
     return props.value.name;
   }
+  if (props.value && _.isString(props.value)) {
+    const text = props.value.split("/");
+    return text[text.length - 1]
+  }
   return name.value;
 });
 const placeholder = computed<string>(function() {
@@ -48,6 +55,18 @@ const placeholder = computed<string>(function() {
     return props.meta.placeholder;
   }
   return "Please select File";
+});
+const fileUrl = computed<string>(function() {
+  if (props.value && _.isObject(props.value)) {
+    const value = safeGet<string>(props.value, "url");
+    if (value) {
+      return value;
+    }
+  }
+  if (props.value && _.isString(props.value)) {
+    return props.value;
+  }
+  return "";
 });
 
 const onSuccess = function(file: FileData) {
@@ -72,5 +91,8 @@ const onSuccess = function(file: FileData) {
         :label="i18n.common.button.upload">
       </SkinView.Input>
     </UploadOSS>
+    <div class="mt-2" v-if="meta && meta.preview">
+      <Download :value="fileUrl" :type="DownloadType.oss"><span>{{ label }}</span></Download>
+    </div>
   </div>
 </template>

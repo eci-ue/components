@@ -42,7 +42,13 @@ export const list = function(results: object[]) {
   })
 };
 
-export const partnerItems = function(): FormOptionValue {
+const toValue = function(value?: string | number): string | undefined {
+  if (value || value === 0) {
+    return String(value);
+  }
+}
+
+export const partnerItems = function(data: object = {}, disabled: boolean = false): FormOptionValue {
   return [
     {
       from: false,
@@ -56,9 +62,11 @@ export const partnerItems = function(): FormOptionValue {
       children: [
         {
           key: "rateDocument",
+          disabled,
           lable: i18n.lqr.form.case1,
           component: FormRadio,
-          rules: rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
+          value: toValue(safeGet<string>(data, "overallQuality")),
+          rules: disabled ? [] : rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
           meta: {
             skin: FormRadioSkin.normal,
             list: [
@@ -72,9 +80,11 @@ export const partnerItems = function(): FormOptionValue {
         },
         {
           key: "rateWork",
+          disabled,
           lable: i18n.lqr.form.case2,
           component: FormRadio,
-          rules: rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
+          value: toValue(safeGet<string>(data, "itemQuality")),
+          rules: disabled ? [] : rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
           meta: {
             skin: FormRadioSkin.normal,
             list: [
@@ -88,9 +98,11 @@ export const partnerItems = function(): FormOptionValue {
         },
         {
           key: "rateCompliance",
+          disabled,
           lable: i18n.lqr.form.case3,
           component: FormRadio,
-          rules: rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
+          value: toValue(safeGet<string>(data, "rate")),
+          rules: disabled ? [] : rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
           meta: {
             skin: FormRadioSkin.normal,
             list: [
@@ -102,22 +114,27 @@ export const partnerItems = function(): FormOptionValue {
         },
         {
           key: "advice",
+          disabled,
           lable: i18n.lqr.form.case4,
           component: FormTextarea,
-          rules: rules.text(i18n.lqr.form.comment),
+          value: safeGet<string>(data, "advice"),
+          rules: disabled ? [] : rules.text(i18n.lqr.form.comment),
           meta: {
             maxLength: 1000
           }
         },
         {
           key: "LQRFileUrl",
+          disabled,
           lable: (<span>
             <span>{ i18n.lqr.title.lqrFile }</span>
             <a class="ml-2" target="_blank" href="/assets/project/lqr_template.xlsx" download="lqr_template.xlsx">{ i18n.lqr.form.download }</a>
           </span>),
           component: FormUpload,
-          rules: rules.text(i18n.lqr.form.upload),
+          rules: disabled ? [] : rules.text(i18n.lqr.form.upload),
+          value: safeGet<string>(data, "storagePath"),
           meta: {
+            preview: true,
             placeholder: i18n.lqr.form.upload,
             transform: function(data: UploadFile): string | undefined {
               if (data && data.url) {

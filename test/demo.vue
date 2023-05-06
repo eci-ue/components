@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { 
-  DriveFile, FileOperate, FileType, Operate, FormRadio, FormRadioSkin
+  DriveFile, FileOperate, FileType, Operate, FormRadio, FormRadioSkin,
 } from "../src/index";
+import TaskDetail from "./task/detail.vue";
 
 onMounted(function() {
   // DriveFile("xxx", {
@@ -40,6 +41,8 @@ const radioMeta = {
 <template>
   <div>
     <!-- <Operate :item="{}" :opt-types="['submit']"></Operate> -->
-    <FormRadio :meta="radioMeta"></FormRadio>
+    <!-- <FormRadio :meta="radioMeta"></FormRadio> -->
+
+    <TaskDetail></TaskDetail>    
   </div>
 </template>

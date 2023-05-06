@@ -61,5 +61,6 @@ export interface TextAreaMeta extends FormItemMeta{
 
 
 export interface UploadMeta extends FormItemMeta {
+  preview: boolean;
   transform?: (value: UploadFile) => any
 }

@@ -17,6 +17,7 @@ export class TaskFileStage {
 export class TaskFileItem {
   lqrIndex: number = 1;
   lqrName: string = "";
+  lqrData?: object;
   lqrVisitPath: string = "";
   bilingualFileId!: string | number; // 文件ID
   bilingualFileName: string = "";

@@ -23,6 +23,7 @@ const wordRender = function(result: object, rate: boolean, props: any) {
     data: value,
     pm: props.pm,
     mode: props.mode,
+    before: props.before,
   });
 }
 

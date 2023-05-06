@@ -17,6 +17,7 @@ import Lqr from "../lqr/lqr.vue";
 import { Table, Space } from "ant-design-vue";
 import { ExportDownload, ExportButton } from "../../export";
 
+import type { Status } from "../type";
 import type { WorkMode } from "../../export";
 import type { HookFunction } from "@ue/utils";
 import type { TaskFileItem, View } from "./type";
@@ -85,6 +86,11 @@ const props = defineProps({
   before: {
     required: false,
     type: [Function, Array] as PropType<HookFunction | HookFunction[]>
+  },
+  /** 项目状态 */
+  status: {
+    required: false,
+    type: Number as PropType<Status>,
   }
 });
 
@@ -135,7 +141,7 @@ const onReload = function() {
       :data-source="fileList(list)">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'lqr'">
-          <LqrLink :data="record" :id="id" :before="before" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqrLink>
+          <LqrLink :data="record" :status="status" :mode="mode" :id="id" :before="before" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqrLink>
         </template>
       </template>
     </Table>
