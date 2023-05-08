@@ -47,6 +47,7 @@ export default class Task {
   }
 
   //合作伙伴评价
+  @$debounce()
   @tryError(false)
   @$error()
   @$success(i18n.message.SAVED_SUCCESSFULLY)
@@ -57,6 +58,7 @@ export default class Task {
   }
 
   //生成平账任务
+  @$debounce()
   @tryError(false)
   @$error()
   @$success(i18n.message.SAVED_SUCCESSFULLY)
@@ -68,6 +70,7 @@ export default class Task {
   }
 
   //confirm
+  @$debounce()
   @tryError(false)
   @$error()
   @$success(i18n.message.CONFIRM_SUCCESSFULLY)
@@ -79,6 +82,7 @@ export default class Task {
   }
 
   //删除任务
+  @$debounce()
   @tryError(false)
   @$error()
   @$success(i18n.message.DELETE_SUCCESSFULLY)
@@ -90,6 +94,7 @@ export default class Task {
   }
 
   //审批-取消
+  @$debounce()
   @tryError(false)
   @$error()
   @$success(i18n.message.CANCEL_SUCCESSFULLY)
@@ -101,6 +106,7 @@ export default class Task {
   }
 
   //任务-审批-拒绝
+  @$debounce()
   @tryError(false)
   @$error()
   @$success(i18n.message.REJECT_SUCCESSFULLY)
@@ -117,6 +123,7 @@ export default class Task {
   * @param reason 任务原因
   * @returns 
   */
+  @$debounce()
   @tryError(false)
   @$error()
   @$success(i18n.message.INTERRUPT_SUCCESSFULLY)
@@ -138,6 +145,7 @@ export default class Task {
   }
 
   //议员 页面-任务提交-中断提交按钮接口
+  @$debounce()
   @tryError(false)
   @$error()
   @$success(i18n.message.SUBMIT_SUCCESSFULLY)
