@@ -55,6 +55,12 @@ const props = defineProps({
   status: {
     required: false,
     type: Number as PropType<Status>,
+  },
+  /** 当前是否为 PM */
+  pm: {
+    type: Boolean,
+    required: false,
+    default: () => false
   }
 });
 
@@ -102,6 +108,10 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
   if (props.status && _.includes([Status.inProgress, Status.inInterrupt], Number(props.status))) {
     disabled = false;
   }
+  if (props.pm) {
+    disabled = true;
+  }
+
   const option = { disabled, id: props.id, file: data.bilingualFileId, partner: props.partner };
   const callback = async function(value: object) {
     if (disabled) {

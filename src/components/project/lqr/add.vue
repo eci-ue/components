@@ -112,7 +112,7 @@ defineExpose({ submit: onSubmit });
 
       <FormItem :label="i18n.lqr.title.LanguageLevel" name="level" :rules="rules.text('')">
         <RadioGroup :value="formState.level" class="level-box">
-          <RadioButton :disabled="disabled" :value="item.value" :key="item.value" v-for="item in LevelList">{{ item.name }}</RadioButton>
+          <RadioButton :value="item.value" :key="item.value" v-for="item in LevelList">{{ item.name }}</RadioButton>
         </RadioGroup>
       </FormItem>
 

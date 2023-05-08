@@ -11,8 +11,8 @@ export class UploadLqr {
     this.fileName = safeGet<string>(value, "fileName");
     this.reportPath = safeGet<string>(value, "storagePath");
     if (safeGet<number>(value, "point")) {
-      this.point = safeGet<number>(value, "point")!;
-      this.level = safeGet<number>(value, "level")!;
+      this.point = Number(safeGet<number>(value, "point"));
+      this.level = Number(safeGet<number>(value, "level"));
     }
     this.taskId = safeGet<number | string>(value, "ttaskId") || "";
   }

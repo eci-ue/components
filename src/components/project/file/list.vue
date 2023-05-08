@@ -141,7 +141,7 @@ const onReload = function() {
       :data-source="fileList(list)">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'lqr'">
-          <LqrLink :data="record" :status="status" :mode="mode" :id="id" :before="before" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqrLink>
+          <LqrLink :data="record" :status="status" :pm="pm" :mode="mode" :id="id" :before="before" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqrLink>
         </template>
       </template>
     </Table>
