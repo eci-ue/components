@@ -75,6 +75,16 @@ const onUpload = function (file: FileData) {
   formState.reportPath = data?.url || "";
 };
 
+const levelTransform = function(value: string | number): number | undefined {
+  if (value) {
+    const num = parseInt(value as string);
+    if (isNaN(num) === false) {
+      return num;
+    }
+  }
+  return void 0;
+}
+
 const { formRef, validate } = useValidate();
 const onSubmit = function () {
   if (props.disabled) {
@@ -106,11 +116,11 @@ defineExpose({ submit: onSubmit });
               @pressEnter="onCalculate" 
               @change="changePoint" />
           </div>
-          <Button class="ml-4" type="primary" :disabled="!formState.point" @click="onCalculate">{{ i18n.lqr.title.calculate }}</Button>
+          <Button class="ml-4" type="primary" :disabled="disabled || !formState.point" @click="onCalculate">{{ i18n.lqr.title.calculate }}</Button>
         </div>
       </FormItem>
 
-      <FormItem :label="i18n.lqr.title.LanguageLevel" name="level" :rules="rules.text('')">
+      <FormItem :label="i18n.lqr.title.LanguageLevel" name="level" :rules="rules.number('', true, levelTransform)">
         <RadioGroup :value="formState.level" class="level-box">
           <RadioButton :value="item.value" :key="item.value" v-for="item in LevelList">{{ item.name }}</RadioButton>
         </RadioGroup>
