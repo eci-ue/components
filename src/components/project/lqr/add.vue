@@ -121,8 +121,18 @@ defineExpose({ submit: onSubmit });
       </FormItem>
 
       <FormItem :label="i18n.lqr.title.LanguageLevel" name="level" :rules="rules.number('', true, levelTransform)">
-        <RadioGroup :value="formState.level" class="level-box">
-          <RadioButton :value="item.value" :key="item.value" v-for="item in LevelList">{{ item.name }}</RadioButton>
+        <RadioGroup v-model:value="formState.level" class="level-box">
+          <template v-for="item in LevelList" :key="item.value">
+            <template v-if="item.value === formState.level">
+              <RadioButton :value="item.value">{{ item.name }}</RadioButton>
+            </template>
+            <template v-else-if="disabled">
+              <RadioButton :value="item.value" :disabled="true">{{ item.name }}</RadioButton>
+            </template>
+            <template v-else>
+              <RadioButton :value="item.value">{{ item.name }}</RadioButton>
+            </template>
+          </template>
         </RadioGroup>
       </FormItem>
 
@@ -150,7 +160,7 @@ defineExpose({ submit: onSubmit });
 <style lang="scss" scoped>
 .level-box {
   ::v-deep(.ant-radio-button-wrapper) {
-    @apply w-full mb-2 bg-milk text-deep-gray cursor-auto;
+    @apply w-full mb-2 bg-milk text-deep-gray;
   }
 
   ::v-deep(.ant-radio-button-wrapper:hover) {
