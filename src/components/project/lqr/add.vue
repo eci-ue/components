@@ -103,7 +103,7 @@ defineExpose({ submit: onSubmit });
 <template>
   <div>
     <Form ref="formRef" layout="vertical" class="my-4 w-full" :model="formState">
-      <FormItem label="" name="point" :rules="rules.text(i18n.lqr.rule.level)">
+      <FormItem label="" name="point">
         <div class="flex w-full">
           <div class="flex-1">
             <InputNumber class="w-full"
