@@ -77,7 +77,7 @@ const confirm = async function (name: string) {
 
 //Rate partner
 const ratePartnerFn = async function (name: string) {
-  const data  = await api.task.ratePartnerDetail<RatePartner>(taskId.value)
+  const data = await api.task.ratePartnerDetail<RatePartner>(taskId.value)
   form(ratePartnerForm(data), {
     okText: i18n.common.button.save,
     title: i18n.operate.title.rate,
@@ -87,7 +87,7 @@ const ratePartnerFn = async function (name: string) {
         resourceId: props.item.resourceId,
         resourceName: props.item.resourceName,
         taskId: taskId.value,
-        innerOuterType:props.item.innerOuterType
+        innerOuterType: props.item.innerOuterType
       })
       _.forEach(data.partner, item => {
         (params as any)[item] = 1
@@ -236,17 +236,15 @@ const buttonName = function (name: string) {
 </script>
 
 <template>
-  <div>
-    <Menu v-if="layout == Skin.vertical">
-      <MenuItem @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ buttonName(name) }} </MenuItem>
-    </Menu>
-    <Space size="large" v-else>
-      <Button @click="handleClick(name)" :type="buttonType(name).type" :key="name" v-for="name in optTypes">
-        <template #icon>
-          <Icon class="text-base" :type="buttonType(name).icon"></Icon>
-        </template>
-        <span>{{ buttonName(name) }}</span>
-      </Button>
-    </Space>
-  </div>
+  <Menu v-if="layout == Skin.vertical">
+    <MenuItem class="py-2" @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ buttonName(name) }} </MenuItem>
+  </Menu>
+  <Space size="large" v-else>
+    <Button @click="handleClick(name)" :type="buttonType(name).type" :key="name" v-for="name in optTypes">
+      <template #icon>
+        <Icon class="text-base" :type="buttonType(name).icon"></Icon>
+      </template>
+      <span>{{ buttonName(name) }}</span>
+    </Button>
+  </Space>
 </template>
