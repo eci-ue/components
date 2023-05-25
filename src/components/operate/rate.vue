@@ -5,8 +5,8 @@
  */
 
 import * as _ from "lodash-es";
-import {watch } from "vue";
-import { FormItem} from "ant-design-vue";
+import { watch } from "vue";
+import { FormItem } from "ant-design-vue";
 import FormCheckbox from "../form/checkbox.vue";
 import i18n from "../../utils/i18n";
 import { RatePartnerList } from "./type";
@@ -45,9 +45,11 @@ const metaObj = {
   ],
   skin: "contain"
 }
-watch(()=>props.meta?.defualtVal,(val)=>{
-  props.state.rate = val || []
-},{ immediate: true })
+const rate = [RatePartnerList.proactive, RatePartnerList.accident, RatePartnerList.delivery]
+watch(() => props.meta?.defualtVal, (val) => {
+  console.log(val)
+  props.state.rate = _.difference(rate, val)
+}, { immediate: true })
 </script>
 <template>
   <FormItem label="Rate">
@@ -72,4 +74,5 @@ watch(()=>props.meta?.defualtVal,(val)=>{
   ::v-deep(.ant-checkbox-checked .ant-checkbox-inner::after) {
     @apply border-info-color;
   }
-}</style>
+}
+</style>
