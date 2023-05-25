@@ -9,6 +9,8 @@ export default {
   label:{
     percentage:"您已完成工作的百分比",
     attachment:"附件",
+    favorite:"喜欢",
+    rate:"Rate",
     impression:"我的印象",
     process:"任务进度",
   },

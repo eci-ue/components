@@ -9,14 +9,16 @@ export default {
   label:{
     percentage:"Percentage of work you have already done.",
     attachment:"Attachment",
+    favorite:"Favorite",
+    rate:"Rate",
     impression:"My Impression",
     process:"Task process",
   },
   list:{
-    proactiveCooperation:"Proactive Cooperation",
-    noQualityAccident:"No Quality Accident",
-    deliveryOnTime:"Delivery On Time",
-    addToFavorite:"Add To Favorite",
+    proactiveCooperation:"Negative Cooperation",
+    noQualityAccident:"Quality Accident",
+    deliveryOnTime:"Delivery Delay",
+    addToFavorite:"Add to Favorite",
     addToClientResourcePool:"Add To This Client’s Resource Pool",
   },
   placeholder: {
