@@ -16,6 +16,8 @@ export * from "./components/operate";
 // export { IconExpand } from "./components/icon/expand";
 
 
+export { default as Header } from "./components/header/index.vue";
+
 export { default as Enum } from "./components/enum/index.vue";
 
 export { default as Link } from "./components/link";
