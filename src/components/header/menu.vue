@@ -25,7 +25,7 @@ export default defineComponent({
 
 <template>
   <ul class="mb-0">
-    <template v-for="data in list">
+    <template v-for="(data, index) in list" :key="`${index}-${data.label}`">
       <template v-if="data.children">
         <li class="nav-menu-item relative" :class="{ active: data.active }">
           <Item class="menu-item-content" :data="data"></Item>

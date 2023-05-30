@@ -17,6 +17,7 @@ export * from "./components/operate";
 
 
 export { default as Header } from "./components/header/index.vue";
+export type { MenuData as HeaderMenuData } from "./components/header/type";
 
 export { default as Enum } from "./components/enum/index.vue";
 
