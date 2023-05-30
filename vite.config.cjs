@@ -5,6 +5,16 @@ import jsx from "@vitejs/plugin-vue-jsx";
 import WindCSS from "vite-plugin-windicss";
 import safeGet from "@fengqiaogang/safe-get";
 
+const style = require("@ue/style");
+const modifyVars = style(path.join(__dirname, "node_modules", "@ue/style/style/antd.less"));
+
+const SassVariables = [];
+
+for(const key of Object.keys(modifyVars)) {
+  const value = `${key}: ${modifyVars[key]}`;
+  SassVariables.push('$' + value + ';');
+}
+
 export default defineConfig(function({ mode }) {
   const envDir = path.resolve(__dirname, "src/config");
   const env = loadEnv(mode, envDir);
@@ -23,7 +33,9 @@ export default defineConfig(function({ mode }) {
         css: {
           charset: false
         },
-        scss: {}
+        scss: {
+          additionalData: SassVariables.join("\n"),
+        }
       }
     },
     plugins: [vue(), jsx(), WindCSS()],

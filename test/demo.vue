@@ -30,6 +30,14 @@ onMounted(function() {
     <!-- <Operate :item="{}" :opt-types="['submit']"></Operate> -->
     <!-- <FormRadio :meta="radioMeta"></FormRadio> -->
 
-    <Header></Header>
+    <div class="header">
+      <Header title="ECI Driver" link="/"></Header>
+    </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.header {
+  --header-height: theme("height[12.5]");
+}
+</style>
