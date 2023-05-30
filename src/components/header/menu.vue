@@ -26,12 +26,10 @@ export default defineComponent({
 <template>
   <ul class="mb-0">
     <template v-for="(data, index) in list" :key="`${index}-${data.label}`">
-      <template v-if="data.children">
+      <template v-if="data.children && data.children.length > 0">
         <li class="nav-menu-item relative" :class="{ active: data.active }">
           <Item class="menu-item-content" :data="data"></Item>
-          <template v-if="data.children">
-            <NavMenu class="bg-navy-blue whitespace-nowrap absolute left-0 top-full hidden" :list="data.children"></NavMenu>
-          </template>
+          <NavMenu class="bg-navy-blue whitespace-nowrap absolute left-0 top-full hidden" :list="data.children"></NavMenu>
         </li>
       </template>
       <template v-else>
