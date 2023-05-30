@@ -5,6 +5,7 @@
  */
 
 import { Icon } from "@ue/icon";
+import { Space } from "ant-design-vue";
 
 defineProps({
   nickName: {
