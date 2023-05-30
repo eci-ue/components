@@ -71,3 +71,12 @@ export class InterruptRate {
   rate: number = 0;
   isUse: number = 0; //1=是、0=否
 }
+
+//Rate the partner
+export enum RatePartnerList {
+  proactive = "proactiveCooperation",
+  accident = "noQualityAccident",
+  delivery = "deliveryOnTime",
+  favorite = "addToFavorite",
+  pool = "addToClientResourcePool",
+}

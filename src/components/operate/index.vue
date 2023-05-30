@@ -9,7 +9,7 @@ import { ratePartnerForm, interupt } from "./util";
 import { computed, reactive, PropType } from "vue";
 import * as message from "@ue/message";
 import { Menu, MenuItem, Button, Space } from "ant-design-vue";
-import { DoOperation, IconType, Skin, Status } from "./type";
+import { DoOperation, IconType, Skin, Status, RatePartnerList } from "./type";
 import type { RatePartner, itemType } from "./type";
 import { lazyload } from "@ue/utils";
 
@@ -77,7 +77,7 @@ const confirm = async function (name: string) {
 
 //Rate partner
 const ratePartnerFn = async function (name: string) {
-  const data  = await api.task.ratePartnerDetail<RatePartner>(taskId.value)
+  const data = await api.task.ratePartnerDetail<RatePartner>(taskId.value)
   form(ratePartnerForm(data), {
     okText: i18n.common.button.save,
     title: i18n.operate.title.rate,
@@ -87,10 +87,16 @@ const ratePartnerFn = async function (name: string) {
         resourceId: props.item.resourceId,
         resourceName: props.item.resourceName,
         taskId: taskId.value,
-        innerOuterType:props.item.innerOuterType
+        innerOuterType: props.item.innerOuterType
       })
-      _.forEach(data.partner, item => {
+      _.each(data.partner, item => {
         (params as any)[item] = 1
+      })
+      const rate = [RatePartnerList.proactive, RatePartnerList.accident, RatePartnerList.delivery]
+      _.each(rate, item => {
+        if (!_.includes(data.rate, item)) {
+          (params as any)[item] = 1
+        }
       })
       const status = await api.task.saveRatePartner<RatePartner>(params);
       if (status) {
@@ -236,17 +242,16 @@ const buttonName = function (name: string) {
 </script>
 
 <template>
-  <div>
-    <Menu v-if="layout == Skin.vertical">
-      <MenuItem @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ buttonName(name) }} </MenuItem>
-    </Menu>
-    <Space size="large" v-else>
-      <Button @click="handleClick(name)" :type="buttonType(name).type" :key="name" v-for="name in optTypes">
-        <template #icon>
-          <Icon class="text-base" :type="buttonType(name).icon"></Icon>
-        </template>
-        <span>{{ buttonName(name) }}</span>
-      </Button>
-    </Space>
-  </div>
+  <Menu v-if="layout == Skin.vertical">
+    <MenuItem class="py-2" @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ buttonName(name) }}
+    </MenuItem>
+  </Menu>
+  <Space size="large" v-else>
+    <Button @click="handleClick(name)" :type="buttonType(name).type" :key="name" v-for="name in optTypes">
+      <template #icon>
+        <Icon class="text-base" :type="buttonType(name).icon"></Icon>
+      </template>
+      <span>{{ buttonName(name) }}</span>
+    </Button>
+  </Space>
 </template>
