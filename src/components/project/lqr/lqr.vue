@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import * as _ from "lodash-es";
 import { computed } from "vue";
 import { confirm } from "@ue/model";
 import { lazyload } from "@ue/utils";
@@ -23,19 +24,28 @@ const onClick = async function() {
   confirm(list, { width: 600, title: "LQR" }, { id: props.id });
 }
 
+const isMultiple = function(value: string | number): boolean {
+  if (_.toLower(String(value)) === _.toLower("multiple")) {
+    return true;
+  }
+  return false;
+}
 const toNumber = function(value: string | number) {
   return Number(value);
 }
 
 const className = computed<string[]>(function() {
+  if (isMultiple(props.level)) {
+    return [];
+  }
   const level = toNumber(props.level);
-  if (level >= 1 && level <= 3) {
+  if (level <= 3) { // level >= 1 && 
     return ["lqr-a"];
   }
   if (level === 4) {
     return ["lqr-b"];
   }
-  if (level >= 5 && level <= 7) {
+  if (level >= 5) { // && level <= 7
     return ["lqr-c"];
   }
   return [];
@@ -43,8 +53,13 @@ const className = computed<string[]>(function() {
 
 </script>
 <template>
-  <Button v-if="toNumber(level) > 0" :class="className" @click="onClick">
-    <span>{{ i18n.template(i18n.lqr.title.lqrResult, { level: level }) }}</span>
+  <Button v-if="isMultiple(level) || toNumber(level) > 0" :class="className" @click="onClick">
+    <template v-if="isMultiple(level)">
+      <span>{{ i18n.part(i18n.lqr.title.lqrResult, 0, { level: level }) }}</span>
+    </template>
+    <template v-else>
+      <span>{{ i18n.part(i18n.lqr.title.lqrResult, 1, { level: level }) }}</span>
+    </template>
   </Button>
 </template>
 <style scoped lang="scss">

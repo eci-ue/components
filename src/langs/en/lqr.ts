@@ -7,7 +7,7 @@ export default {
     words: "Paid Words",
     lqrFile: "LQR File",
     lqrLevel: "Level {level}",
-    lqrResult: "LQR Result: Level {level}",
+    lqrResult: "LQR Result: {level} | LQR Result: Level {level}",
     lqrReport: "Submit Targeted Quality Report",
     lqrUpload: "Upload LQR",
     languageReport: "Language Quality Report:",
