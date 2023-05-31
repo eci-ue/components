@@ -25,7 +25,7 @@ const onClick = async function() {
 }
 
 const isMultiple = function(value: string | number): boolean {
-  if (_.toLower(String(value)) === _.toLower("multiple")) {
+  if (_.toLower(String(value)) === "multiple") {
     return true;
   }
   return false;
@@ -55,7 +55,7 @@ const className = computed<string[]>(function() {
 <template>
   <Button v-if="isMultiple(level) || toNumber(level) > 0" :class="className" @click="onClick">
     <template v-if="isMultiple(level)">
-      <span>{{ i18n.part(i18n.lqr.title.lqrResult, 0, { level: level }) }}</span>
+      <span>{{ i18n.part(i18n.lqr.title.lqrResult, 0, { level: _.upperFirst(_.toLower(String(level))) }) }}</span>
     </template>
     <template v-else>
       <span>{{ i18n.part(i18n.lqr.title.lqrResult, 1, { level: level }) }}</span>
