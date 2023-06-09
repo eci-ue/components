@@ -23,7 +23,7 @@ defineProps({
   <div class="h-full flex items-center">
     <Space>
       <img v-if="portrait" class="block w-8 h-8 rounded" :src="portrait" alt="avatar"/>
-      <Icon v-else class="text-3xl" type="user-outlined" />
+      <Icon v-else class="text-3xl flex" type="user-outlined" />
       <span v-if="nickName">{{ nickName }}</span>
     </Space>
   </div>

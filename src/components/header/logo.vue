@@ -13,6 +13,6 @@ defineProps({
 </script>
 <template>
   <RouteLink class="text-inherit flex h-full items-center" :to="link" tag="a">
-    <b class="text-2xl font-500">{{ title }}</b>
+    <b class="text-2xl font-medium">{{ title }}</b>
   </RouteLink>
 </template>
