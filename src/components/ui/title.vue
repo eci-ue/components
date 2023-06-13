@@ -33,7 +33,7 @@ const slots = useSlots();
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .title {
   @apply pl-3 relative;
   &::before {
