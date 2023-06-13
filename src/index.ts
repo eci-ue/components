@@ -10,12 +10,6 @@ export { Alert, Alert as Alter };
 
 export * from "./components/operate";
 
-// export { default as Icon } from "./components/icon";
-// export { default as Pic } from "./components/icon/pic.vue";
-// export { default as FileIcon } from "./components/icon/file.vue";
-// export { IconExpand } from "./components/icon/expand";
-
-
 export { default as Header } from "./components/header/index.vue";
 export type { MenuData as HeaderMenuData } from "./components/header/type";
 
@@ -28,7 +22,8 @@ export { default as TimeDelivery } from "./components/time/delivery.vue";
 export { default as DriveFile } from "./utils/drive";
 export { default as Drive, FileType, FileOperate } from "./components/drive";
 
-export * from "./components/project"
+export * from "./components/project";
+export * from "./components/ui/index";
 export { DownloadType } from "./components/download/type";
 export { default as Download } from "./components/download/index.vue";
 export { ExportDownload, ExportRecord, ExportFile, WorkMode, ExportButton } from "./components/export";
