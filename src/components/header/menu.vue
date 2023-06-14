@@ -5,14 +5,25 @@
  */
 
 import Item from "./item.vue";
+import { computed } from "vue";
 import type { MenuData } from "./type";
 
-defineProps({
+const props = defineProps({
   list: {
     required: true,
     type: Array as PropType<MenuData[]>,
   }
 });
+
+const menuList = computed<MenuData[]>(() => {
+  return props.list.filter((data: MenuData) => {
+    if (data.hidden) {
+      return false;
+    }
+    return true;
+  });
+});
+
 </script>
 
 <script lang="ts">
@@ -25,7 +36,7 @@ export default defineComponent({
 
 <template>
   <ul class="mb-0">
-    <template v-for="(data, index) in list" :key="`${index}-${data.label}`">
+    <template v-for="(data, index) in menuList" :key="`${index}-${data.label}`">
       <template v-if="data.children && data.children.length > 0">
         <li class="nav-menu-item relative" :class="{ active: data.active }">
           <Item class="menu-item-content" :data="data"></Item>
