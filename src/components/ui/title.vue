@@ -16,6 +16,10 @@ defineProps({
     type: Boolean,
     default: true
   },
+  vertical: {
+    type: Boolean,
+    default: true
+  }
 });
 
 const slots = useSlots();
@@ -27,7 +31,7 @@ const slots = useSlots();
       {{ value }}
     </div>
     <template v-if="slots.default">
-      <Divider type="vertical" />
+      <Divider v-if="vertical" type="vertical" />
       <slot></slot>
     </template>
   </div>
@@ -44,6 +48,6 @@ const slots = useSlots();
 }
 .ant-divider-vertical{
     height: 1.2em;
-    @apply border-border-color mx-0 my-6;
+    @apply border-border-color mx-4 my-0;
 }
 </style>
