@@ -10,3 +10,10 @@ export enum FormCheckboxSkin {
   cover = "cover", // 铺满，子元素平分总宽度
   vertical = "vertical", // 垂直, 一个元素一行
 }
+
+export interface SelectItem {
+  value: string | number;
+  name: string;
+  text?: string;
+  roles?: string | string[];
+}
