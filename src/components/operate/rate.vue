@@ -10,6 +10,7 @@ import { FormItem } from "ant-design-vue";
 import FormCheckbox from "../form/checkbox.vue";
 import i18n from "../../utils/i18n";
 import { RatePartnerList } from "./type";
+import { FormCheckboxSkin as Skin } from "../form/type";
 
 const $emit = defineEmits(["update:state"]);
 const props = defineProps({
@@ -43,11 +44,11 @@ const metaObj = {
     name: i18n.operate.list.deliveryOnTime
   }
   ],
-  skin: "contain"
+  skin: Skin.contain,
+  mode:""
 }
 const rate = [RatePartnerList.proactive, RatePartnerList.accident, RatePartnerList.delivery]
 watch(() => props.meta?.defualtVal, (val) => {
-  console.log(val)
   props.state.rate = _.difference(rate, val)
 }, { immediate: true })
 </script>
