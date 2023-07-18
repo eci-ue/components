@@ -96,6 +96,7 @@ export default class Project {
   // 删除文件
   @tryError(false)
   @$error(i18n.message.DELETE_Failed)
+  @$success(i18n.message.DELETE_SUCCESSFULLY)
   @post("/:project/cat/file/delete/:projectId")
   @validate
   removeFile(
@@ -271,6 +272,7 @@ export default class Project {
   //删除task任务相关文件接口
   @tryError(false)
   @$error(i18n.message.DELETE_Failed)
+  @$success(i18n.message.DELETE_SUCCESSFULLY)
   @post("/:task/file/deleteFile")
   @validate
   deleteTaskFile<D = string | number>(@required fileIds: D[]): Promise<boolean> {
