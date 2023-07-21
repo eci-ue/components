@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.3.5-7",
+  "version": "0.3.5-8",
   "type": "module",
   "license": "MIT",
   "main": "./dist/components.js",
