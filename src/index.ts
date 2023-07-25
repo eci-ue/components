@@ -10,6 +10,9 @@ export { Alert, Alert as Alter };
 
 export * from "./components/operate";
 
+export { MemoqExpress, ImportMemoqExpress, MemoqCard, MemoqItemData, ToolProjectData } from "./components/memoq";
+export { LanguageOneToMoreType, LanguageOneToMore } from "./components/source";
+
 export { default as Header } from "./components/header/index.vue";
 export type { MenuData as HeaderMenuData } from "./components/header/type";
 

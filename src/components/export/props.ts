@@ -13,7 +13,8 @@ export enum ExportStatus {
 export enum WorkMode {
   Transdoc = "Transdoc",
   Memoq = "MemoQ",
-  Offline = "Offline"
+  Offline = "Offline",
+  MemoqExpress = "quick"
 }
 
 export const headers = function(mode: WorkMode, pm: boolean = false): ColumnsType<object> {
