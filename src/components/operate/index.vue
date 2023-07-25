@@ -2,9 +2,8 @@
 import { Icon } from "@ue/icon";
 import * as _ from "lodash-es";
 import { api } from "../../api";
-import { form } from "@ue/model";
 import i18n from "../../utils/i18n";
-import { confirm as modalComfirm } from "@ue/model";
+import { form, confirm as modalComfirm } from "@ue/modal";
 import { ratePartnerForm, interupt } from "./util";
 import { computed, reactive, PropType } from "vue";
 import * as message from "@ue/message";
@@ -196,11 +195,10 @@ const onInstruction = function (name: string) {
   modalComfirm(Instruction, i18n.operate.title.instruction, { data });
 }
 //按钮图标与颜色
-const buttonType = function (name: string) {
-  return {
-    icon: IconType[name],
-    type: name == DoOperation.submit ? "primary" : "default"
-  } as any
+const buttonType = function (name: string): any {
+  // @ts-ignore
+  const icon = IconType[name];
+  return { icon, type: name == DoOperation.submit ? "primary" : "default"};
 }
 //按钮文案
 const buttonName = function (name: string) {
@@ -243,8 +241,7 @@ const buttonName = function (name: string) {
 
 <template>
   <Menu v-if="layout == Skin.vertical">
-    <MenuItem class="py-2" @click="handleClick(name)" :key="name" v-for="name in optTypes"> {{ buttonName(name) }}
-    </MenuItem>
+    <MenuItem class="py-2" @click="handleClick(name)" :key="name" v-for="name in optTypes">{{ buttonName(name) }}</MenuItem>
   </Menu>
   <Space size="large" v-else>
     <Button @click="handleClick(name)" :type="buttonType(name).type" :key="name" v-for="name in optTypes">

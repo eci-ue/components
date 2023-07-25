@@ -4,7 +4,7 @@
  * @author svon.me@gmail.com
  */
 
-import { form } from "@ue/model";
+import { form } from "@ue/modal";
 import * as _ from "lodash-es";
 import { api } from "../../api";
 import i18n from "../../utils/i18n";

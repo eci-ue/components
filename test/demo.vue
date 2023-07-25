@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { Header } from "../src/index";
+import { ref, onMounted, defineComponent, h as createElement } from "vue";
+import { Header, UiTitle } from "../src/index";
 
 onMounted(function() {
   // DriveFile("xxx", {
@@ -24,14 +24,25 @@ onMounted(function() {
   // });
 });
 
+const list = new Array(20).fill({
+  label: "AA",
+  active: false,
+  link: "/"
+});
+
 </script>
 <template>
   <div>
     <!-- <Operate :item="{}" :opt-types="['submit']"></Operate> -->
     <!-- <FormRadio :meta="radioMeta"></FormRadio> -->
-
     <div class="header">
-      <Header title="ECI Driver" link="/"></Header>
+      <Header title="ECI Driver" link="/" :list="list"></Header>
+    </div>
+    <br/><br/>
+    <div class="pl-10">
+      <UiTitle value="title">
+        <span>11</span>
+      </UiTitle>
     </div>
   </div>
 </template>

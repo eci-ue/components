@@ -3,5 +3,5 @@
  * @author svon.me@gmail.com
  */
 
+export { default as UiTitle } from "./title";
 export { default as UiCard } from "./card.vue";
-export { default as UiTitle } from "./title.vue";

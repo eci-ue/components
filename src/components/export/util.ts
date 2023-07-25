@@ -1,6 +1,6 @@
 
 import i18n from "../../utils/i18n";
-import * as modal from "@ue/model";
+import * as modal from "@ue/modal";
 import ExportRecord from "./record.vue";
 
 import type { Props } from "./props";
