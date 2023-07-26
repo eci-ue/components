@@ -2,7 +2,7 @@
  * @file 文件管理
  */
 
-import { confirm } from "@ue/model";
+import { confirm } from "@ue/modal";
 import Drive from "../../components/drive";
 import { Props } from "../../components/drive/props";
 

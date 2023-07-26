@@ -6,7 +6,7 @@
 
 import { Icon } from "@ue/icon";
 import * as _ from "lodash-es";
-import { confirm } from "@ue/model";
+import { confirm } from "@ue/modal";
 import { lazyload } from "@ue/utils";
 import i18n from "../../utils/i18n";
 

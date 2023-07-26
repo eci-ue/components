@@ -4,7 +4,7 @@
  * @author svon.me@gmail.com
  */
 
-import Title from "./title.vue";
+import Title from "./title";
 
 defineProps({
   value: {

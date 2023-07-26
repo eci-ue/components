@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as _ from "lodash-es";
 import { computed } from "vue";
-import { confirm } from "@ue/model";
+import { confirm } from "@ue/modal";
 import { lazyload } from "@ue/utils";
 import { Button } from "ant-design-vue";
 import i18n from "../../../utils/i18n";
