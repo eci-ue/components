@@ -14,6 +14,7 @@ export enum DoOperation {
   partner = "rate partner",
   submit = "submit",
   instruction = "instruction",
+  edit = "edit",
 }
 
 export class ResourceType {
@@ -31,13 +32,6 @@ export interface RatePartner extends ResourceType {
   addToClientResourcePool?: number, //是否添加客户资源池 0-否，1-是
   impression?: string, //评价/印象
   taskId?: string | number, //任务id
-}
-
-export enum IconType {
-  delete = "delete-outlined",
-  interrupt = "file-sync-outlined",
-  submit = "send-outlined",
-  instruction = "schedule-outlined"
 }
 
 export interface itemType extends ResourceType {

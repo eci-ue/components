@@ -9,9 +9,18 @@ import { ratePartnerForm, interupt } from "./util";
 import { computed, reactive, PropType } from "vue";
 import * as message from "@ue/message";
 import { Menu, MenuItem, Button, Space } from "ant-design-vue";
-import { DoOperation, IconType, Skin, Status, RatePartnerList } from "./type";
+import { DoOperation, Skin, Status, RatePartnerList } from "./type";
 import type { RatePartner, itemType } from "./type";
 import { lazyload } from "@ue/utils";
+
+
+const IconType: {[key:string]:string} = {
+  delete: "delete-outlined",
+  interrupt: "file-sync-outlined",
+  submit: "send-outlined",
+  instruction: "schedule-outlined"
+}
+
 
 const props = defineProps({
   item: {
@@ -33,7 +42,7 @@ const props = defineProps({
     default: "taskId",
   }
 });
-const emit = defineEmits(["reload"]);
+const emit = defineEmits(["reload","onClick"]);
 
 //刷新列表
 const onReload = function (name?: string) {
@@ -60,6 +69,8 @@ const handleClick = async (name: string) => {
     onSubmit(name)
   } else if (name == DoOperation.instruction) {
     onInstruction(name)
+  }else{
+    emit("onClick", name);
   }
 };
 
@@ -233,8 +244,11 @@ const buttonName = function (name: string) {
     case DoOperation.instruction:
       value = i18n.common.button.instruction;
       break;
+    case DoOperation.edit:
+      value = i18n.common.button.edit;
+      break;
     default:
-      value = name;
+      value = _.startCase(name);
       break;
   }
   return value;

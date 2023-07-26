@@ -4,5 +4,6 @@ export default {
     hedge: "Hedge JAS",
     partner: "Rate Partner",
     instruction: "Instruction",
+    edit: "Edit",
   },
 };

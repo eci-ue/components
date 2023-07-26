@@ -4,5 +4,6 @@ export default {
     hedge: "对冲JAS",
     partner: "评价合作伙伴",
     instruction: "说明",
+    edit: "编辑",
   },
 };
