@@ -34,7 +34,7 @@ export const check = function <T, D>(response: D): T | boolean {
   const result = getResult<T, D>(response);
   if (result && isObject(result)) {
     const status = safeGet<boolean>(result, API.statusName);
-    const scode = safeGet<string>(result, API.codeName);
+    const scode = safeGet<string>(result, API.codeName) || "";
     if (status && toInteger(scode) === API.success) {
       const value = safeGet<T>(result, API.dataName);
       return _.isNil(value) ? true : value;

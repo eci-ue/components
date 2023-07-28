@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { MemoqExpress, ImportMemoqExpress } from "../src/index";
+import { MemoqExpress, ImportMemoqExpress, FormFile } from "../src/index";
 import { Button, Space } from "ant-design-vue";
-import * as modal from "@ue/model";
+import * as modal from "@ue/modal";
 import { MemoqItemData, ToolProjectData } from "../src/components/memoq/type";
 
 onMounted(function () {
@@ -25,6 +25,15 @@ onMounted(function () {
   //     // return api.project.saveLqr(state, true);
   //   }
   // });
+
+  modal.form({
+    key: "fileIds",
+    component: FormFile,
+    meta: {
+      all: true,
+      multiple: true
+    },
+  })
 });
 
 
