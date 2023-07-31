@@ -5,11 +5,11 @@
 
 import * as _ from "lodash-es";
 import i18n from "../utils/i18n";
-import { $error, $success } from "@ue/message";
-import { validate, required, get, post, tryError } from "@js-lion/api";
 import { $debounce } from "@ue/utils";
-import { TaskInterruptType } from "../components/alert/props";
+import { $error, $success } from "@ue/message";
 import { InterruptRate } from "../components/operate/type";
+import { TaskInterruptType } from "../components/alert/props";
+import { validate, required, get, post, tryError } from "@js-lion/api";
 
 export default class Task {
   /**

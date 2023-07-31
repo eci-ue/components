@@ -6,8 +6,7 @@
 import { PageResult, path } from "@ue/utils";
 import safeGet from "@fengqiaogang/safe-get";
 import { API, get, tryError, validate, required } from "@js-lion/api";
-
-import type { Signature, SignatureSTS } from "src/components/upload/props";
+import type { Signature, SignatureSTS } from "@ue/upload/types/components/type";
 
 export default class {
   // 获取签名
