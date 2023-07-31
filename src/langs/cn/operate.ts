@@ -13,6 +13,7 @@ export default {
     rate:"评价",
     impression:"我的印象",
     process:"任务进度",
+    workload:"工作量",
   },
   list:{
     proactiveCooperation:"积极合作",

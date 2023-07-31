@@ -7,6 +7,7 @@ import { api } from "../../api";
 import { useState, downloadFile, fileDownloadUrl } from "@ue/utils";
 interface InfoType {
   rate: number,
+  actualWorkload:number,
   taskFileList: { fileName: string, filePath: string }[]
 
 }
@@ -29,11 +30,15 @@ const onDownload = function (fileName: string, filePath: string) {
 
 <template>
   <div class="flex">
-    <div class="text-label-color mr-6">{{i18n.operate.label.process}}</div>
+    <div class="text-label-color mr-6">{{i18n.operate.label.process}}：</div>
     <div>{{ state.rate || 0 }} %</div>
   </div>
+  <div class="flex mt-6">
+    <div class="text-label-color mr-6">{{i18n.operate.label.workload}}：</div>
+    <div>{{ state.actualWorkload || 0 }}</div>
+  </div>
   <div class="mt-7 min-h-50">
-    <div class="text-label-color">{{i18n.part(i18n.common.label.file, 0)}}</div>
+    <div class="text-label-color">{{i18n.part(i18n.common.label.file, 0)}}：</div>
     <section v-if="_.size(state.taskFileList) > 0">
       <p class="mt-1.5" v-for="item in state.taskFileList || []">
         <span class="bg-primary-light py-1 px-1.5">

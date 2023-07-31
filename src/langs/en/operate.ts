@@ -13,6 +13,7 @@ export default {
     rate:"Rate",
     impression:"My Impression",
     process:"Task process",
+    workload:"Workload",
   },
   list:{
     proactiveCooperation:"Negative Cooperation",
