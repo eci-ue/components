@@ -69,10 +69,21 @@ const changePoint = function () {
 };
 
 //上传文件
-const onUpload = function (file: FileData) {
+const onUpload = async function (file: FileData) {
   const data: UploadFile = file.value;
   formState.fileName = file.name() || "";
   formState.reportPath = data?.url || "";
+  if (data?.url){
+    const LQRPerformance = await api.project.getLQRPerformance(data.url);
+    formState.level = _.get(LQRPerformance,'level') || formState.level;
+    const point = _.get(LQRPerformance,'point')
+    if (point){
+      formState.point = point
+      onCalculate()
+    }
+   
+
+  }
 };
 
 const levelTransform = function(value: string | number): number | undefined {

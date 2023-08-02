@@ -417,6 +417,19 @@ export default class Project {
   }
 
   /**
+   * 获取文件LQR等级、分数信息
+   * @param filePath 文件路径
+   */
+  @tryError({})
+  @$error()
+  @get("/:task/task/getLQRPerformance/:filePath")
+  @validate
+  getLQRPerformance(@required filePath: string): Promise<object> {
+    const params = { filePath };
+    return { params } as any;
+  }
+
+  /**
    * 保存LQR文件及评价
    * @param data Lqr 数据
    * @param partner 是否为外部议员提交
