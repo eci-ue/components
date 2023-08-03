@@ -422,11 +422,11 @@ export default class Project {
    */
   @tryError({})
   @$error()
-  @get("/:task/task/getLQRPerformance/:filePath")
+  @post("/:task/task/getLQRPerformance")
   @validate
   getLQRPerformance(@required filePath: string): Promise<object> {
-    const params = { filePath };
-    return { params } as any;
+    const data = { filePath };
+    return { data } as any;
   }
 
   /**

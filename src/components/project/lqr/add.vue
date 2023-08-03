@@ -4,7 +4,7 @@
  * @author svon.me@gmail.com
  */
 
- import _ from "lodash-es";
+import _ from "lodash-es";
 import { api } from "../../../api";
 import { reactive, toRaw, computed } from "vue";
 import { UploadLqr } from "./type";
@@ -34,7 +34,7 @@ const props = defineProps({
   },
   value: {
     type: Object,
-    default () {
+    default() {
       return {};
     }
   }
@@ -42,7 +42,7 @@ const props = defineProps({
 
 const formState = reactive<UploadLqr>(new UploadLqr(props.value));
 
-const LevelList = computed(function() {
+const LevelList = computed(function () {
   return [
     { name: i18n.lqr.level.case1, value: 1 },
     { name: i18n.lqr.level.case2, value: 2 },
@@ -73,20 +73,24 @@ const onUpload = async function (file: FileData) {
   const data: UploadFile = file.value;
   formState.fileName = file.name() || "";
   formState.reportPath = data?.url || "";
-  if (data?.url){
+  if (data?.url) {
     const LQRPerformance = await api.project.getLQRPerformance(data.url);
-    formState.level = _.get(LQRPerformance,'level') || formState.level;
-    const point = _.get(LQRPerformance,'point')
-    if (point){
-      formState.point = point
+    const level = _.get(LQRPerformance, 'level')
+    if (level) {
+      formState.level = Number(level)
+      _.set(formState, "point", null)
+    }
+    const point = _.get(LQRPerformance, 'point')
+    if (point) {
+      formState.point = Number(point)
       onCalculate()
     }
-   
+
 
   }
 };
 
-const levelTransform = function(value: string | number): number | undefined {
+const levelTransform = function (value: string | number): number | undefined {
   if (value) {
     const num = parseInt(value as string);
     if (isNaN(num) === false) {
@@ -101,7 +105,7 @@ const onSubmit = function () {
   if (props.disabled) {
     return true;
   }
-  return validate(function() {
+  return validate(function () {
     return Object.assign(toRaw(formState), {
       fileId: props.fileId,
       taskId: props.taskId
@@ -117,14 +121,14 @@ defineExpose({ submit: onSubmit });
       <FormItem label="" name="point">
         <div class="flex w-full">
           <div class="flex-1">
-            <InputNumber class="w-full"
-              :min="1" 
-              :precision="0" 
-              v-model:value.trim="formState.point" 
-              :max="9999999"
+            <InputNumber class="w-full" 
+            :min="1" 
+            :precision="0" 
+            v-model:value.trim="formState.point" 
+            :max="9999999"
               :placeholder="i18n.lqr.placeholder.memoq" 
               :disabled="disabled" 
-              @pressEnter="onCalculate" 
+              @pressEnter="onCalculate"
               @change="changePoint" />
           </div>
           <Button class="ml-4" type="primary" :disabled="disabled || !formState.point" @click="onCalculate">{{ i18n.lqr.title.calculate }}</Button>
@@ -148,7 +152,7 @@ defineExpose({ submit: onSubmit });
       </FormItem>
 
       <FormItem 
-        :label="i18n.lqr.title.languageReport" 
+      :label="i18n.lqr.title.languageReport" 
         name="reportPath"
         :rules="rules.text(i18n.lqr.rule.languageReport)">
 
