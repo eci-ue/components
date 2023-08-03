@@ -2,12 +2,13 @@
 import { Icon } from "@ue/icon";
 import * as _ from "lodash-es";
 import i18n from "../../utils/i18n";
-import { Button } from "ant-design-vue";
+import { Button, Descriptions, DescriptionsItem } from "ant-design-vue";
 import { api } from "../../api";
 import { useState, downloadFile, fileDownloadUrl } from "@ue/utils";
 interface InfoType {
   rate: number,
-  actualWorkload:number,
+  actualWorkload: string,
+  plannedWorkload: string,
   taskFileList: { fileName: string, filePath: string }[]
 
 }
@@ -29,16 +30,21 @@ const onDownload = function (fileName: string, filePath: string) {
 </script>
 
 <template>
-  <div class="flex">
-    <div class="text-label-color mr-6">{{i18n.operate.label.process}}：</div>
-    <div>{{ state.rate || 0 }} %</div>
+  <div class="work-info text-center">
+    <Descriptions layout="vertical" bordered :column="3">
+      <DescriptionsItem :label="i18n.operate.label.plannedWorkload">
+        {{ state.plannedWorkload || 0 }}
+      </DescriptionsItem>
+      <DescriptionsItem :label="i18n.operate.label.process">
+        {{ state.rate || 0 }} %
+      </DescriptionsItem>
+      <DescriptionsItem :label="i18n.operate.label.acturalWorkload">
+        {{ state.actualWorkload }}
+      </DescriptionsItem>
+    </Descriptions>
   </div>
-  <div class="flex mt-6">
-    <div class="text-label-color mr-6">{{i18n.operate.label.workload}}：</div>
-    <div>{{ state.actualWorkload || 0 }}</div>
-  </div>
-  <div class="mt-7 min-h-50">
-    <div class="text-label-color">{{i18n.part(i18n.common.label.file, 0)}}：</div>
+  <div class="mt-7 min-h-30">
+    <div class="text-label-color">{{ i18n.part(i18n.common.label.file, 0) }}：</div>
     <section v-if="_.size(state.taskFileList) > 0">
       <p class="mt-1.5" v-for="item in state.taskFileList || []">
         <span class="bg-primary-light py-1 px-1.5">
@@ -49,5 +55,16 @@ const onDownload = function (fileName: string, filePath: string) {
       </p>
     </section>
     <span v-else class="ml-5 text-label-color">--</span>
-</div>
+  </div>
 </template>
+<style scoped lang="scss">
+.work-info {
+  ::v-deep(.ant-descriptions-bordered .ant-descriptions-item-label) {
+    @apply py-2 px-3 text-deep-gray text-center;
+  }
+
+  ::v-deep(.ant-descriptions-bordered .ant-descriptions-item-content) {
+    @apply p-2 px-3;
+  }
+}
+</style>
