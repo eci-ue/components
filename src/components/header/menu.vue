@@ -4,7 +4,7 @@
  * @author svon.me@gmail.com
  */
 
-import Item from "./item.vue";
+import Item from "./item";
 import { computed } from "vue";
 import type { MenuData } from "./type";
 
@@ -79,4 +79,4 @@ export default defineComponent({
     }
   }
 }
-</style>
+</style>./item.tsx

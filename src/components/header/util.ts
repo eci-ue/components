@@ -27,7 +27,7 @@ const sortBy = function(value: Array<RouteRecord | RouteRecordRaw> = []) {
 }
 
 export const isNav = function(item: RouteRecord | RouteRecordRaw) {
-  return toBoolean(item.meta?.inNavigation);
+  return toBoolean(item.meta?.inNavigation) || toBoolean(item.meta?.secondInNavigation);
 };
 
 export const rolePick = function(item: RouteRecord | RouteRecordRaw) {
@@ -45,14 +45,22 @@ export const getTitle = function(data: RouteRecord | RouteRecordRaw): string {
 
 export const getHref = function(data: RouteRecord | RouteRecordRaw): string | object {
   const value = data.meta?.link;
-  if (value) {
-    return value;
-  }
-  return {
+  const to = {
     name: data.name,
     query: data.meta?.query || {},
     params: data.meta?.params || {},
   }
+  const target = data.meta?.target;
+  if (value && typeof value === "string") {
+    return { target, to: value };
+  }
+  if (value && typeof value === "object") {
+    return {
+      target, 
+      to: { ...to, ...value }
+    };
+  }
+  return { target, to };
 }
 
 export const createDB = function(list: Array<RouteRecord | RouteRecordRaw> = []) {
@@ -74,11 +82,21 @@ export const filterRouters = function(list: Array<RouteRecord | RouteRecordRaw>,
     if (cache.selectOne({ name })) {
       continue;
     }
-    if (isNav(item)) {
+    const inNavigation = toBoolean(item.meta?.inNavigation);
+    const secondInNavigation = toBoolean(item.meta?.secondInNavigation);
+    if (inNavigation || secondInNavigation) {
       const link = getHref(item);
       const label = getTitle(item);
       const hidden = safeGet<boolean>(item, "meta.hidden") || false;
-      cache.insert({ hidden, label, link, active: false, ...item });
+      const value = { 
+        hidden, 
+        label, 
+        link, 
+        active: false, 
+        inNavigation: inNavigation ? "1" : "0", 
+        secondInNavigation: secondInNavigation ? "1" : "0",
+      };
+      cache.insert({ ...value, ...item });
     }
   }
   if (current) {
@@ -97,10 +115,10 @@ export const getNavigationList = function(
   menuList: HeaderMenuData[] = []
 ): HeaderMenuData[] {
   const db = filterRouters(routers, currentPageName);
-  const where = { [db.foreign]: db.foreignValue };
   if (menuList && menuList.length > 0) {
     db.insert(menuList);
   }
+  const where = { inNavigation: "1" };
   // @ts-ignore
   return sortBy(db.childrenDeep(where));
 }
