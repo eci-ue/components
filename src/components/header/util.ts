@@ -14,15 +14,23 @@ const toBoolean = function(value?: any) {
   return false;
 }
 
-const sortBy = function(list: RouteRecord[] = []) {
-  return _.sortBy(list, "meta.index");
+const sortBy = function(value: Array<RouteRecord | RouteRecordRaw> = []) {
+  const list = _.sortBy(value, "meta.index");
+  const array = list.map(function(item: RouteRecord | RouteRecordRaw) {
+    const children: RouteRecordRaw[] = item.children || [];
+    if (children && children.length > 1) {
+      item.children = sortBy(children);
+    }
+    return item;
+  });
+  return array;
 }
 
-export const isNav = function(item: RouteRecord) {
+export const isNav = function(item: RouteRecord | RouteRecordRaw) {
   return toBoolean(item.meta?.inNavigation);
 };
 
-export const rolePick = function(item: RouteRecord) {
+export const rolePick = function(item: RouteRecord | RouteRecordRaw) {
   const value = _.compact(_.concat(item.meta?.roles));
   if (value && value.length > 0) {
     return role.assert(value as RoleType);
@@ -36,24 +44,25 @@ export const getTitle = function(data: RouteRecord | RouteRecordRaw): string {
 }
 
 export const getHref = function(data: RouteRecord | RouteRecordRaw): string | object {
-  if (data.meta?.link) {
-    const value = data.meta?.link;
-    if (toBoolean(value)) {
-      return value;
-    }
-    return "";
+  const value = data.meta?.link;
+  if (value) {
+    return value;
   }
-  return data;
+  return {
+    name: data.name,
+    query: data.meta?.query || {},
+    params: data.meta?.params || {},
+  }
 }
 
-export const createDB = function(list: RouteRecord[] = []) {
+export const createDB = function(list: Array<RouteRecord | RouteRecordRaw> = []) {
   const id = "id";
   const pid = "pid";
   const root = "0";
-  return new DBList<RouteRecord>(list, id, pid, root);
+  return new DBList<RouteRecord | RouteRecordRaw>(list, id, pid, root);
 }
 
-export const filterRouters = function(list: RouteRecord[], current?: string) {
+export const filterRouters = function(list: Array<RouteRecord | RouteRecordRaw>, current?: string) {
   const cache = createDB();
   const db = createDB(sortBy(list));
   for (const item of db.clone()) {
@@ -82,11 +91,16 @@ export const filterRouters = function(list: RouteRecord[], current?: string) {
 }
 
 // 通过全局路由检索出导航数据
-export const getNavigationList = function(routers: RouteRecord[] = [], currentPageName?: string, menuList: HeaderMenuData[] = []) {
+export const getNavigationList = function(
+  routers: Array<RouteRecord | RouteRecordRaw> = [], 
+  currentPageName?: string, 
+  menuList: HeaderMenuData[] = []
+): HeaderMenuData[] {
   const db = filterRouters(routers, currentPageName);
   const where = { [db.foreign]: db.foreignValue };
   if (menuList && menuList.length > 0) {
     db.insert(menuList);
   }
-  return db.childrenDeep(where);
+  // @ts-ignore
+  return sortBy(db.childrenDeep(where));
 }
