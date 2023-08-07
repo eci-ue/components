@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.3.8",
+  "version": "0.3.9",
   "type": "module",
   "license": "MIT",
   "main": "./dist/components.js",
@@ -25,6 +25,7 @@
     "url": "git+https://github.com/eci-ue/components.git"
   },
   "devDependencies": {
+    "@ue/role": "^0.1.1-1",
     "@fengqiaogang/dblist": "^0.4.1",
     "@fengqiaogang/safe-get": "^0.1.4",
     "@fengqiaogang/safe-set": "^0.1.3",

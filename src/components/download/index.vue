@@ -4,10 +4,11 @@
  * @author svon.me@gmail.com
  */
 
+import * as _ from "lodash-es";
 import { Icon } from "@ue/icon";
-import { PropType, computed, ref } from "vue";
 import UrlPattern from "url-pattern";
 import { DownloadType, Env } from "./type";
+import { PropType, computed, ref } from "vue";
 import { download, ossFileDownloadLink, downloadName } from "./util";
 import type { HookFunction } from "@ue/utils";
 
@@ -71,7 +72,9 @@ const env = computed<Env>(function() {
 
 const iframeSrc = computed<string>(function() {
   const r = Math.random();
-  return `/export/${env.value}.html?_r=${r}`;
+  const name = _.toLower(env.value);
+  // return `/export/${env.value}.html?_r=${r}`;
+  return `https://static.eciol.com/html/export/${name}.html?r=${r}`;
 });
 
 // 触发文件下载
