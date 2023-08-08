@@ -7,6 +7,11 @@ import type { RoleType } from "@ue/role";
 import type { MenuData as HeaderMenuData } from "./type";
 import type { RouteRecord, RouteRecordRaw } from "vue-router";
 
+enum NavigationStatus {
+  "on" = "1",
+  "off" = "2"
+}
+
 const toBoolean = function(value?: any) {
   if (value || value === 0) {
     return true;
@@ -26,11 +31,7 @@ const sortBy = function(value: Array<RouteRecord | RouteRecordRaw> = []) {
   return array;
 }
 
-export const isNav = function(item: RouteRecord | RouteRecordRaw) {
-  return toBoolean(item.meta?.inNavigation) || toBoolean(item.meta?.secondInNavigation);
-};
-
-export const rolePick = function(item: RouteRecord | RouteRecordRaw) {
+const rolePick = function(item: RouteRecord | RouteRecordRaw) {
   const value = _.compact(_.concat(item.meta?.roles));
   if (value && value.length > 0) {
     return role.assert(value as RoleType);
@@ -38,29 +39,38 @@ export const rolePick = function(item: RouteRecord | RouteRecordRaw) {
   return true;
 };
 
-export const getTitle = function(data: RouteRecord | RouteRecordRaw): string {
+const getTitle = function(data: RouteRecord | RouteRecordRaw): string {
   const value = safeGet<string>(data, "meta.title") || safeGet<string>(data, "name");
   return value || "";
 }
 
-export const getHref = function(data: RouteRecord | RouteRecordRaw): string | object {
+const routerLink = function(value?: string | object, target?: string): string | object | undefined {
+  if (target) {
+    return { target, to: value };
+  }
+  return value;
+}
+
+const getHref = function(data: RouteRecord | RouteRecordRaw, db: DBList<RouteRecord | RouteRecordRaw>): string | object | undefined {
   const value = data.meta?.link;
   const to = {
     name: data.name,
     query: data.meta?.query || {},
     params: data.meta?.params || {},
   }
-  const target = data.meta?.target;
+  const target = data.meta?.target as string;
   if (value && typeof value === "string") {
-    return { target, to: value };
+    return routerLink(value, target);
   }
   if (value && typeof value === "object") {
-    return {
-      target, 
-      to: { ...to, ...value }
-    };
+    return routerLink({ ...to, ...value }, target);
   }
-  return { target, to };
+  const where = {[db.primary]: safeGet(data, db.primary)};
+  const children = db.children(where);
+  if (children && children.length > 0) {
+    return getHref(children[0], db);
+  }
+  return routerLink(to, target);
 }
 
 export const createDB = function(list: Array<RouteRecord | RouteRecordRaw> = []) {
@@ -85,7 +95,7 @@ export const filterRouters = function(list: Array<RouteRecord | RouteRecordRaw>,
     const inNavigation = toBoolean(item.meta?.inNavigation);
     const secondInNavigation = toBoolean(item.meta?.secondInNavigation);
     if (inNavigation || secondInNavigation) {
-      const link = getHref(item);
+      const link = getHref(item, db);
       const label = getTitle(item);
       const hidden = safeGet<boolean>(item, "meta.hidden") || false;
       const value = { 
@@ -93,8 +103,7 @@ export const filterRouters = function(list: Array<RouteRecord | RouteRecordRaw>,
         label, 
         link, 
         active: false, 
-        inNavigation: inNavigation ? "1" : "0", 
-        secondInNavigation: secondInNavigation ? "1" : "0",
+        inNavigation: inNavigation ? NavigationStatus.on : NavigationStatus.off
       };
       cache.insert({ ...value, ...item });
     }
@@ -115,10 +124,12 @@ export const getNavigationList = function(
   menuList: HeaderMenuData[] = []
 ): HeaderMenuData[] {
   const db = filterRouters(routers, currentPageName);
-  if (menuList && menuList.length > 0) {
-    db.insert(menuList);
+  if (menuList) {
+    for (const item of menuList) {
+      db.insert({ ...item, inNavigation: NavigationStatus.on });
+    }
   }
-  const where = { inNavigation: "1" };
+  const where = { inNavigation: NavigationStatus.on };
   // @ts-ignore
   return sortBy(db.childrenDeep(where));
 }

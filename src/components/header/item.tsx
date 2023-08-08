@@ -32,7 +32,7 @@ export default defineComponent({
         const value: string | RouteLocationRaw = url as any;
         return <Link class={ className } to={ value }>{ props.data.label }</Link>;
       }
-      return (<span>{ props.data.label }</span>);
+      return (<Link class={ className } tag="a">{ props.data.label }</Link>);
     };
   }
 });

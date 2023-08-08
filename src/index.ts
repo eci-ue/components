@@ -15,7 +15,7 @@ export { LanguageOneToMoreType, LanguageOneToMore } from "./components/source";
 
 export * as HeaderUtil from "./components/header/util";
 export { default as Header } from "./components/header/index.vue";
-export type { MenuData as HeaderMenuData } from "./components/header/type";
+export type { MenuData as HeaderMenuData, RouteMeta } from "./components/header/type";
 
 export { default as Enum } from "./components/enum/index.vue";
 
