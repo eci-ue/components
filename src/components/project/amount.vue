@@ -23,7 +23,7 @@ const props = defineProps({
   },
   /** 费用 */
   money: {
-    type: String,
+    type: [String, Number],
     required: false,
     default: () => 0
   },
@@ -41,6 +41,16 @@ const props = defineProps({
   /** work 单位 */
   workUnit: {
     type: String,
+    required: false,
+  },
+  /** Workload ( MT factor)列是否显示 （mtDiscount机翻折扣和mtShow都为1时显示） */
+  mtShow: {
+    type: [Boolean, Number],
+    required: false,
+  },
+  /** MT factor的值 */
+  mtFactor: {
+    type: [Number, String],
     required: false,
   },
   /** taskOuterDetailRspArrayList */
@@ -78,8 +88,12 @@ const amount = function(list: AmountItemData[]): string {
               <th class="ant-table-cell">{{ i18n.project.label.amount }}</th>
               <th class="ant-table-cell">
                 <span class="block text-right">
-                  <span>{{ i18n.project.detail.workLoad }}</span>
-                  <span class="ml-1" v-if="workUnit">({{ workUnit }})</span>
+                  {{ i18n.project.detail.workLoad }}
+                </span>
+              </th>
+              <th class="ant-table-cell" v-if="mtShow">
+                <span class="block text-right">
+                  {{ i18n.project.detail.workLoadMT }}
                 </span>
               </th>
               <th class="ant-table-cell">
@@ -103,7 +117,14 @@ const amount = function(list: AmountItemData[]): string {
             <tr v-for="(name, index) in taskPhaseList" :key="name">
               <td class="ant-table-cell" rowspan="8" v-if="index < 1">{{ _.upperFirst(type) }}</td>
               <td class="ant-table-cell">{{ name }}</td>
-              <td class="ant-table-cell text-right">{{ toFixed(task(index, "words"), 0) }}</td>
+              <td class="ant-table-cell text-right">
+                <span v-if="mtShow">{{ toFixed(task(index, "initWords"), 0) }}</span>
+                <span v-else>{{ toFixed(task(index, "words"), 0) }}</span>
+              </td>
+              <td class="ant-table-cell text-right" v-if="mtShow">
+                {{ toFixed(task(index, "words"), 0) }}
+                <span  v-if="index > 5">({{ mtFactor || 1 }})</span>
+              </td>
               <td class="ant-table-cell text-right" rowspan="8" v-if="index < 1">{{ toFixed(money, fixed) }}</td>
               <td class="ant-table-cell text-right">{{ valueFormat(toFixed(task(index, "discount", 0) * 100, 0), "%") }}</td>
               <td class="ant-table-cell text-right">{{ toFixed(task(index, "subTotal"), fixed) }}</td>
