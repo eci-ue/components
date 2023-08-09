@@ -3,6 +3,7 @@ export class AmountItemData {
   discount: number = 0;
   unitPrice: number = 0; // 费率
   words: number = 0;     // 字数
+  initWords: number = 0;     // 初始字数
   subTotal: number = 0;  // 小计
 }
 
