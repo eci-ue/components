@@ -131,7 +131,7 @@ const amount = function(list: AmountItemData[]): string {
             </tr>
             <tr>
               <td class="ant-table-cell">{{ i18n.project.label.amount }}</td>
-              <td class="ant-table-cell text-right" colspan="5">{{ amount(list) }}</td>
+              <td class="ant-table-cell text-right" :colspan="mtShow?6:5">{{ amount(list) }}</td>
             </tr>
           </tbody>
         </table>
