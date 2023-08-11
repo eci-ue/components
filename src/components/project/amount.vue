@@ -62,12 +62,12 @@ const props = defineProps({
 });
 
 
-const task = function<T = number>(index: number, key: string, autoValue?: T) {
+const task = function <T = number>(index: number, key: string, autoValue?: T) {
   const value = safeGet<T>(props.list, `[${index}].${key}`);
   return (value || autoValue) as T;
 };
 
-const amount = function(list: AmountItemData[]): string {
+const amount = function (list: AmountItemData[]): string {
   let sum = new BigNumber(0);
   const array = _.compact(_.concat(list));
   for (const data of array) {
@@ -86,9 +86,13 @@ const amount = function(list: AmountItemData[]): string {
             <tr>
               <th class="ant-table-cell">{{ i18n.project.detail.type }}</th>
               <th class="ant-table-cell">{{ i18n.project.label.amount }}</th>
-              <th class="ant-table-cell">
-                <span class="block text-right">
-                  {{ i18n.project.detail.workLoad }}
+              <th class="ant-table-cell text-right">
+                <span class="block" v-if="mtShow">
+                  {{ i18n.project.detail.initialWords }}
+                </span>
+                <span v-else class="block">
+                  <span>{{ i18n.project.detail.workLoad }}</span>
+                  <span class="ml-1" v-if="workUnit">({{ workUnit }})</span>
                 </span>
               </th>
               <th class="ant-table-cell" v-if="mtShow">
@@ -123,15 +127,16 @@ const amount = function(list: AmountItemData[]): string {
               </td>
               <td class="ant-table-cell text-right" v-if="mtShow">
                 {{ toFixed(task(index, "words"), 0) }}
-                <span  v-if="index > 5">({{ mtFactor || 1 }})</span>
+                <span v-if="index > 5">({{ toFixed(mtFactor,2) || '1.00' }})</span>
               </td>
               <td class="ant-table-cell text-right" rowspan="8" v-if="index < 1">{{ toFixed(money, fixed) }}</td>
-              <td class="ant-table-cell text-right">{{ valueFormat(toFixed(task(index, "discount", 0) * 100, 0), "%") }}</td>
+              <td class="ant-table-cell text-right">{{ valueFormat(toFixed(task(index, "discount", 0) * 100, 0), "%") }}
+              </td>
               <td class="ant-table-cell text-right">{{ toFixed(task(index, "subTotal"), fixed) }}</td>
             </tr>
             <tr>
               <td class="ant-table-cell">{{ i18n.project.label.amount }}</td>
-              <td class="ant-table-cell text-right" :colspan="mtShow?6:5">{{ amount(list) }}</td>
+              <td class="ant-table-cell text-right" :colspan="mtShow ? 6 : 5">{{ amount(list) }}</td>
             </tr>
           </tbody>
         </table>

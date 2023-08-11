@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.3.9-6",
+  "version": "0.3.9-7",
   "type": "module",
   "license": "MIT",
   "main": "./dist/components.js",
@@ -35,7 +35,7 @@
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.15.11",
     "@ue/form": "^0.1.8",
-    "@ue/i18n": "^0.1.69",
+    "@ue/i18n": "^0.1.7",
     "@ue/icon": "^0.1.8",
     "@ue/message": "^0.0.6",
     "@ue/modal": "^0.2.3",
