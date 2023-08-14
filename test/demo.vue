@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { MemoqExpress, ImportMemoqExpress, FormFile } from "../src/index";
+import { MemoqExpress, ImportMemoqExpress, FormFile, FormLanguagePairs } from "../src/index";
 import { Button, Space } from "ant-design-vue";
 import * as modal from "@ue/modal";
 import { MemoqItemData, ToolProjectData } from "../src/components/memoq/type";
@@ -26,14 +26,14 @@ onMounted(function () {
   //   }
   // });
 
-  modal.form({
-    key: "fileIds",
-    component: FormFile,
-    meta: {
-      all: true,
-      multiple: true
-    },
-  })
+  // modal.form({
+  //   key: "fileIds",
+  //   component: FormFile,
+  //   meta: {
+  //     all: true,
+  //     multiple: true
+  //   },
+  // })
 });
 
 
@@ -63,6 +63,36 @@ const requestApi = function () {
     deleteApi: async (data: MemoqItemData) => new Promise<boolean>(function(resolve){resolve(false)})
   }
 }
+
+const languagesMeta = {
+  border: true,
+  list: [
+    {
+      source: {
+        id: 1,
+        pic: 1,
+        name: "A"
+      },
+      target: {
+        id: 2,
+        pic: 2,
+        name: "B"
+      }
+    },
+    {
+      source: {
+        id: 3,
+        pic: 3,
+        name: "C"
+      },
+      target: {
+        id: 4,
+        pic: 4,
+        name: "D"
+      }
+    }
+  ]
+};
 </script> 
 <template>
   <div>
@@ -72,13 +102,17 @@ const requestApi = function () {
     <!-- <div class="header">
       <Header title="ECI Driver" link="/"></Header>
     </div> -->
-    <div class="p-6">
+    <!-- <div class="p-6">
         <Space>
           <Button type="primary" @click="importProject">Import</Button>
           <Button>Refresh</Button>
         </Space>
         <MemoqExpress ref="memoqExpress" @create="importProject()" :requestApi="requestApi()" class="mt-6"></MemoqExpress>
-      </div>
+      </div> -->
+
+    <div>
+      <FormLanguagePairs :value="['1.2', '3.4']" :meta="languagesMeta"></FormLanguagePairs>
+    </div>
   </div>
 </template>
 

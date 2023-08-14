@@ -6,7 +6,7 @@
 
 import * as _ from "lodash-es";
 import i18n from "../../../utils/i18n";
-import { computed, PropType, ref } from "vue";
+import { computed, PropType, ref, onMounted } from "vue";
 import { CheckboxGroup, Checkbox } from "ant-design-vue";
 import { LanguagePairs } from "../../language";
 
@@ -72,6 +72,7 @@ const onCheckAllChange: any = function() {
   return false;
 };
 
+
 const text = computed<Array<string | number>>({
   get: () => _.concat(props.value),
   set: (value: Array<string | number>) => {
@@ -95,6 +96,20 @@ const allText = computed<string>(function() {
   }
   return i18n.project.label.allLanguages;
 });
+
+onMounted(function() {
+  if (checkboxList.value.length === props.value.length) {
+    checkAll.value = true;
+    indeterminate.value = false;
+  } else if (props.value.length > 0){
+    indeterminate.value = true;
+    checkAll.value = false;
+  } else {
+    indeterminate.value = false;
+    checkAll.value = false;
+  }
+});
+
 </script>
 
 <template>
