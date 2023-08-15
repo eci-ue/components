@@ -9,6 +9,7 @@ import { Form, FormItem, Tag, Slider } from "ant-design-vue";
 import { useValidate } from "@ue/form";
 import i18n from "../../utils/i18n";
 import { useState, rule as rules } from "@ue/utils";
+import * as message from "@ue/message";
 
 import type { UploadFile, FileData } from "@ue/upload";
 
@@ -45,6 +46,10 @@ const { formRef, validate } = useValidate();
 const onSubmit = async function () {
   const status = await validate();
   if (status) {
+    if (submitParams.rate != 0 && _.size(submitParams.attachment) == 0){
+      message.error(i18n.operate.placeholder.attachment);
+      return false;
+    }
     submitParams.taskId = props.taskId
     const status = await api.task.interruptSubmit<SubmitType>(submitParams);
     if (status) {
@@ -74,9 +79,7 @@ defineExpose({ submit: onSubmit });
             <span class="ml-2">{{ submitParams.rate }}%</span>
           </div>
         </FormItem>
-        <FormItem v-if="!state.isUse" :label="i18n.operate.label.attachment" name="attachment"
-          :rules="rules.array(i18n.operate.placeholder.attachment)">
-
+        <FormItem v-if="!state.isUse" :label="i18n.operate.label.attachment">
           <UploadOSS class="mb-2" :success="onUpload">
             <SkinView.Auto value="Upload"></SkinView.Auto>
           </UploadOSS>
