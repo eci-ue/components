@@ -6,7 +6,7 @@
 
 import _ from "lodash-es";
 import { api } from "../../../api";
-import { reactive, toRaw, computed } from "vue";
+import { reactive, toRaw, computed,ref } from "vue";
 import { UploadLqr } from "./type";
 import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
@@ -54,6 +54,9 @@ const LevelList = computed(function () {
   ];
 });
 
+//如果上传的LQR报告存在分数或等级，页面展示的分数和等级就不可编辑
+const disabledEdit = ref(false)
+
 //计算 memoq penalty point 对应级别接口
 const onCalculate = async function () {
   const level = await api.project.culMemoqPoint(props.fileId, formState.point);
@@ -73,6 +76,7 @@ const onUpload = async function (file: FileData) {
   const data: UploadFile = file.value;
   formState.fileName = file.name() || "";
   formState.reportPath = data?.url || "";
+  disabledEdit.value = false
   if (data?.url) {
     const LQRPerformance = await api.project.getLQRPerformance(data.url);
     const level = _.get(LQRPerformance, 'level')
@@ -85,7 +89,9 @@ const onUpload = async function (file: FileData) {
       formState.point = Number(point)
       onCalculate()
     }
-
+    if(point || level){
+      disabledEdit.value = true
+    }
 
   }
 };
@@ -127,11 +133,11 @@ defineExpose({ submit: onSubmit });
             v-model:value.trim="formState.point" 
             :max="9999999"
               :placeholder="i18n.lqr.placeholder.memoq" 
-              :disabled="disabled" 
+              :disabled="disabled || disabledEdit" 
               @pressEnter="onCalculate"
               @change="changePoint" />
           </div>
-          <Button class="ml-4" type="primary" :disabled="disabled || !formState.point" @click="onCalculate">{{ i18n.lqr.title.calculate }}</Button>
+          <Button class="ml-4" type="primary" :disabled="disabled || !formState.point || disabledEdit" @click="onCalculate">{{ i18n.lqr.title.calculate }}</Button>
         </div>
       </FormItem>
 
@@ -141,7 +147,7 @@ defineExpose({ submit: onSubmit });
             <template v-if="item.value === formState.level">
               <RadioButton :value="item.value">{{ item.name }}</RadioButton>
             </template>
-            <template v-else-if="disabled">
+            <template v-else-if="disabled || disabledEdit">
               <RadioButton :value="item.value" :disabled="true">{{ item.name }}</RadioButton>
             </template>
             <template v-else>
