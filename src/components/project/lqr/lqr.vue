@@ -21,7 +21,7 @@ const props = defineProps({
 
 const onClick = async function() {
   const list = lazyload(() => import("./list.vue"));
-  confirm(list, { width: 600, title: "LQR" }, { id: props.id });
+  confirm(list, { width: 700, title: "LQR" }, { id: props.id });
 }
 
 const isMultiple = function(value: string | number): boolean {

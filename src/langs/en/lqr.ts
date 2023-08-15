@@ -5,6 +5,7 @@ export default {
     task: "Task Words",
     modify: "Modify",
     words: "Paid Words",
+    adjustWorkload: "Adjust Workload",
     lqrFile: "LQR File",
     lqrLevel: "Level {level}",
     lqrResult: "LQR Result: {level} | LQR Result: Level {level}",

@@ -13,11 +13,20 @@ export const headers: ColumnsType<object> = [
   { title: i18n.lqr.title.job, dataIndex: "resourceName", key: "name" },
   { title: i18n.lqr.title.task, dataIndex: "words", key: "words", align: "right" },
   { title: i18n.lqr.title.modify, dataIndex: "modify", key: "modify", align: "right" },
+  { title: i18n.lqr.title.adjustWorkload, dataIndex: "adjustWorkload", key: "adjustWorkload", align: "right" },
   { title: i18n.lqr.title.words, dataIndex: "paidWords", key: "words", align: "right" }
 ];
 
-export const list = function(results: object[]) {
-  return _.map(results, function(item: object, index: number) {
+const showNumber = function (words: number, paidWords: number): string | undefined {
+  const value = Number((words - paidWords).toFixed(0))
+  if (value > 0) {
+    return `+${value}`
+  }
+  return String(value);
+}
+
+export const list = function (results: object[]) {
+  return _.map(results, function (item: object, index: number) {
     return {
       index: index,
       level: _.toInteger(safeGet<number>(item, "level")),
@@ -28,6 +37,7 @@ export const list = function(results: object[]) {
           resourceName: "T" + safeGet<string>(item, "tresourceName"),
           words: safeGet<number>(item, "twords"),
           modify: _.toNumber(safeGet<number>(item, "tadjustPercent")),
+          adjustWorkload: showNumber((safeGet<number>(item, "twords") || 0), (safeGet<number>(item, "tpaidWords") || 0)),
           paidWords: safeGet<number>(item, "tpaidWords"),
         },
         // E
@@ -35,6 +45,7 @@ export const list = function(results: object[]) {
           resourceName: "E" + safeGet<string>(item, "eresourceName"),
           words: safeGet<number>(item, "ewords"),
           modify: _.toNumber(safeGet<number>(item, "eadjustPercent")),
+          adjustWorkload: showNumber((safeGet<number>(item, "ewords") || 0), (safeGet<number>(item, "epaidWords") || 0)),
           paidWords: safeGet<number>(item, "epaidWords"),
         }
       ]
@@ -42,19 +53,19 @@ export const list = function(results: object[]) {
   })
 };
 
-const toValue = function(value?: string | number): string | undefined {
+const toValue = function (value?: string | number): string | undefined {
   if (value || value === 0) {
     return String(value);
   }
 }
 
-export const partnerItems = function(data: object = {}, disabled: boolean = false): FormOptionValue {
+export const partnerItems = function (data: object = {}, disabled: boolean = false): FormOptionValue {
   return [
     {
       from: false,
       component: (<div>
-        <p>{ i18n.lqr.form.description1 }</p>
-        <p>{ i18n.lqr.form.description2 }</p>
+        <p>{i18n.lqr.form.description1}</p>
+        <p>{i18n.lqr.form.description2}</p>
       </div>)
     },
     {
@@ -66,7 +77,7 @@ export const partnerItems = function(data: object = {}, disabled: boolean = fals
           lable: i18n.lqr.form.case1,
           component: FormRadio,
           value: toValue(safeGet<string>(data, "overallQuality")),
-          rules: disabled ? [] : rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
+          rules: disabled ? [] : rules.text(i18n.template(i18n.common.placeholder.select, { label: "" })),
           meta: {
             skin: FormRadioSkin.normal,
             list: [
@@ -84,7 +95,7 @@ export const partnerItems = function(data: object = {}, disabled: boolean = fals
           lable: i18n.lqr.form.case2,
           component: FormRadio,
           value: toValue(safeGet<string>(data, "itemQuality")),
-          rules: disabled ? [] : rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
+          rules: disabled ? [] : rules.text(i18n.template(i18n.common.placeholder.select, { label: "" })),
           meta: {
             skin: FormRadioSkin.normal,
             list: [
@@ -102,7 +113,7 @@ export const partnerItems = function(data: object = {}, disabled: boolean = fals
           lable: i18n.lqr.form.case3,
           component: FormRadio,
           value: toValue(safeGet<string>(data, "rate")),
-          rules: disabled ? [] : rules.text(i18n.template(i18n.common.placeholder.select, {label: ""})),
+          rules: disabled ? [] : rules.text(i18n.template(i18n.common.placeholder.select, { label: "" })),
           meta: {
             skin: FormRadioSkin.normal,
             list: [
@@ -127,8 +138,8 @@ export const partnerItems = function(data: object = {}, disabled: boolean = fals
           key: "LQRFileUrl",
           disabled,
           lable: (<span>
-            <span>{ i18n.lqr.title.lqrFile }</span>
-            <a class="ml-2" target="_blank" href="/assets/project/lqr_template.xlsx" download="lqr_template.xlsx">{ i18n.lqr.form.download }</a>
+            <span>{i18n.lqr.title.lqrFile}</span>
+            <a class="ml-2" target="_blank" href="/assets/project/lqr_template.xlsx" download="lqr_template.xlsx">{i18n.lqr.form.download}</a>
           </span>),
           component: FormUpload,
           rules: disabled ? [] : rules.text(i18n.lqr.form.upload),
@@ -136,7 +147,7 @@ export const partnerItems = function(data: object = {}, disabled: boolean = fals
           meta: {
             preview: true,
             placeholder: i18n.lqr.form.upload,
-            transform: function(data: UploadFile): string | undefined {
+            transform: function (data: UploadFile): string | undefined {
               if (data && data.url) {
                 return data.url;
               }

@@ -5,6 +5,7 @@ export default {
     task: "任务字数",
     modify: "修改",
     words: "付费字数",
+    adjustWorkload: "调整字数",
     lqrFile: "LQR 文件",
     lqrLevel: "{{ level }} 级",
     lqrResult: "LQR 结果：{{ level }} | LQR 结果：{{ level }} 级",
