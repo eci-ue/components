@@ -46,7 +46,7 @@ const { formRef, validate } = useValidate();
 const onSubmit = async function () {
   const status = await validate();
   if (status) {
-    if (submitParams.rate != 0 && _.size(submitParams.attachment) == 0){
+    if (!state.value.isUse && submitParams.rate != 0 && _.size(submitParams.attachment) == 0){
       message.error(i18n.operate.placeholder.attachment);
       return false;
     }
