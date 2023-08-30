@@ -25,7 +25,7 @@ defineProps({
     <Space>
       <img v-if="portrait" class="block w-8 h-8 rounded" :src="portrait" alt="avatar"/>
       <Icon v-else class="text-xl flex" type="user-outlined"/>
-      <span v-if="nickName" class="whitespace-nowrap">{{ nickName }}</span>
+      <span v-if="nickName" class="whitespace-nowrap hidden xl:inline-block">{{ nickName }}</span>
     </Space>
   </div>
 </template>
