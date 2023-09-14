@@ -18,7 +18,7 @@ export const headers: ColumnsType<object> = [
 ];
 
 const showNumber = function (words: number, paidWords: number): string | undefined {
-  const value = Number((words - paidWords).toFixed(0))
+  const value = Number((paidWords - words).toFixed(0))
   if (value > 0) {
     return `+${value}`
   }
