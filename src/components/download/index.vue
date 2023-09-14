@@ -72,9 +72,9 @@ const env = computed<Env>(function() {
 
 const iframeSrc = computed<string>(function() {
   const r = Math.random();
-  const name = _.toLower(env.value);
-  // return `/export/${env.value}.html?_r=${r}`;
-  return `https://static.eciol.com/html/export/${name}.html?r=${r}`;
+  return `/export/${env.value}.html?_r=${r}`;
+  // const name = _.toLower(env.value);
+  // return `https://static.eciol.com/html/export/${name}.html?r=${r}`;
 });
 
 // 触发文件下载
