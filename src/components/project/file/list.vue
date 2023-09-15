@@ -61,11 +61,6 @@ const props = defineProps({
     type: [String, Number],
     required: false,
   },
-  // 是否展示，创建LQR链接
-  showLqr: {
-    type: Boolean,
-    default: () => false
-  },
   /** 
    * 是否为外部议员
    * @description 当 partner 为 true 时 pm & innerOuterType 两字段失效
@@ -146,7 +141,7 @@ const onReload = function() {
       :data-source="fileList(list)">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'lqr'">
-          <template v-if = "showLqr">
+          <template v-if = "record.showLqr">
             <LqrLink :data="record" :status="status" :pm="pm" :mode="mode" :id="id" :before="before" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqrLink>
           </template>
           <template v-else> -- </template>
