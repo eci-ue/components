@@ -7,7 +7,7 @@
 import * as _ from "lodash-es";
 import { Icon } from "@ue/icon";
 // import UrlPattern from "url-pattern";
-import { DownloadType, Env } from "./type";
+import { Domain, DownloadType, Env } from "./type";
 import { PropType, computed, ref } from "vue";
 import { download, ossFileDownloadLink, downloadName } from "./util";
 import type { HookFunction } from "@ue/utils";
@@ -84,8 +84,9 @@ const env = computed<Env>(function() {
 });
 
 const iframeSrc = computed<string>(function() {
-  const name = _.toLower(env.value);
-  return `/export/download.html?env=${name}`;
+  // 如果字符开头为 . 则删除
+  const value = String(Domain[env.value]).replace(/^\./i, "");
+  return `/export/download.html?env=${value}`;
   // return `https://static.eciol.com/html/export/${name}.html`;
 });
 
