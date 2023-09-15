@@ -6,7 +6,7 @@
 
 import * as _ from "lodash-es";
 import { Icon } from "@ue/icon";
-import UrlPattern from "url-pattern";
+// import UrlPattern from "url-pattern";
 import { DownloadType, Env } from "./type";
 import { PropType, computed, ref } from "vue";
 import { download, ossFileDownloadLink, downloadName } from "./util";
@@ -53,28 +53,40 @@ const props = defineProps({
 const iframe = ref<HTMLIFrameElement>();
 
 const env = computed<Env>(function() {
-  const pattern = new UrlPattern('(http(s)\\://)(:subdomain.):domain.*(\\::port)(/*)');
-  const location = pattern.match(window.location.origin);
-  if (location.domain === "eciol-dev") {
+  // const pattern = new UrlPattern('(http(s)\\://)(:subdomain.):domain.*(\\::port)(/*)');
+  // const location = pattern.match(window.location.origin);
+  // if (location.domain === "eciol-dev") {
+  //   return Env.dev;
+  // }
+  // if (location.domain === "eciol-test") {
+  //   return Env.test;
+  // }
+  // if (location.domain === "ecinnovations") {
+  //   return Env.ecinnovations;
+  // }
+  // if (location.domain === "ectranslate") {
+  //   return Env.ectranslate;
+  // }
+  const url = window.location.origin;
+  if (_.includes(url, "eciol-dev")) {
     return Env.dev;
   }
-  if (location.domain === "eciol-test") {
+  if (_.includes(url, "eciol-dev")) {
     return Env.test;
   }
-  if (location.domain === "ecinnovations") {
+  if (_.includes(url, "ecinnovations")) {
     return Env.ecinnovations;
   }
-  if (location.domain === "ectranslate") {
+  if (_.includes(url, "ectranslate")) {
     return Env.ectranslate;
   }
   return Env.prod;
 });
 
 const iframeSrc = computed<string>(function() {
-  const r = Math.random();
-  return `/export/${env.value}.html?_r=${r}`;
-  // const name = _.toLower(env.value);
-  // return `https://static.eciol.com/html/export/${name}.html?r=${r}`;
+  const name = _.toLower(env.value);
+  return `/export/download.html?env=${name}`;
+  // return `https://static.eciol.com/html/export/${name}.html`;
 });
 
 // 触发文件下载

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta content="yes" name="apple-mobile-web-app-capable"/>
+  <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"/>
+  <link rel="icon" href="https://static.eciol.com/image/logo/favicon.png"/>
+  <link rel="shortcut icon" href="https://static.eciol.com/image/logo/favicon.png"/>
+  <title>download</title>
+  <!-- <script>document.domain = "eciol-dev.com";</script> -->
+  <script>
+    (function(){
+      function parseQueryString(queryString) {
+        var params = {};
+        queryString = queryString.substring(1);
+        var pairs = queryString.split('&');
+        for (var i = 0; i < pairs.length; i++) {
+          var pair = pairs[i].split('=');
+          var key = decodeURIComponent(pair[0]);
+          var value = decodeURIComponent(pair[1]);
+          params[key] = value;
+        }
+        return params;
+      }
+      function setDomain() {
+        var queryString = window.location.search;
+        var queryParams = parseQueryString(queryString);
+        var env = queryParams["env"];
+        if (env) {
+          document.domain = env;
+        } else {
+          document.domain = window.location.host;
+        }
+      }
+      if (/^http/i.test(window.location.origin)) {
+        setDomain();
+      }
+    })();
+  </script>
+  <script src="https://static.eciol.com/libs/js/jquery.js"></script>
+  <script src="https://static.eciol.com/libs/js/jquery.signalR-2.2.1.min.js"></script>
+  <script src="https://static.eciol.com/libs/js/eci.communication.channel.js"></script>
+  <script src="https://static.eciol.com/libs/js/eci.communication.websocket.js"></script>
+  <script src="https://static.eciol.com/libs/js/eci.control.downloadcontrol2.js?v=210728"></script>
+  <script src="https://static.eciol.com/libs/js/eci.control.uploadcontrol.js"></script>
+  <script src="https://static.eciol.com/libs/js/eci.io.file.js"></script>
+  <script src="https://static.eciol.com/libs/js/eci-file-hub.js"></script>
+  <link href="https://static.eciol.com/libs/css/signalr_upload.css" rel="stylesheet"/>
+</head>
+<body>
+  <span></span>
+</body>
+</html>
