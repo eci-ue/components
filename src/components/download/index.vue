@@ -84,6 +84,11 @@ const env = computed<Env>(function() {
 });
 
 const iframeSrc = computed<string>(function() {
+  /**
+   * 跨域需要回退版本时回退到 a456f3fc4b8cd2ecab1bc1df990bde4f8d524305 节点
+   * public \ export 下有各个环境的 html 文件
+   */
+  
   // 如果字符开头为 . 则删除
   const value = String(Domain[env.value]).replace(/^\./i, "");
   return `/export/download.html?env=${value}`;
