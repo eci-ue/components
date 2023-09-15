@@ -131,7 +131,7 @@ const exportFIle = computed<string>(() => {
 </script>
 <template>
   <div class="inline-block">
-    <Dropdown :placement="placement" v-if="menuItems.length > 1">
+    <Dropdown :disabled="disabled" :placement="placement" v-if="menuItems.length > 1">
       <Button type="primary" @click.prevent :disabled="disabled">{{ i18n.common.label.export }}</Button>
       <template #overlay>
         <Menu>
