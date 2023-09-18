@@ -139,7 +139,7 @@ export const partnerItems = function (data: object = {}, disabled: boolean = fal
           disabled,
           lable: (<span>
             <span>{i18n.lqr.title.lqrFile}</span>
-            <a class="ml-2" target="_blank" href="/assets/project/lqr_template.xlsx" download="lqr_template.xlsx">{i18n.lqr.form.download}</a>
+            <a class="ml-2" target="_blank" href="https://static.eciol.com/template/prod/lqr_template.xlsx" download="lqr_template.xlsx">{i18n.lqr.form.download}</a>
           </span>),
           component: FormUpload,
           rules: disabled ? [] : rules.text(i18n.lqr.form.upload),
