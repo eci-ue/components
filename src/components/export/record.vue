@@ -53,7 +53,7 @@ const props: Props = defineProps({
 
 // 获取下载记录列表
 const getExportFileList = function(params: UsePaginationData) {
-  if(props.mode === WorkMode.Memoq) {
+  if(props.mode === WorkMode.Memoq || props.mode === WorkMode.MemoqExpress) {
     return api.project.getExportMomoqFileList<Data>(props.id, params.current, params.pageSize);
   }
   if (props.mode === WorkMode.Transdoc && props.pm) {
