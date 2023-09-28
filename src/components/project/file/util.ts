@@ -15,9 +15,9 @@ import { h as createElement } from "vue";
 import type { HookFunction } from "@ue/utils";
 import type { TaskFileItem, TaskFileStage } from "./type";
 
-const wordRender = function(result: object, rate: boolean, props: any, subType:string) {
-  const listRecord = safeGet<TaskFileStage[]>(result, ["record", "taskBilingualFileStageRspList"])
-  const value = _.find(listRecord,["subType", subType])
+const wordRender = function(result: object, rate: boolean, props: any) {
+  const key = safeGet<string>(result, "column.dataIndex");
+  const value = key ? safeGet<TaskFileStage>(result, ["record", key]) : undefined;
   return createElement(Words, {
     rate,
     data: value,
@@ -42,7 +42,6 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
   const list: object[] = [...prev];
   let showLqr: boolean = false;
 
-  let headList: object[] = [];
   for (const data of fileList) {
     const temp: object[] = [];
     _.forEach<TaskFileStage>(data.taskBilingualFileStageRspList || [], function(item: TaskFileStage, index: number) {
@@ -58,7 +57,7 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
         dataIndex: `taskBilingualFileStageRspList[${index}]`,
         className: "word-content",
         customRender: function(result: object) {
-          return wordRender(result, false, props, subType);
+          return wordRender(result, false, props);
         }
       },
       {
@@ -68,17 +67,14 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
         width: "200px",
         dataIndex: `taskBilingualFileStageRspList[${index}]`,
         customRender: function(result: object) {
-          return wordRender(result, true, props, subType);
+          return wordRender(result, true, props);
         }
       });
     });
-    if (_.size(temp) > _.size(headList)){
-      headList = temp
-    }
+    _.forEach<object>(temp, function(item: object, index: number) {
+      list[index + prev.length] = item;
+    });
   }
-  _.forEach<object>(headList, function(item: object, index: number) {
-    list[index + prev.length] = item;
-  });
   if (showLqr) {
     return [...list, ...next];
   }
