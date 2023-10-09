@@ -5,7 +5,7 @@
     "declaration": true,
     "composite": true,
     "useDefineForClassFields": true,
-    "module": "ES2015",
+    "module": "ESNext",
     "moduleResolution": "Node",
     "strict": true,
     "jsx": "preserve",
@@ -20,7 +20,13 @@
       "src/*": ["./src/*"],
       "test/*": ["./test/*"],
       "types/*": ["./types/*"]
-    }
+    },
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
   "include": [
     "src/**/*.ts", 

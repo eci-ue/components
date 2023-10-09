@@ -133,13 +133,16 @@ const onSelectDriveFile = async function () {
 
 // 直接上传文件
 const onUpload = async function (fileData: FileData) {
-  const data: UploadFile = fileData.value;
+  // const data: UploadFile = fileData.value;
 
   const file = {
-    fileName: fileData.name(),
-    filePath: data.url,
-    fileSize: data.file?.size,
-    fileExt: _.last(data.name.split(".")),
+    fileName: fileData.name(),              // 文件名称
+    // filePath: data.url,
+    // fileSize: data.file?.size,
+    // fileExt: _.last(data.name.split(".")),
+    filePath: fileData.url(),               // 文件路径
+    fileSize: fileData.size(),              // 文件大小
+    fileExt: fileData.suffix(),             // 文件后缀
   };
 
   let status: boolean = false;
@@ -256,14 +259,29 @@ const disabledDel = computed(() => {
         <Button :disabled="selectedKeys.length < 1" @click="onChangePairs">{{ i18n.common.label.languagePairs }}</Button>
       </template>
 
-      <UploadOSS 
-        v-if="!disabled && operateBtn.upload" 
-        :accept="accept" 
-        :disabled="disabled" 
-        :multiple="true"
-        :success="onUpload">
-        <span class="ant-btn ant-btn-primary">{{ i18n.common.label.fileUpload }}</span>
-      </UploadOSS>
+      <template v-if="task">
+        <UploadOSS 
+          v-if="!disabled && operateBtn.upload" 
+          :accept="accept" 
+          :disabled="disabled" 
+          :multiple="true"
+          :success="onUpload">
+          <span class="ant-btn ant-btn-primary">{{ i18n.common.label.fileUpload }}</span>
+        </UploadOSS>
+      </template>
+      <template v-else>
+        <!-- 如果是项目使用该功能，则需要传项目ID -->
+        <UploadOSS 
+          v-if="!disabled && operateBtn.upload" 
+          :project-Id="id" 
+          :accept="accept" 
+          :disabled="disabled" 
+          :multiple="true"
+          :success="onUpload">
+          <span class="ant-btn ant-btn-primary">{{ i18n.common.label.fileUpload }}</span>
+        </UploadOSS>
+      </template>
+      
 
       <span v-if="operateBtn.downTarget">
         <ExportDownload 
