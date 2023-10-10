@@ -44,7 +44,7 @@
     "@ue/role": "^0.1.1-1",
     "@ue/style": "^0.1.4",
     "@ue/upload": "^0.2.4",
-    "@ue/utils": "^0.2.7",
+    "@ue/utils": "^0.2.9",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "ant-design-vue": "^3.2.15",

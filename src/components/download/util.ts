@@ -124,9 +124,6 @@ export const downloadName = function(value: string = ""): string | undefined {
   return void 0;
 }
 
-export const ossFileDownloadLink = function(value: string) {
-  return fileDownloadUrl(value);
-}
 
 const fileDownload = function(env: Env, value: string, name: string = "") {
   const domain = DomainApi[env];

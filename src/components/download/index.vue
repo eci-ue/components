@@ -6,10 +6,11 @@
 
 import * as _ from "lodash-es";
 import { Icon } from "@ue/icon";
-// import UrlPattern from "url-pattern";
-import { Domain, DownloadType, Env } from "./type";
+import { fileDownloadUrl } from "@ue/utils";
 import { PropType, computed, ref } from "vue";
-import { download, ossFileDownloadLink, downloadName } from "./util";
+import { download, downloadName } from "./util";
+import { Domain, DownloadType, Env } from "./type";
+
 import type { HookFunction } from "@ue/utils";
 
 const props = defineProps({
@@ -114,7 +115,7 @@ const onDownload = function() {
           <iframe class="w-full h-full" ref="iframe" :src="iframeSrc"></iframe>
         </div>
       </template>
-      <a class="block" v-if="value && type === DownloadType.oss" :href="ossFileDownloadLink(value)" :download="downloadName(value)">
+      <a class="block" v-if="value && type === DownloadType.oss" :href="fileDownloadUrl(value)" :download="downloadName(value)">
         <slot>
           <Icon class="text-sm" type="download-outlined"></Icon>
         </slot>
