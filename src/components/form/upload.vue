@@ -69,6 +69,18 @@ const fileUrl = computed<string>(function() {
   return "";
 });
 
+const projectId = computed<string | number | undefined>(function() {
+  if (props.meta) {
+    return props.meta.projectId;
+  }
+});
+
+const taskId = computed<string | number | undefined>(function() {
+  if (props.meta) {
+    return props.meta.taskId;
+  }
+});
+
 const onSuccess = function(file: FileData) {
   name.value = file.name();
   const value = file.value;
@@ -83,7 +95,7 @@ const onSuccess = function(file: FileData) {
 </script>
 <template>
   <div>
-    <UploadOSS class="w-full" :success="onSuccess" :disabled="disabled">
+    <UploadOSS class="w-full" :success="onSuccess" :disabled="disabled" :project-id="projectId" :task-id="taskId">
       <SkinView.Input 
         :disabled="disabled" 
         :name="label" 

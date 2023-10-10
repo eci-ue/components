@@ -1,7 +1,7 @@
 {
   "name": "@ue/components",
   "private": false,
-  "version": "0.4.7",
+  "version": "0.4.7-1",
   "type": "module",
   "license": "MIT",
   "main": "./dist/components.js",
@@ -43,7 +43,7 @@
     "@ue/modal": "^0.2.3",
     "@ue/role": "^0.1.1-1",
     "@ue/style": "^0.1.4",
-    "@ue/upload": "^0.2.3",
+    "@ue/upload": "^0.2.4",
     "@ue/utils": "^0.2.7",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",

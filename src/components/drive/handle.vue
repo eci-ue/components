@@ -19,7 +19,7 @@ import FormFile from "../form/file.vue";
 import { ExportDownload } from "../export/index";
 import FormlanguagePairs from "../form/language/pairs.vue";
 
-import type { UploadFile, FileData } from "@ue/upload";
+import type { FileData } from "@ue/upload";
 
 const $emit = defineEmits(["update:progress", "click", "download"]);
 const props = defineProps({
@@ -260,8 +260,10 @@ const disabledDel = computed(() => {
       </template>
 
       <template v-if="task">
+        <!-- 如果时任务相关的文件，则需要传入任务ID -->
         <UploadOSS 
-          v-if="!disabled && operateBtn.upload" 
+          v-if="!disabled && operateBtn.upload"
+          :task-id="id" 
           :accept="accept" 
           :disabled="disabled" 
           :multiple="true"
@@ -270,10 +272,10 @@ const disabledDel = computed(() => {
         </UploadOSS>
       </template>
       <template v-else>
-        <!-- 如果是项目使用该功能，则需要传项目ID -->
+        <!-- 默认为项目相关的文件，则传入项目ID -->
         <UploadOSS 
           v-if="!disabled && operateBtn.upload" 
-          :project-Id="id" 
+          :project-id="id" 
           :accept="accept" 
           :disabled="disabled" 
           :multiple="true"
@@ -281,7 +283,6 @@ const disabledDel = computed(() => {
           <span class="ant-btn ant-btn-primary">{{ i18n.common.label.fileUpload }}</span>
         </UploadOSS>
       </template>
-      
 
       <span v-if="operateBtn.downTarget">
         <ExportDownload 

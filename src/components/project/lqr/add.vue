@@ -24,6 +24,7 @@ const props = defineProps({
     type: [Number, String],
     required: true,
   },
+  // 任务ID
   taskId: {
     type: [Number, String],
     default: true,
@@ -157,12 +158,8 @@ defineExpose({ submit: onSubmit });
         </RadioGroup>
       </FormItem>
 
-      <FormItem 
-      :label="i18n.lqr.title.languageReport" 
-        name="reportPath"
-        :rules="rules.text(i18n.lqr.rule.languageReport)">
-
-        <UploadOSS class="w-full" :disabled="disabled" :multiple="true" :success="onUpload">
+      <FormItem :label="i18n.lqr.title.languageReport" name="reportPath" :rules="rules.text(i18n.lqr.rule.languageReport)">
+        <UploadOSS class="w-full" :disabled="disabled" :task-id="taskId" :multiple="true" :success="onUpload">
           <SkinView.Input label="Upload" :disabled="disabled" :name="formState.fileName"></SkinView.Input>
         </UploadOSS>
         <div class="mt-2">

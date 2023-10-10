@@ -28,7 +28,7 @@ export const AddLqr = function<T>(option: Option, config: ModalFuncProps = {}, d
         return callback(Object.assign(value, params));
       };
     }
-    return form<T>(partnerItems(data, option.disabled), Object.assign({
+    return form<T>(partnerItems(data, option.disabled, option.id), Object.assign({
       width: 920,
       title: i18n.lqr.title.lqrReport
     }, config || {}));

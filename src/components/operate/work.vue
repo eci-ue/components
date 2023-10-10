@@ -4,13 +4,14 @@ import { onMounted, reactive } from "vue";
 import { api } from "../../api";
 import { UploadOSS, SkinView } from "@ue/upload";
 import { Icon } from "@ue/icon";
-import { SubmitType, InterruptRate } from "./type";
+import { SubmitType } from "./type";
 import { Form, FormItem, Tag, Slider } from "ant-design-vue";
 import { useValidate } from "@ue/form";
 import i18n from "../../utils/i18n";
-import { useState, rule as rules } from "@ue/utils";
+import { useState } from "@ue/utils";
 import * as message from "@ue/message";
 
+import type { InterruptRate } from "./type";
 import type { UploadFile, FileData } from "@ue/upload";
 
 const props = defineProps({
@@ -20,7 +21,8 @@ const props = defineProps({
   }
 });
 // 中断提交前完成比例获取
-const { state, execute } = useState.dataExecute<InterruptRate>(async function () {
+// @ts-ignore
+const { state, execute } = useState.dataExecute<InterruptRate>(function () {
   return api.task.interruptRate(props.taskId);
 });
 let submitParams = reactive(new SubmitType())
@@ -80,7 +82,7 @@ defineExpose({ submit: onSubmit });
           </div>
         </FormItem>
         <FormItem v-if="!state.isUse" :label="i18n.operate.label.attachment">
-          <UploadOSS class="mb-2" :success="onUpload">
+          <UploadOSS class="mb-2" :task-id="taskId" :success="onUpload">
             <SkinView.Auto value="Upload"></SkinView.Auto>
           </UploadOSS>
           <div class="mb-1" v-for="(file, index) in submitParams.attachment" :key="`${index}-${file.fileName}`">

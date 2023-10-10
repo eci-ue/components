@@ -59,7 +59,7 @@ const toValue = function (value?: string | number): string | undefined {
   }
 }
 
-export const partnerItems = function (data: object = {}, disabled: boolean = false): FormOptionValue {
+export const partnerItems = function (data: object = {}, disabled: boolean = false, taskId?: string | number): FormOptionValue {
   return [
     {
       from: false,
@@ -145,6 +145,7 @@ export const partnerItems = function (data: object = {}, disabled: boolean = fal
           rules: disabled ? [] : rules.text(i18n.lqr.form.upload),
           value: safeGet<string>(data, "storagePath"),
           meta: {
+            taskId,
             preview: true,
             placeholder: i18n.lqr.form.upload,
             transform: function (data: UploadFile): string | undefined {
