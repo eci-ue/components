@@ -243,7 +243,7 @@ const operateBtn = computed(() => {
 const disabledDel = computed(() => {
   if (props.task) {
     //解析的双语文件类型不允许删除和下载
-    return _.size(props.selected.filter(item => item.type != 5)) < 1
+    return _.some(props.selected, item => item.type == 5) || props.selected.length < 1
   }
   return props.selectedKeys.length < 1
 })
