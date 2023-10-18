@@ -59,7 +59,13 @@ const toValue = function (value?: string | number): string | undefined {
   }
 }
 
-export const partnerItems = function (data: object = {}, disabled: boolean = false, taskId?: string | number): FormOptionValue {
+export const partnerItems = function (data: object = {}, disabled: boolean = false,lqType: string | number, taskId?: string | number): FormOptionValue {
+  let lqTypeName = ""
+  if (lqType == 1){
+    lqTypeName = "LQR"
+  }else if (lqType == 3){
+    lqTypeName = "LQF"
+  }
   return [
     {
       from: false,
@@ -138,16 +144,18 @@ export const partnerItems = function (data: object = {}, disabled: boolean = fal
           key: "LQRFileUrl",
           disabled,
           lable: (<span>
-            <span>{i18n.lqr.title.lqrFile}</span>
-            <a class="ml-2" target="_blank" href="https://static.eciol.com/template/prod/lqr_template.xlsx" download="lqr_template.xlsx">{i18n.lqr.form.download}</a>
+            <span>{i18n.part(i18n.lqr.title.lqrFile, 1, { lqTypeName: lqTypeName })}</span>
+            <a class="ml-2" target="_blank" href="https://static.eciol.com/template/prod/lqr_template.xlsx" download={lqTypeName + `_template.xlsx`}>
+              {i18n.part(i18n.lqr.form.download, 1, { lqTypeName: lqTypeName })}
+            </a>
           </span>),
           component: FormUpload,
-          rules: disabled ? [] : rules.text(i18n.lqr.form.upload),
+          rules: disabled ? [] : rules.text( i18n.part(i18n.lqr.form.upload, 1, { lqTypeName: lqTypeName }) ),
           value: safeGet<string>(data, "storagePath"),
           meta: {
             taskId,
             preview: true,
-            placeholder: i18n.lqr.form.upload,
+            placeholder: i18n.part(i18n.lqr.form.upload, 1, { lqTypeName: lqTypeName }),
             transform: function (data: UploadFile): string | undefined {
               if (data && data.url) {
                 return data.url;

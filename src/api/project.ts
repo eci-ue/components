@@ -449,12 +449,13 @@ export default class Project {
   /**
    * 获取 Lqr 列表
    * @param taskId 任务ID
+   * @param lqType 评价类型 1：lqr 2:lqa 3:lqf
    * @returns 
    */
   @tryError(new PageResult())
   @post("/:task/lqr/list")
-  lqrList(@required taskId: string | number): Promise<PageResult> {
-    const data = { taskId };
+  lqrList(@required taskId: string | number, lqType?: string | number): Promise<PageResult> {
+    const data = { taskId, lqType };
     return { data } as any;
   }
 }

@@ -28,6 +28,11 @@ const props = defineProps({
   taskId: {
     type: [Number, String],
     default: true,
+  }, 
+  /** 类型 1：lqr 2:lqa 3:lqf */
+  lqType: {
+    type: [String, Number],
+    default: () => 1
   },
   disabled: {
     type: Boolean,
@@ -115,7 +120,8 @@ const onSubmit = function () {
   return validate(function () {
     return Object.assign(toRaw(formState), {
       fileId: props.fileId,
-      taskId: props.taskId
+      taskId: props.taskId,
+      lqType: props.lqType
     });
   });
 }
@@ -125,7 +131,7 @@ defineExpose({ submit: onSubmit });
 <template>
   <div>
     <Form ref="formRef" layout="vertical" class="my-4 w-full" :model="formState">
-      <FormItem label="" name="point">
+      <FormItem label="" name="point" v-if="lqType == 1">
         <div class="flex w-full">
           <div class="flex-1">
             <InputNumber class="w-full" 

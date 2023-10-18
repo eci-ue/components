@@ -8,6 +8,7 @@ import type { Component } from "vue";
 import type { ModalFuncProps } from "ant-design-vue";
 
 interface Option {
+  lqType: number |string;     /** 类型 1：lqr 2:lqa 3:lqf */
   disabled: boolean;     // 是否禁用
   id: string | number;   // 任务ID
   file: string | number; // 双语文件ID
@@ -20,7 +21,7 @@ interface Option {
  * @param config    弹框属性
  */
 export const AddLqr = function<T>(option: Option, config: ModalFuncProps = {}, data: object = {}) {
-  const params = { taskId: option.id, fileId: option.file };
+  const params = { taskId: option.id, fileId: option.file, lqType: option.lqType };
   if (option.partner) {
     if (config.onOk) {
       const callback = config.onOk;
@@ -28,7 +29,7 @@ export const AddLqr = function<T>(option: Option, config: ModalFuncProps = {}, d
         return callback(Object.assign(value, params));
       };
     }
-    return form<T>(partnerItems(data, option.disabled, option.id), Object.assign({
+    return form<T>(partnerItems(data, option.disabled, option.lqType, option.id), Object.assign({
       width: 920,
       title: i18n.lqr.title.lqrReport
     }, config || {}));
@@ -37,7 +38,7 @@ export const AddLqr = function<T>(option: Option, config: ModalFuncProps = {}, d
     { 
       width: 380, 
       okText: i18n.common.button.save,
-      title: i18n.lqr.title.lqrUpload
+      title: i18n.part(i18n.lqr.title.lqrUpload, 1, { lqTypeName: option.lqType == 1? "LQR" : "LQF" })
     }, config || {}
   ), Object.assign(params, { value: data, disabled: option.disabled }));
 }

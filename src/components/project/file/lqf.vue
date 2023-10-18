@@ -35,14 +35,14 @@ const props = defineProps({
   mode: {
     required: true,
     type: String as PropType<WorkMode>,
-  },
+  },  
   /** 类型 1：lqr 2:lqa 3:lqf */
   lqType: {
     type: [String, Number],
     default: () => 1
   },
-  // lqr 枚举
-  lqrOper: {
+  // lqf 枚举
+  lqfOper: {
     type: [String, Number],
     required: false,
   },
@@ -70,8 +70,8 @@ const props = defineProps({
 });
 
 
-// lqr 链接处理
-const lqrLink = function(value: string): string | undefined {
+// lqf 链接处理
+const lqfLink = function(value: string): string | undefined {
   if (value && /^http/.test(value)) {
     return value;
   }
@@ -83,12 +83,12 @@ const lqrLink = function(value: string): string | undefined {
   }
 };
 
-// 查看 Lqr
-const onCheckLqr = function(e: Event, value: string) {
+// 查看 Lqf
+const onCheckLqf = function(e: Event, value: string) {
   const run =async () => {
-    const status = await before(props.before ,"lqr");
+    const status = await before(props.before ,"lqf");
     if (status) {
-      const url = lqrLink(value);
+      const url = lqfLink(value);
       if (url) {
         window.open(url);
       }
@@ -97,13 +97,13 @@ const onCheckLqr = function(e: Event, value: string) {
   if (props.mode === WorkMode.Transdoc) {
     run();
   } else {
-    onAddLqr(e, props.data);
+    onAddLqf(e, props.data);
   }
 }
 
-// 添加 Lqr
-const onAddLqr = async function(e: Event, data: TaskFileItem) {
-  const status = await before(props.before, "addLqr");
+// 添加 Lqf
+const onAddLqf = async function(e: Event, data: TaskFileItem) {
+  const status = await before(props.before, "addLqf");
   if (!status) {
     return false;
   }
@@ -128,29 +128,29 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
     }
     return status;
   };
-  AddLqr(option, { onOk: callback }, data.lqrData || {});
+  AddLqr(option, { onOk: callback }, data.lqfData || {});
 };
 
 </script>
 
 <template>
   <div v-if="data">
-    <template v-if="lqrOper && String(lqrOper) === '3'">
+    <template v-if="lqfOper && String(lqfOper) === '3'">
       <!-- 可上传 -->
-      <!-- 如果有 lqr 链接 -->
-      <Button v-if="data.lqrVisitPath" type="link" @click="onCheckLqr($event, data.lqrVisitPath)">{{ data.lqrName }}</Button>
+      <!-- 如果有 lqf 链接 -->
+      <Button v-if="data.lqfVisitPath" type="link" @click="onCheckLqf($event, data.lqfVisitPath)">{{ data.lqfName }}</Button>
       <!-- 无链接时展示添加按钮 -->
-      <Button v-else type="link" class="text-sm" @click="onAddLqr($event, data)">
+      <Button v-else type="link" class="text-sm" @click="onAddLqf($event, data)">
         <span class="flex items-center">
           <Icon class="flex mr-1" type="icon-a-add"></Icon>
-          <span>{{ i18n.common.button.addLqr }}</span>
-          <span class="ml-0.5">{{ data.lqrIndex }}</span>
+          <span>{{ i18n.common.button.addLqf }}</span>
+          <span class="ml-0.5">{{ data.lqfIndex }}</span>
         </span>
       </Button>
     </template>
-    <template v-else-if="lqrOper && String(lqrOper) === '2' && data.lqrVisitPath">
-      <!-- Lqr Link -->
-      <Button type="link" @click="onCheckLqr($event, data.lqrVisitPath)">{{ data.lqrName }}</Button>
+    <template v-else-if="lqfOper && String(lqfOper) === '2' && data.lqfVisitPath">
+      <!-- Lqf Link -->
+      <Button type="link" @click="onCheckLqf($event, data.lqfVisitPath)">{{ data.lqfName }}</Button>
     </template>
     <template v-else>
       <span>--</span>

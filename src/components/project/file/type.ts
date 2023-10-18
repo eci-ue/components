@@ -19,6 +19,10 @@ export class TaskFileItem {
   lqrName: string = "";
   lqrData?: object;
   lqrVisitPath: string = "";
+  lqfIndex: number = 1;
+  lqfName: string = "";
+  lqfData?: object;
+  lqfVisitPath: string = "";
   bilingualFileId!: string | number; // 文件ID
   bilingualFileName: string = "";
   taskBilingualFileStageRspList: TaskFileStage[] = []

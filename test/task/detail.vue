@@ -4,7 +4,111 @@ import { useState } from "@ue/utils";
 
 const id = "300615021";
 const { state } = useState.data<any>(() => {
-  const data = '{"id":300615021,"taskName":"E_en-US_zh-CN_20230512-094901","mainType":"Translation","workFlowId":664228,"resourceId":863,"resourceName":"SYJY_Penny[王扬]","subType":"E","catType":0,"fileManualType":0,"innerOuterType":0,"onlineOfflineType":0,"status":2,"projectId":10094139,"projectName":"SYJY_ProjectName10094139","resourceFileNum":1,"deliveryFileNum":0,"updateTime":null,"updateUser":null,"createTime":"2023-05-12 09:49:17","createUser":"24ce45effab84203a33971b62e98c5d0","relBgfile":0,"operate":["submit","instruction"],"taskBilingualFileRspList":[{"id":300615020,"bilingualFileName":"444","bilingualFileId":10609088,"catFileId":null,"catUrl":null,"taskBilingualFileStageRspList":[{"workLoad":12121,"resourceName":"Translator0","rate":0,"subType":"T","current":false,"online":false,"status":4,"catUrl":null},{"workLoad":12121,"resourceName":"SYJY_Penny[王扬]","rate":0,"subType":"E","current":true,"online":false,"status":2,"catUrl":null}],"lqrName":"Source_Word.docx","lqrVisitPath":"drive/20230512/AHxkz8Ncjl00ZQ6Zs88BgEKssHsahI/Source_Word.docx","lqrIndex":1,"lqrData":{"id":1657195495867650049,"type":1,"fileName":"Source_Word.docx","storageType":1,"storagePath":"drive/20230512/AHxkz8Ncjl00ZQ6Zs88BgEKssHsahI/Source_Word.docx","point":3.0,"level":1,"overallQuality":null,"itemQuality":null,"rate":null,"advice":null,"updateTime":null,"updateUser":null,"createTime":"2023-05-13 01:26:10","createUser":863,"tresourceId":1167,"tresourceName":"SYJY_Geni[张莹]","eresourceName":"SYJY_Penny[王扬]","eresourceId":863,"ttaskId":300615020,"tpaidWords":18182,"twords":12121,"epaidWords":6060,"ewords":12121,"etaskId":300615021,"tadjustPercent":50.0,"eadjustPercent":-50.0}}],"workInstructionList":null,"attachments":null,"resourceIdCard":null,"workLoad":12121.00,"acceptTime":"2023-05-12 09:49:47","rejectReason":null,"deliveryTime":"2023-05-31 09:00:10","realWorkLoad":6060.00,"workLoadUnit":"11","slang":12,"tlang":7,"slangShortName":"en-US","tlangShortName":"zh-CN","commentRequest":null,"transferFrom":null,"transferTo":null,"dataFrom":1,"fee":25.28,"feeCost":45.78,"currency":28,"currencyName":null,"mtDiscount":null,"mtFactor":null,"reviewFactor100":null,"reviewFactor101":null,"lqrLevel":"1","lqrOper":2,"unitName":"Word","qualityLevel":null,"dtpToolName":null,"taskFactor":null,"taskType":null}';
+  const data = `{
+        "taskAttribute":1,
+        "id":4000087767,
+        "taskName":"P_zh-CN_en-US_20231017-015539",
+        "mainType":"Translation",
+        "workFlowId":100204049,
+        "resourceId":10002322,
+        "resourceName":"SYJY_Alyssa[郑炫玥]",
+        "subType":"P",
+        "catType":2,
+        "fileManualType":0,
+        "innerOuterType":0,
+        "onlineOfflineType":0,
+        "status":2,
+        "projectId":10064677,
+        "projectName":"CDXX_ProjectName10064677",
+        "resourceFileNum":1,
+        "deliveryFileNum":0,
+        "updateTime":null,
+        "updateUser":null,
+        "createTime":"2023-10-17 01:56:29",
+        "createUser":"987d5291d992464ab86bd757b684b101",
+        "relBgfile":0,
+        "mtShow":null,
+        "operate":[
+            "submit",
+            "instruction"
+        ],
+        "taskBilingualFileRspList":[
+            {
+                "id":4000087766,
+                "bilingualFileName":"测试",
+                "bilingualFileId":10609046,
+                "catFileId":null,
+                "catUrl":null,
+                "taskBilingualFileStageRspList":[
+                    {
+                        "workLoad":40,
+                        "resourceName":"Translator0",
+                        "rate":0,
+                        "subType":"E",
+                        "current":false,
+                        "online":false,
+                        "status":2,
+                        "catUrl":null
+                    },
+                    {
+                        "workLoad":40,
+                        "resourceName":"SYJY_Alyssa[郑炫玥]",
+                        "rate":0,
+                        "subType":"P",
+                        "current":true,
+                        "online":false,
+                        "status":2,
+                        "catUrl":null
+                    }
+                ],
+                "lqrName":null,
+                "lqrVisitPath":null,
+                "lqrIndex":1,
+                "lqrData":null,
+                "showLqr":true,
+                "lqfName":null,
+                "lqfVisitPath":null,
+                "lqfIndex":1,
+                "lqfData":null,
+                "showLqf":true
+            }
+        ],
+        "workInstructionList":null,
+        "attachments":null,
+        "resourceIdCard":null,
+        "workLoad":23,
+        "acceptTime":"2023-10-17 01:56:29",
+        "rejectReason":null,
+        "deliveryTime":"2023-10-26 01:56:18",
+        "realWorkLoad":0,
+        "workLoadUnit":"12",
+        "slang":7,
+        "tlang":12,
+        "slangShortName":"zh-CN",
+        "tlangShortName":"en-US",
+        "commentRequest":null,
+        "transferFrom":null,
+        "transferTo":null,
+        "dataFrom":1,
+        "fee":11.06,
+        "feeCost":22.37,
+        "currency":28,
+        "currencyName":"CNY",
+        "mtDiscount":null,
+        "mtFactor":null,
+        "reviewFactor100":null,
+        "reviewFactor101":null,
+        "lqrLevel":4,
+        "lqrOper":3,
+        "lqfLevel":5,
+        "lqfOper":3,
+        "unitName":"Hour",
+        "qualityLevel":null,
+        "dtpToolName":null,
+        "taskFactor":null,
+        "taskType":null,
+        "taskTypeName":null
+    }`;
   return Promise.resolve(JSON.parse(data));
 });
 
@@ -23,7 +127,9 @@ const catType = function(value: number) {
   <div class="p-4">
     <FileInformation 
       :lqr-level="state.lqrLevel" 
+      :lqf-level="state.lqfLevel" 
       :lqr-oper="state.lqrOper" 
+      :lqf-oper="state.lqfOper" 
       :list="state.taskBilingualFileRspList"
       :pm="true" 
       :partner="false" 

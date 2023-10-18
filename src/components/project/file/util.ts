@@ -38,12 +38,21 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
     dataIndex: "lqrName", 
     key: "lqr"
   }];
-  
+  const lqf = [{ 
+    title: i18n.lqr.title.lqf, 
+    dataIndex: "lqfName", 
+    key: "lqf"
+  }];
   const list: object[] = [...prev];
   let showLqr: boolean = false;
+  let showLqf: boolean = false;
 
   for (const data of fileList) {
     const temp: object[] = [];
+    // 如果P前面没有节点，则不需要上传。P节点前面有E节点才需要上传LQF
+    if(_.some(data.taskBilingualFileStageRspList, ["subType", "E"]) && _.some(data.taskBilingualFileStageRspList, ["subType", "P"])){
+      showLqf = true
+    }
     _.forEach<TaskFileStage>(data.taskBilingualFileStageRspList || [], function(item: TaskFileStage, index: number) {
       let { subType = "", current = false } = item;
       subType = _.toUpper(subType);
@@ -74,6 +83,9 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
     _.forEach<object>(temp, function(item: object, index: number) {
       list[index + prev.length] = item;
     });
+  }
+  if (showLqf) {
+    return [...list, ...next, ...lqf];
   }
   if (showLqr) {
     return [...list, ...next];

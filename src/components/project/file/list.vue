@@ -12,6 +12,7 @@ import { table } from "@ue/utils";
 
 
 import LqrLink from "./lqr.vue";
+import LqfLink from "./lqf.vue";
 import Lqr from "../lqr/lqr.vue";
 
 import { Table, Space } from "ant-design-vue";
@@ -51,6 +52,12 @@ const props = defineProps({
     required: false,
     default: () => 0
   },
+  /** 报告等级 */
+  lqfLevel: {
+    type: [Number, String],
+    required: false,
+    default: () => 0
+  },
   /** 工作模式 */
   mode: {
     required: true,
@@ -58,6 +65,11 @@ const props = defineProps({
   },
   // lqr 枚举
   lqrOper: {
+    type: [String, Number],
+    required: false,
+  },
+  // lqr 枚举
+  lqfOper: {
     type: [String, Number],
     required: false,
   },
@@ -107,6 +119,8 @@ const onReload = function() {
       <Space>
         <!-- Lqr 报告 -->
         <Lqr :id="id" :level="lqrLevel"/>
+        <!-- Lqf 报告 -->
+        <Lqr :id="id" :level="lqfLevel" :lqType="3" />
         <!-- 下载双语文件 -->
         <ExportDownload 
           placement="bottomLeft" 
@@ -143,6 +157,12 @@ const onReload = function() {
         <template v-if="column.key === 'lqr'">
           <template v-if = "record.showLqr">
             <LqrLink :data="record" :status="status" :pm="pm" :mode="mode" :id="id" :before="before" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqrLink>
+          </template>
+          <template v-else> -- </template>
+        </template>
+        <template v-else-if="column.key === 'lqf'">
+          <template v-if = "record.showLqf">
+            <LqfLink :data="record" :status="status" :pm="pm" :mode="mode" :lqType="3" :id="id" :before="before" :lqf-oper="lqfOper" :partner="partner" @add="onReload"></LqfLink>
           </template>
           <template v-else> -- </template>
         </template>

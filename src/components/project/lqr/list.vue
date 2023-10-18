@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as _ from "lodash-es";
+import { computed } from "vue";
 import { api } from "../../../api";
 import { useState } from "@ue/utils";
 import { Table, Space, Tag } from "ant-design-vue";
@@ -13,9 +14,21 @@ const props = defineProps({
     required: true,
     type: [String, Number],
   },
+  /** 类型 1：lqr 2:lqa 3:lqf */
+  lqType: {
+    type: [String, Number],
+  },
 });
 
-const { state } = useState.list(api.project.lqrList(props.id));
+const lqTypeName = computed(()=>{
+  if (props.lqType == 1){
+    return "LQR"
+  }else if (props.lqType == 3){
+    return "LQF"
+  }
+})
+
+const { state } = useState.list(api.project.lqrList(props.id, props.lqType));
 
 </script>
 
@@ -23,7 +36,7 @@ const { state } = useState.list(api.project.lqrList(props.id));
   <div>
     <div v-for="data in list(state.results)" :key="data.key" class="mb-2 last:mb-0">
       <div class="flex justify-between">
-        <span>LQR {{ data.index + 1 }}: </span>
+        <span>{{lqTypeName}} {{ data.index + 1 }}: </span>
         <div class="mx-2 flex-1">
           <template v-for="i in 7" :key="i">
             <Tag class="select-none" :color=" i <= data.level ? '#3c6cfe' : undefined">
