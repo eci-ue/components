@@ -145,7 +145,7 @@ export const partnerItems = function (data: object = {}, disabled: boolean = fal
           disabled,
           lable: (<span>
             <span>{i18n.part(i18n.lqr.title.lqrFile, 1, { lqTypeName: lqTypeName })}</span>
-            <a class="ml-2" target="_blank" href="https://static.eciol.com/template/prod/lqr_template.xlsx" download={lqTypeName + `_template.xlsx`}>
+            <a class="ml-2" target="_blank" href={`https://static.eciol.com/template/prod/` + (lqType==1?`lqr_template.xlsx`:`lqf_template.xls`)} download={lqTypeName + `_template.xlsx`}>
               {i18n.part(i18n.lqr.form.download, 1, { lqTypeName: lqTypeName })}
             </a>
           </span>),
