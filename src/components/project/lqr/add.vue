@@ -84,7 +84,7 @@ const onUpload = async function (file: FileData) {
   formState.reportPath = data?.url || "";
   disabledEdit.value = false
   if (data?.url) {
-    const LQRPerformance = await api.project.getLQRPerformance(data.url);
+    const LQRPerformance = await api.project.getLQRPerformance(data.url, props.lqType);
     const level = _.get(LQRPerformance, 'level')
     if (level) {
       formState.level = Number(level)
