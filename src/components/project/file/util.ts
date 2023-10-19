@@ -36,12 +36,14 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
   const next = [{ 
     title: i18n.lqr.title.lqr, 
     dataIndex: "lqrName", 
-    key: "lqr"
+    key: "lqr",
+    minWidth:140
   }];
   const lqf = [{ 
     title: i18n.lqr.title.lqf, 
     dataIndex: "lqfName", 
-    key: "lqf"
+    key: "lqf",
+    minWidth:140
   }];
   const list: object[] = [...prev];
   let showLqr: boolean = false;

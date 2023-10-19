@@ -3,7 +3,7 @@ import * as _ from "lodash-es";
 import { computed } from "vue";
 import { api } from "../../../api";
 import { useState } from "@ue/utils";
-import { Table, Space, Tag } from "ant-design-vue";
+import { Table, Space, Tag, Empty } from "ant-design-vue";
 import { headers, list } from "./util";
 import { Icon } from "@ue/icon";
 import i18n from "../../../utils/i18n";
@@ -34,7 +34,7 @@ const { state } = useState.list(api.project.lqrList(props.id, props.lqType));
 </script>
 
 <template>
-  <div>
+  <div v-if="_.size(state.results) > 0">
     <div v-for="data in list(state.results, lqType)" :key="data.key" class="mb-2 last:mb-0">
       <div class="flex justify-between">
         <span>{{lqTypeName}} {{ data.index + 1 }}: </span>
@@ -66,4 +66,5 @@ const { state } = useState.list(api.project.lqrList(props.id, props.lqType));
       </Table>
     </div>
   </div>
+  <Empty v-else :image="Empty.PRESENTED_IMAGE_SIMPLE"></Empty>
 </template>

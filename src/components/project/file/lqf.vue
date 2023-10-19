@@ -138,7 +138,7 @@ const onAddLqf = async function(e: Event, data: TaskFileItem) {
     <template v-if="lqfOper && String(lqfOper) === '3'">
       <!-- 可上传 -->
       <!-- 如果有 lqf 链接 -->
-      <Button v-if="data.lqfVisitPath" type="link" @click="onCheckLqf($event, data.lqfVisitPath)">{{ data.lqfName }}</Button>
+      <span v-if="data.lqfVisitPath" class="break-all max-w-40 cursor-pointer ant-btn-link" @click="onCheckLqf($event, data.lqfVisitPath)">{{ data.lqfName }}</span>
       <!-- 无链接时展示添加按钮 -->
       <Button v-else type="link" class="text-sm" @click="onAddLqf($event, data)">
         <span class="flex items-center">
@@ -150,7 +150,7 @@ const onAddLqf = async function(e: Event, data: TaskFileItem) {
     </template>
     <template v-else-if="lqfOper && String(lqfOper) === '2' && data.lqfVisitPath">
       <!-- Lqf Link -->
-      <Button type="link" @click="onCheckLqf($event, data.lqfVisitPath)">{{ data.lqfName }}</Button>
+      <span @click="onCheckLqf($event, data.lqfVisitPath)" class="break-all max-w-40 cursor-pointer ant-btn-link">{{ data.lqfName }}</span>
     </template>
     <template v-else>
       <span>--</span>

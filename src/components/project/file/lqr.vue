@@ -138,7 +138,7 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
     <template v-if="lqrOper && String(lqrOper) === '3'">
       <!-- 可上传 -->
       <!-- 如果有 lqr 链接 -->
-      <Button v-if="data.lqrVisitPath" type="link" @click="onCheckLqr($event, data.lqrVisitPath)">{{ data.lqrName }}</Button>
+      <span v-if="data.lqrVisitPath" @click="onCheckLqr($event, data.lqrVisitPath)" class="break-all max-w-40 cursor-pointer ant-btn-link">{{ data.lqrName }}</span>
       <!-- 无链接时展示添加按钮 -->
       <Button v-else type="link" class="text-sm" @click="onAddLqr($event, data)">
         <span class="flex items-center">
@@ -150,7 +150,7 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
     </template>
     <template v-else-if="lqrOper && String(lqrOper) === '2' && data.lqrVisitPath">
       <!-- Lqr Link -->
-      <Button type="link" @click="onCheckLqr($event, data.lqrVisitPath)">{{ data.lqrName }}</Button>
+      <span @click="onCheckLqr($event, data.lqrVisitPath)" class="break-all max-w-40 cursor-pointer ant-btn-link">{{ data.lqrName }}</span>
     </template>
     <template v-else>
       <span>--</span>
