@@ -34,7 +34,7 @@ const lqTypeName = computed(()=>{
 
 const onClick = async function() {
   const list = lazyload(() => import("./list.vue"));
-  confirm(list, { width: 700, title: lqTypeName.value }, { id: props.id, lqType: props.lqType });
+  confirm(list, { width: 800, title: lqTypeName.value }, { id: props.id, lqType: props.lqType });
 }
 
 const isMultiple = function(value: string | number): boolean {

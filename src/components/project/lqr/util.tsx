@@ -14,7 +14,8 @@ export const headers: ColumnsType<object> = [
   { title: i18n.lqr.title.task, dataIndex: "words", key: "words", align: "right" },
   { title: i18n.lqr.title.modify, dataIndex: "modify", key: "modify", align: "right" },
   { title: i18n.lqr.title.adjustWorkload, dataIndex: "adjustWorkload", key: "adjustWorkload", align: "right" },
-  { title: i18n.lqr.title.words, dataIndex: "paidWords", key: "words", align: "right" }
+  { title: i18n.lqr.title.words, dataIndex: "paidWords", key: "words", align: "right" },
+  { title: i18n.lqr.title.remark, dataIndex: "remark", key: "remark" }
 ];
 
 const showNumber = function (words: number, paidWords: number): string | undefined {
@@ -25,7 +26,7 @@ const showNumber = function (words: number, paidWords: number): string | undefin
   return String(value);
 }
 
-export const list = function (results: object[]) {
+export const list = function (results: object[], lqType: string | number) {
   return _.map(results, function (item: object, index: number) {
     return {
       index: index,
@@ -34,7 +35,7 @@ export const list = function (results: object[]) {
       list: [
         // T
         {
-          resourceName: "T" + safeGet<string>(item, "tresourceName"),
+          resourceName: lqType == 1 ? "T" : "E" + safeGet<string>(item, "tresourceName"),
           words: safeGet<number>(item, "twords"),
           modify: _.toNumber(safeGet<number>(item, "tadjustPercent")),
           adjustWorkload: showNumber((safeGet<number>(item, "twords") || 0), (safeGet<number>(item, "tpaidWords") || 0)),
@@ -42,7 +43,7 @@ export const list = function (results: object[]) {
         },
         // E
         {
-          resourceName: "E" + safeGet<string>(item, "eresourceName"),
+          resourceName:  lqType == 1 ? "E" : "P" + safeGet<string>(item, "eresourceName"),
           words: safeGet<number>(item, "ewords"),
           modify: _.toNumber(safeGet<number>(item, "eadjustPercent")),
           adjustWorkload: showNumber((safeGet<number>(item, "ewords") || 0), (safeGet<number>(item, "epaidWords") || 0)),

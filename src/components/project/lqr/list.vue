@@ -17,6 +17,7 @@ const props = defineProps({
   /** 类型 1：lqr 2:lqa 3:lqf */
   lqType: {
     type: [String, Number],
+    required: true,
   },
 });
 
@@ -34,7 +35,7 @@ const { state } = useState.list(api.project.lqrList(props.id, props.lqType));
 
 <template>
   <div>
-    <div v-for="data in list(state.results)" :key="data.key" class="mb-2 last:mb-0">
+    <div v-for="data in list(state.results, lqType)" :key="data.key" class="mb-2 last:mb-0">
       <div class="flex justify-between">
         <span>{{lqTypeName}} {{ data.index + 1 }}: </span>
         <div class="mx-2 flex-1">
@@ -57,6 +58,9 @@ const { state } = useState.list(api.project.lqrList(props.id, props.lqType));
               <span class="inline-block min-w-10">{{text}}%</span>
               <Icon class="text-error-color" type="caret-down-outlined"></Icon>
             </Space>
+          </template>
+          <template v-else-if="column.key === 'remark'">
+           {{text || '--'}}
           </template>
         </template>
       </Table>

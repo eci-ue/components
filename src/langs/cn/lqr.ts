@@ -7,6 +7,7 @@ export default {
     modify: "修改",
     words: "付费字数",
     adjustWorkload: "调整字数",
+    remark: "说明",
     lqrFile: "{lqTypeName} 文件",
     lqrLevel: "{{ level }} 级",
     lqrResult: "{lqTypeName} 结果：{{ level }} | {lqTypeName} 结果：{{ level }} 级",
