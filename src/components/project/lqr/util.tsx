@@ -40,6 +40,7 @@ export const list = function (results: object[], lqType: string | number) {
           modify: _.toNumber(safeGet<number>(item, "tadjustPercent")),
           adjustWorkload: showNumber((safeGet<number>(item, "twords") || 0), (safeGet<number>(item, "tpaidWords") || 0)),
           paidWords: safeGet<number>(item, "tpaidWords"),
+          remark: safeGet<string>(item, "remark")
         },
         // E
         {
@@ -48,6 +49,7 @@ export const list = function (results: object[], lqType: string | number) {
           modify: _.toNumber(safeGet<number>(item, "eadjustPercent")),
           adjustWorkload: showNumber((safeGet<number>(item, "ewords") || 0), (safeGet<number>(item, "epaidWords") || 0)),
           paidWords: safeGet<number>(item, "epaidWords"),
+          remark: safeGet<string>(item, "remark")
         }
       ]
     };
