@@ -22,6 +22,11 @@ const props = defineProps({
     required: true,
     type: [String, Number]
   },
+  /** 项目ID */
+  projectId: {
+    required: true,
+    type: [String, Number]
+  },
   /** 
    * 是否为外部议员
    * @description 当 partner 为 true 时 pm & innerOuterType 两字段失效
@@ -35,7 +40,7 @@ const props = defineProps({
   mode: {
     required: true,
     type: String as PropType<WorkMode>,
-  },  
+  },
   /** 类型 1：lqr 2:lqa 3:lqf */
   lqType: {
     type: [String, Number],
@@ -71,7 +76,7 @@ const props = defineProps({
 
 
 // lqf 链接处理
-const lqfLink = function(value: string): string | undefined {
+const lqfLink = function (value: string): string | undefined {
   if (value && /^http/.test(value)) {
     return value;
   }
@@ -84,9 +89,9 @@ const lqfLink = function(value: string): string | undefined {
 };
 
 // 查看 Lqf
-const onCheckLqf = function(e: Event, value: string) {
-  const run =async () => {
-    const status = await before(props.before ,"lqf");
+const onCheckLqf = function (e: Event, value: string) {
+  const run = async () => {
+    const status = await before(props.before, "lqf");
     if (status) {
       const url = lqfLink(value);
       if (url) {
@@ -102,7 +107,7 @@ const onCheckLqf = function(e: Event, value: string) {
 }
 
 // 添加 Lqf
-const onAddLqf = async function(e: Event, data: TaskFileItem) {
+const onAddLqf = async function (e: Event, data: TaskFileItem) {
   const status = await before(props.before, "addLqf");
   if (!status) {
     return false;
@@ -117,8 +122,8 @@ const onAddLqf = async function(e: Event, data: TaskFileItem) {
     disabled = true;
   }
 
-  const option = { disabled, id: props.id, file: data.bilingualFileId, partner: props.partner, lqType: props.lqType };
-  const callback = async function(value: object) {
+  const option = { disabled, id: props.id, projectId: props.projectId, file: data.bilingualFileId, partner: props.partner, lqType: props.lqType };
+  const callback = async function (value: object) {
     if (disabled) {
       return false;
     }
