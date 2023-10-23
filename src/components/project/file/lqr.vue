@@ -22,6 +22,11 @@ const props = defineProps({
     required: true,
     type: [String, Number]
   },
+  /** 项目ID */
+  projectId: {
+    required: true,
+    type: [String, Number]
+  },
   /** 
    * 是否为外部议员
    * @description 当 partner 为 true 时 pm & innerOuterType 两字段失效
@@ -71,7 +76,7 @@ const props = defineProps({
 
 
 // lqr 链接处理
-const lqrLink = function(value: string): string | undefined {
+const lqrLink = function (value: string): string | undefined {
   if (value && /^http/.test(value)) {
     return value;
   }
@@ -84,9 +89,9 @@ const lqrLink = function(value: string): string | undefined {
 };
 
 // 查看 Lqr
-const onCheckLqr = function(e: Event, value: string) {
-  const run =async () => {
-    const status = await before(props.before ,"lqr");
+const onCheckLqr = function (e: Event, value: string) {
+  const run = async () => {
+    const status = await before(props.before, "lqr");
     if (status) {
       const url = lqrLink(value);
       if (url) {
@@ -102,7 +107,7 @@ const onCheckLqr = function(e: Event, value: string) {
 }
 
 // 添加 Lqr
-const onAddLqr = async function(e: Event, data: TaskFileItem) {
+const onAddLqr = async function (e: Event, data: TaskFileItem) {
   const status = await before(props.before, "addLqr");
   if (!status) {
     return false;
@@ -117,8 +122,8 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
     disabled = true;
   }
 
-  const option = { disabled, id: props.id, file: data.bilingualFileId, partner: props.partner, lqType: props.lqType };
-  const callback = async function(value: object) {
+  const option = { disabled, id: props.id, projectId: props.projectId, file: data.bilingualFileId, partner: props.partner, lqType: props.lqType };
+  const callback = async function (value: object) {
     if (disabled) {
       return false;
     }
@@ -138,7 +143,8 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
     <template v-if="lqrOper && String(lqrOper) === '3'">
       <!-- 可上传 -->
       <!-- 如果有 lqr 链接 -->
-      <span v-if="data.lqrVisitPath" @click="onCheckLqr($event, data.lqrVisitPath)" class="break-all max-w-40 cursor-pointer ant-btn-link">{{ data.lqrName }}</span>
+      <span v-if="data.lqrVisitPath" @click="onCheckLqr($event, data.lqrVisitPath)"
+        class="break-all max-w-40 cursor-pointer ant-btn-link">{{ data.lqrName }}</span>
       <!-- 无链接时展示添加按钮 -->
       <Button v-else type="link" class="text-sm" @click="onAddLqr($event, data)">
         <span class="flex items-center">
@@ -150,7 +156,8 @@ const onAddLqr = async function(e: Event, data: TaskFileItem) {
     </template>
     <template v-else-if="lqrOper && String(lqrOper) === '2' && data.lqrVisitPath">
       <!-- Lqr Link -->
-      <span @click="onCheckLqr($event, data.lqrVisitPath)" class="break-all max-w-40 cursor-pointer ant-btn-link">{{ data.lqrName }}</span>
+      <span @click="onCheckLqr($event, data.lqrVisitPath)" class="break-all max-w-40 cursor-pointer ant-btn-link">{{
+        data.lqrName }}</span>
     </template>
     <template v-else>
       <span>--</span>

@@ -6,7 +6,7 @@
 
 import _ from "lodash-es";
 import { api } from "../../../api";
-import { reactive, toRaw, computed,ref } from "vue";
+import { reactive, toRaw, computed, ref } from "vue";
 import { UploadLqr } from "./type";
 import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
@@ -28,7 +28,12 @@ const props = defineProps({
   taskId: {
     type: [Number, String],
     default: true,
-  }, 
+  },
+  /** 项目ID */
+  projectId: {
+    required: true,
+    type: [String, Number]
+  },
   /** 类型 1：lqr 2:lqa 3:lqf */
   lqType: {
     type: [String, Number],
@@ -84,7 +89,7 @@ const onUpload = async function (file: FileData) {
   formState.reportPath = data?.url || "";
   disabledEdit.value = false
   if (data?.url) {
-    const LQRPerformance = await api.project.getLQRPerformance(data.url, props.lqType);
+    const LQRPerformance = await api.project.getLQRPerformance(data.url,props.projectId, props.lqType);
     const level = _.get(LQRPerformance, 'level')
     if (level) {
       formState.level = Number(level)
@@ -95,7 +100,7 @@ const onUpload = async function (file: FileData) {
       formState.point = Number(point)
       onCalculate()
     }
-    if(point || level){
+    if (point || level) {
       disabledEdit.value = true
     }
 
@@ -134,17 +139,12 @@ defineExpose({ submit: onSubmit });
       <FormItem label="" name="point" v-if="lqType == 1">
         <div class="flex w-full">
           <div class="flex-1">
-            <InputNumber class="w-full" 
-            :min="1" 
-            :precision="0" 
-            v-model:value.trim="formState.point" 
-            :max="9999999"
-              :placeholder="i18n.lqr.placeholder.memoq" 
-              :disabled="disabled || disabledEdit" 
-              @pressEnter="onCalculate"
+            <InputNumber class="w-full" :min="1" :precision="0" v-model:value.trim="formState.point" :max="9999999"
+              :placeholder="i18n.lqr.placeholder.memoq" :disabled="disabled || disabledEdit" @pressEnter="onCalculate"
               @change="changePoint" />
           </div>
-          <Button class="ml-4" type="primary" :disabled="disabled || !formState.point || disabledEdit" @click="onCalculate">{{ i18n.lqr.title.calculate }}</Button>
+          <Button class="ml-4" type="primary" :disabled="disabled || !formState.point || disabledEdit"
+            @click="onCalculate">{{ i18n.lqr.title.calculate }}</Button>
         </div>
       </FormItem>
 
@@ -164,7 +164,8 @@ defineExpose({ submit: onSubmit });
         </RadioGroup>
       </FormItem>
 
-      <FormItem :label="i18n.lqr.title.languageReport" name="reportPath" :rules="rules.text(i18n.lqr.rule.languageReport)">
+      <FormItem :label="i18n.lqr.title.languageReport" name="reportPath"
+        :rules="rules.text(i18n.lqr.rule.languageReport)">
         <UploadOSS class="w-full" :disabled="disabled" :task-id="taskId" :multiple="true" :success="onUpload">
           <SkinView.Input label="Upload" :disabled="disabled" :name="formState.fileName"></SkinView.Input>
         </UploadOSS>

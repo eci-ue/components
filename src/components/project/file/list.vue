@@ -157,13 +157,13 @@ const onReload = function() {
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'lqr'">
           <template v-if = "record.showLqr">
-            <LqrLink :data="record" :status="status" :pm="pm" :mode="mode" :id="id" :before="before" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqrLink>
+            <LqrLink :data="record" :status="status" :pm="pm" :mode="mode" :id="id" :before="before" :projectId="projectId" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqrLink>
           </template>
           <template v-else> -- </template>
         </template>
         <template v-else-if="column.key === 'lqf'">
           <template v-if = "record.showLqf">
-            <LqfLink :data="record" :status="status" :pm="pm" :mode="mode" :lqType="3" :id="id" :before="before" :lqf-oper="lqfOper" :partner="partner" @add="onReload"></LqfLink>
+            <LqfLink :data="record" :status="status" :pm="pm" :mode="mode" :lqType="3" :id="id" :projectId="projectId" :before="before" :lqf-oper="lqfOper" :partner="partner" @add="onReload"></LqfLink>
           </template>
           <template v-else> -- </template>
         </template>

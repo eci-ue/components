@@ -424,8 +424,8 @@ export default class Project {
   @$error()
   @post("/:task/task/getLQRPerformance")
   @validate
-  getLQRPerformance(@required filePath: string, lqType: string | number): Promise<object> {
-    const data = { filePath, lqType };
+  getLQRPerformance(@required filePath: string, projectId: string | number, lqType: string | number): Promise<object> {
+    const data = { filePath, lqType, projectId };
     return { data } as any;
   }
 
