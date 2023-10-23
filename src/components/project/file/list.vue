@@ -149,7 +149,7 @@ const onReload = function() {
       </slot>
     </div>
     <Table bordered 
-      :scroll="{x: 1288 }"
+      :scroll="{x: 1200 }"
       :pagination="false" 
       :row-selection="rowSelection" 
       :columns="headers(list, props)" 

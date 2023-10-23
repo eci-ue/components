@@ -46,16 +46,11 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
     minWidth:140
   }];
   const list: object[] = [...prev];
-  let showLqr: boolean = false;
-
   for (const data of fileList) {
     const temp: object[] = [];
     _.forEach<TaskFileStage>(data.taskBilingualFileStageRspList || [], function(item: TaskFileStage, index: number) {
       let { subType = "", current = false } = item;
       subType = _.toUpper(subType);
-      if (subType === "T" || subType === "E") {
-        showLqr = true;
-      }
       temp.push({
         key: "words",
         title: `For ${subType} words`,
@@ -84,7 +79,7 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
   if (_.includes([2,3], props.lqfOper)) {
     return [...list, ...next, ...lqf];
   }
-  if (showLqr) {
+  if (_.includes([2,3], props.lqrOper)) {
     return [...list, ...next];
   }
   return list;
