@@ -45,7 +45,7 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
     key: "lqf",
     minWidth:140
   }];
-  const list: object[] = [...prev];
+  let list: object[] = [...prev];
   for (const data of fileList) {
     const temp: object[] = [];
     _.forEach<TaskFileStage>(data.taskBilingualFileStageRspList || [], function(item: TaskFileStage, index: number) {
@@ -76,11 +76,11 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
       list[index + prev.length] = item;
     });
   }
-  if (_.includes([2,3], props.lqfOper)) {
-    return [...list, ...next, ...lqf];
-  }
   if (_.includes([2,3], props.lqrOper)) {
-    return [...list, ...next];
+    list = [...list, ...next];
+  }
+  if (_.includes([2,3], props.lqfOper)) {
+    list = [...list, ...lqf];
   }
   return list;
 };
