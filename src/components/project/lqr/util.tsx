@@ -35,7 +35,7 @@ export const list = function (results: object[], lqType: string | number) {
       list: [
         // T
         {
-          resourceName: (lqType == 1 ? "T" : "E") + safeGet<string>(item, "tresourceName"),
+          resourceName: safeGet<string>(item, "tresourceName"),
           words: `${safeGet<number>(item, "twords")} ${safeGet<string>(item, "ttaskUnitName") || "Word"}`,
           modify: _.toNumber(safeGet<number>(item, "tadjustPercent")),
           adjustWorkload: `${showNumber((safeGet<number>(item, "twords") || 0), (safeGet<number>(item, "tpaidWords") || 0))} ${safeGet<string>(item, "ttaskUnitName") || "Word"}`,
@@ -44,7 +44,7 @@ export const list = function (results: object[], lqType: string | number) {
         },
         // E
         {
-          resourceName:  (lqType == 1 ? "E" : "P") + safeGet<string>(item, "eresourceName"),
+          resourceName: safeGet<string>(item, "eresourceName"),
           words: `${safeGet<number>(item, "ewords")} ${safeGet<string>(item, "etaskUnitName") || "Word"}`,
           modify: _.toNumber(safeGet<number>(item, "eadjustPercent")),
           adjustWorkload: `${showNumber((safeGet<number>(item, "ewords") || 0), (safeGet<number>(item, "epaidWords") || 0))} ${safeGet<string>(item, "etaskUnitName") || "Word"}`,
