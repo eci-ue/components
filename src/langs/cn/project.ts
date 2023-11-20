@@ -26,4 +26,7 @@ export default {
     notStarted: "未开始",
     openFile: "查看",
   },
+  detail: {
+    rate: "物料单价 ( {name} )"
+  }
 };

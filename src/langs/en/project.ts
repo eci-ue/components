@@ -26,4 +26,7 @@ export default {
     notStarted: "Not Started",
     openFile: "Open File",
   },
+  detail: {
+    rate: "Material Price"
+  }
 };
