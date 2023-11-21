@@ -27,6 +27,6 @@ export default {
     openFile: "查看",
   },
   detail: {
-    rate: "物料单价 ( {name} )"
+    rate: "物料单价"
   }
 };
