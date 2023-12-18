@@ -195,8 +195,6 @@ const onCreate = async function (e: Event, data: TaskFileItem) {
         <slot></slot>
       </div>
     </template>
-    <template v-else>
-      <slot>--</slot>
-    </template>
+    <template v-else>--</template>
   </div>
 </template>

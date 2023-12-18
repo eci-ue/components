@@ -3,15 +3,14 @@
  * @author svon.me@gmail.com
  */
 
-import { View } from "./type";
 import * as _ from "lodash-es";
 import { hook } from "@ue/utils";
-import i18n from "../../../utils/i18n";
-import * as message from "@ue/message";
-import safeGet from "@fengqiaogang/safe-get";
 import Words from "./words.vue";
 import LqaLink from "./lqa.vue";
+import i18n from "../../../utils/i18n";
+import * as message from "@ue/message";
 import { h as createElement } from "vue";
+import safeGet from "@fengqiaogang/safe-get";
 
 import type { HookFunction } from "@ue/utils";
 import type { TaskFileItem, TaskFileStage } from "./type";
@@ -28,13 +27,10 @@ const wordRender = function (result: object, rate: boolean, props: any) {
   });
 }
 
-const lqaRender = function(props: object, title?: string) {
-  if (title) {
-    return createElement(LqaLink, props as any, [
-      createElement("span", { "class": "ant-btn-link", title }, title)
-    ]);
-  }
-  return createElement(LqaLink, props as any);
+const lqaRender = function(props: object, title: string) {
+  return createElement(LqaLink, props as any, [
+    createElement("span", { "class": "ant-btn-link", title }, title)
+  ]);
 }
 
 export const headers = function (fileList: TaskFileItem[] = [], props: any, onReload: () => void) {
@@ -57,7 +53,7 @@ export const headers = function (fileList: TaskFileItem[] = [], props: any, onRe
           }, 
           _.pick(props, ["status", "pm", "mode", "id", "before", "projectId", "partner"])
         );
-        return lqaRender({ ...option, onAdd: onReload }, record.lqrName);
+        return lqaRender({ ...option, onAdd: onReload }, record.lqrName || "Lqr");
       }
       return "--";
     }
@@ -77,7 +73,7 @@ export const headers = function (fileList: TaskFileItem[] = [], props: any, onRe
           }, 
           _.pick(props, ["status", "pm", "mode", "id", "before", "projectId", "partner"])
         );
-        return lqaRender({ ...option, onAdd: onReload }, record.lqfName);
+        return lqaRender({ ...option, onAdd: onReload }, record.lqfName || "Lqf");
       }
       return "--";
     }
