@@ -35,16 +35,16 @@ export const headers = function (fileList: TaskFileItem[] = [], props: any, onRe
     key: "name"
   }];
   const next = [{
-    title: i18n.lqr.title.lqr,
-    dataIndex: "lqrName",
     key: "lqr",
     minWidth: 140,
+    dataIndex: "lqrName",
+    title: i18n.lqr.title.lqr,
     customRender: function({ record }: { record: TaskFileItem }) {
-      if (record.showLqr) {
+      if (record && record.showLqr) {
         // <LqaLink :data="record" :status="status" :pm="pm" :mode="mode" :id="id" :before="before" :projectId="projectId" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqaLink>
         const option = Object.assign({
             data: record,
-            oper: safeGet<number | string>(props, "lqrOper")
+            oper: safeGet<number | string>(props, "lqrOper"),
           }, 
           _.pick(props, ["status", "pm", "mode", "id", "before", "projectId", "partner"])
         );
@@ -56,17 +56,17 @@ export const headers = function (fileList: TaskFileItem[] = [], props: any, onRe
     }
   }];
   const lqf = [{
-    title: i18n.lqr.title.lqf,
-    dataIndex: "lqfName",
     key: "lqf",
     minWidth: 140,
+    dataIndex: "lqfName",
+    title: i18n.lqr.title.lqf,
     customRender: function({ record }: { record: TaskFileItem }) {
-      if (record.showLqr) {
+      if (record && record.showLqr) {
         // <LqaLink :data="record" :status="status" :pm="pm" :mode="mode" :lqType="3" :id="id" :projectId="projectId" :before="before" :lqf-oper="lqfOper" :partner="partner" @add="onReload"></LqaLink>
         const option = Object.assign({ 
             type: 3,
             data: record,
-            oper: safeGet<number | string>(props, "lqfOper")
+            oper: safeGet<number | string>(props, "lqfOper"),
           }, 
           _.pick(props, ["status", "pm", "mode", "id", "before", "projectId", "partner"])
         );
