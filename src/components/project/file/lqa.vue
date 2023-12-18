@@ -77,6 +77,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: () => false
+  },
+  // 标题
+  title: {
+    required: false,
+    type: String,
   }
 });
 
@@ -171,9 +176,12 @@ const onCreate = async function (e: Event, data: TaskFileItem) {
     <template v-if="oper && String(oper) === '3'">
       <!-- 可上传 -->
       <!-- 如果有链接 -->
-      <div v-if="data.lqrVisitPath" class="max-w-40 cursor-pointer truncate" @click="onCheck($event, data.lqrVisitPath)">
-        <slot>{{ data.lqrVisitPath }}</slot>
-      </div>
+      <template v-if="data.lqrVisitPath">
+        <div v-if="title" class="max-w-40 cursor-pointer truncate" @click="onCheck($event, data.lqrVisitPath)">
+          <slot></slot>
+        </div>
+        <template>--</template>
+      </template>
       <!-- 无链接时展示添加按钮 -->
       <Button v-else type="link" class="text-sm" @click="onCreate($event, data)">
         <span class="flex items-center">
@@ -191,10 +199,12 @@ const onCreate = async function (e: Event, data: TaskFileItem) {
     </template>
     <template v-else-if="oper && String(oper) === '2' && data.lqrVisitPath">
       <!-- Link -->
-      <div class="max-w-40 cursor-pointer truncate" @click="onCheck($event, data.lqrVisitPath)">
-        <slot>{{ data.lqrVisitPath }}</slot>
+      <div v-if="title" class="max-w-40 cursor-pointer truncate" @click="onCheck($event, data.lqrVisitPath)">
+        <slot></slot>
       </div>
+      <template v-else>--</template>  
     </template>
     <template v-else>--</template>
   </div>
+  <template v-else>--</template>
 </template>

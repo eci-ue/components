@@ -29,7 +29,7 @@ const wordRender = function (result: object, rate: boolean, props: any) {
 
 const lqaRender = function(props: object, title?: string) {
   if (title) {
-    return createElement(LqaLink, props as any, [
+    return createElement(LqaLink, { ...props, title } as any, [
       createElement("span", { "class": "ant-btn-link", title }, title)
     ]);
   }

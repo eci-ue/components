@@ -38,11 +38,11 @@ onMounted(async function () {
   //     multiple: true
   //   },
   // })
-  // const api = new API();
-  // const data = await api.post("/tbms-task/detail/innerTranslationTaskDetail", { taskId: "4000123750" });
-  // state.value = data;
-  const { data } =await import("./data.json");
+  const api = new API();
+  const data = await api.post("http://erpapi.eciol-test.com/tbms-task/detail/innerTranslationTaskDetail", { taskId: "4000123750" });
   state.value = data;
+  // const { data } =await import("./data.json");
+  // state.value = data;
 });
 
 
