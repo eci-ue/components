@@ -27,10 +27,13 @@ const wordRender = function (result: object, rate: boolean, props: any) {
   });
 }
 
-const lqaRender = function(props: object, title: string) {
-  return createElement(LqaLink, props as any, [
-    createElement("span", { "class": "ant-btn-link", title }, title)
-  ]);
+const lqaRender = function(props: object, title?: string) {
+  if (title) {
+    return createElement(LqaLink, props as any, [
+      createElement("span", { "class": "ant-btn-link", title }, title)
+    ]);
+  }
+  return createElement(LqaLink, props as any);
 }
 
 export const headers = function (fileList: TaskFileItem[] = [], props: any, onReload: () => void) {
@@ -53,7 +56,7 @@ export const headers = function (fileList: TaskFileItem[] = [], props: any, onRe
           }, 
           _.pick(props, ["status", "pm", "mode", "id", "before", "projectId", "partner"])
         );
-        return lqaRender({ ...option, onAdd: onReload }, record.lqrName || "Lqr");
+        return lqaRender({ ...option, onAdd: onReload }, record.lqrName);
       }
       return "--";
     }
@@ -73,7 +76,7 @@ export const headers = function (fileList: TaskFileItem[] = [], props: any, onRe
           }, 
           _.pick(props, ["status", "pm", "mode", "id", "before", "projectId", "partner"])
         );
-        return lqaRender({ ...option, onAdd: onReload }, record.lqfName || "Lqf");
+        return lqaRender({ ...option, onAdd: onReload }, record.lqfName);
       }
       return "--";
     }

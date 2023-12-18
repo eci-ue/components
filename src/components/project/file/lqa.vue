@@ -172,7 +172,7 @@ const onCreate = async function (e: Event, data: TaskFileItem) {
       <!-- 可上传 -->
       <!-- 如果有链接 -->
       <div v-if="data.lqrVisitPath" class="max-w-40 cursor-pointer truncate" @click="onCheck($event, data.lqrVisitPath)">
-        <slot></slot>
+        <slot>{{ data.lqrVisitPath }}</slot>
       </div>
       <!-- 无链接时展示添加按钮 -->
       <Button v-else type="link" class="text-sm" @click="onCreate($event, data)">
@@ -192,7 +192,7 @@ const onCreate = async function (e: Event, data: TaskFileItem) {
     <template v-else-if="oper && String(oper) === '2' && data.lqrVisitPath">
       <!-- Link -->
       <div class="max-w-40 cursor-pointer truncate" @click="onCheck($event, data.lqrVisitPath)">
-        <slot></slot>
+        <slot>{{ data.lqrVisitPath }}</slot>
       </div>
     </template>
     <template v-else>--</template>
