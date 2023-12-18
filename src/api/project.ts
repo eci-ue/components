@@ -186,13 +186,13 @@ export default class Project {
   @post("/:task/file/setFileLanguagePair")
   @validate
   setTaskPairs<D>(@required fileIds: Array<string | number>, @required languagePairs: D): Promise<boolean> {
-    let data:any = []
-    _.each(fileIds,val=>{
-      _.each(languagePairs || [],(item:any)=>{
+    let data: any = []
+    _.each(fileIds, val => {
+      _.each(languagePairs || [], (item: any) => {
         data.push({
-          fileId:val,
-          slangId:item.sourceLanguageId,
-          tlangId:item.targetLanguageId
+          fileId: val,
+          slangId: item.sourceLanguageId,
+          tlangId: item.targetLanguageId
         })
       })
     })
@@ -265,7 +265,7 @@ export default class Project {
     @required taskId: string | number,
     @required type: FileType
   ): Promise<boolean> {
-    const data = { fileIds, taskId, type};
+    const data = { fileIds, taskId, type };
     return { data } as any;
   }
 
@@ -295,15 +295,15 @@ export default class Project {
   @post("/:task/bilingual/export")
   @validate
   fileExport(
-    @required list: Array<string | number>,  
+    @required list: Array<string | number>,
     type: string | number = 1,
     subType?: string,
     operator: number | boolean = 1,
     userType?: number
   ): Promise<boolean> {
     const fileIds = _.compact(_.concat(list));
-    const data = { 
-      fileIds, 
+    const data = {
+      fileIds,
       type,
       subType,
       operatorType: operator ? 1 : 0,
@@ -339,11 +339,11 @@ export default class Project {
   @get("/:cat/cat/translation/export/task/list/pm", { withCredentials: true })
   @validate
   getExportTransDocPmFileList<T>(
-    @required projectId: string | number, 
+    @required projectId: string | number,
     @required languageId: string | number,
   ): Promise<PageResult<T>> {
     const params = { projectId, sourceLang: languageId };
-    const callback = function(list: T[]) {
+    const callback = function (list: T[]) {
       return list.map((item: T) => {
         const key = safeGet<string>(item as object, "zipFileId");
         return Object.assign({ key }, item);
@@ -361,12 +361,12 @@ export default class Project {
   @get("/:cat/cat/translation/export/task/list/other", { withCredentials: true })
   @validate
   getExportTransDocFileList<T>(
-    @required projectId: string | number, 
+    @required projectId: string | number,
     @required languageId: string | number,
     partner: boolean = false,
   ): Promise<PageResult<T>> {
     const params = { projectId, sourceLang: languageId, userType: partner ? 2 : 1 };
-    const callback = function(data: object) {
+    const callback = function (data: object) {
       const list = safeGet<T[]>(data, "taskInfoList") || [];
       const cookie = safeGet<object[]>(data, "taskPMCookieList") || [];
       return list.map((item: T) => {
@@ -392,7 +392,7 @@ export default class Project {
     @required language: string | number
   ): Promise<T> {
     const params = { projectId: id, sourceLanguageId: language };
-    const callback = function(res: T) {
+    const callback = function (res: T) {
       if (_.isBoolean(res) || _.isNil(res)) {
         return void 0;
       }
@@ -454,8 +454,33 @@ export default class Project {
    */
   @tryError(new PageResult())
   @post("/:task/lqr/list")
+  @validate
   lqrList(@required taskId: string | number, lqType?: string | number): Promise<PageResult> {
     const data = { taskId, lqType };
     return { data } as any;
+  }
+
+  /**
+   * 获取双语文件下的同组双语文件列表
+   * @param taskId 任务ID
+   * @param fileId 双语文件ID
+   * @param type   lq 类型 [lqr: 1, lqa: 2, lqf: 3]
+   */
+  @tryError(new PageResult())
+  @post("/:task/lqr/getGroupBilingualFile")
+  @validate
+  getGroupBilingualFile(@required taskId: string | number, @required fileId: string | number, @required type: string | number): Promise<PageResult<{ id: string | number; name: string }>> {
+    const data = { taskId, bilingualFileId: fileId, lqType: type };
+    const callback = function (list: object[]) {
+      const value = _.map(list, function (data: object) {
+        const id = safeGet<string | number>(data, "bilingualFileId");
+        const name = safeGet<string>(data, "bilingualFileName");
+        return { id, name };
+      });
+      return new PageResult(value);
+    }
+    // @ts-ignore
+    return { data, callback };
+
   }
 }

@@ -57,7 +57,7 @@ watch(() => props.meta?.defualtVal, (val) => {
     <FormCheckbox v-model:value="state.rate" :meta="metaObj" class="rate-check-box"></FormCheckbox>
   </FormItem>
 </template>
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .rate-check-box {
   ::v-deep(.ant-checkbox-wrapper) {
     user-select: none;

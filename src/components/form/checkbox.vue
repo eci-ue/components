@@ -67,19 +67,19 @@ const text = computed<Array<string | number>>({
   </div>
 </template>
 
-<style scoped lang="scss">
-%border {
+<style scoped lang="less">
+.border() {
   @apply border-border-color border-solid border;
   
 }
 .checkbox-contain, .checkbox-vertical {
   .ant-checkbox-wrapper {
     @apply py-1 px-3;
-    @extend %border;
+    .border();
   }
 }
 .checkbox-cover {
-  @extend %border;
+  .border();
   .ant-checkbox-group {
     @apply flex justify-between;
   }

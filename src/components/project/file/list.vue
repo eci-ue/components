@@ -10,9 +10,6 @@ import i18n from "../../../utils/i18n";
 import { headers, fileList, before } from "./util";
 import { table } from "@ue/utils";
 
-
-import LqrLink from "./lqr.vue";
-import LqfLink from "./lqf.vue";
 import Lqr from "../lqr/lqr.vue";
 
 import { Table, Space } from "ant-design-vue";
@@ -108,7 +105,7 @@ const props = defineProps({
 
 const { selectedKeys, rowSelection } = table.useSelection();
 
-const onReload = function() {
+const onReload = function () {
   $emit("reload");
 };
 
@@ -118,27 +115,15 @@ const onReload = function() {
     <div class="flex w-full justify-between items-center mb-4">
       <Space>
         <!-- Lqr 报告 -->
-        <Lqr :id="id" :level="lqrLevel"/>
+        <Lqr :id="id" :level="lqrLevel" />
         <!-- Lqf 报告 -->
         <Lqr :id="id" :level="lqfLevel" :lqType="3" />
         <!-- 下载双语文件 -->
-        <ExportDownload 
-          placement="bottomLeft" 
-          :before="before"
-          :pm="pm"  
-          :partner="partner" 
-          :mode="mode" 
-          :disabled="selectedKeys.length < 1" 
-          :file="selectedKeys">
+        <ExportDownload placement="bottomLeft" :before="before" :pm="pm" :partner="partner" :mode="mode"
+          :disabled="selectedKeys.length < 1" :file="selectedKeys">
         </ExportDownload>
         <!-- 文件下载记录 -->
-        <ExportButton 
-          :id="projectId" 
-          :language="language" 
-          :before="before" 
-          :pm="pm" 
-          :mode="mode" 
-          :partner="partner">
+        <ExportButton :id="projectId" :language="language" :before="before" :pm="pm" :mode="mode" :partner="partner">
         </ExportButton>
       </Space>
       <slot>
@@ -148,34 +133,16 @@ const onReload = function() {
         </Space>
       </slot>
     </div>
-    <Table bordered 
-      :scroll="{x: 1200 }"
-      :pagination="false" 
-      :row-selection="rowSelection" 
-      :columns="headers(list, props)" 
-      :data-source="fileList(list)">
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'lqr'">
-          <template v-if = "record.showLqr">
-            <LqrLink :data="record" :status="status" :pm="pm" :mode="mode" :id="id" :before="before" :projectId="projectId" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqrLink>
-          </template>
-          <template v-else> -- </template>
-        </template>
-        <template v-else-if="column.key === 'lqf'">
-          <template v-if = "record.showLqf">
-            <LqfLink :data="record" :status="status" :pm="pm" :mode="mode" :lqType="3" :id="id" :projectId="projectId" :before="before" :lqf-oper="lqfOper" :partner="partner" @add="onReload"></LqfLink>
-          </template>
-          <template v-else> -- </template>
-        </template>
-      </template>
-    </Table>
+    <div class="overflow-x-auto">
+        <Table class="min-w-300" bordered :pagination="false" :row-selection="rowSelection" :columns="headers(list, props, onReload)" :data-source="fileList(list)"></Table>
+    </div>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="less">
 .ant-table .word-content {
   &:not(th) {
     @apply p-0;
-  }  
+  }
 }
 </style>

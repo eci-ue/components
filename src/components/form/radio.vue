@@ -148,8 +148,8 @@ const text = computed<string>({
   </div>
 </template>
 
-<style scoped lang="scss">
-%border {
+<style scoped lang="less">
+.border() {
   border-color: #d9d9d9;
   @apply border border-solid;
 }
@@ -159,16 +159,16 @@ const text = computed<string>({
 .radio-contain {
   .ant-radio-wrapper {
     @apply py-1;
-    @extend %border;
+    .border();
   }
 }
 .radio-cover {
-  @extend %border;
+  .border();
   .ant-radio-group {
     @apply flex justify-between;
   }
   .ant-radio-wrapper {
-    @extend %border;
+    .border();
     @apply flex-1 py-1 mr-0;
     @apply first:border-l-0;
   }

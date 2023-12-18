@@ -15,6 +15,7 @@ export class TaskFileStage {
 }
 
 export class TaskFileItem {
+  showLqr?: boolean;
   lqrIndex: number = 1;
   lqrName: string = "";
   lqrData?: object;

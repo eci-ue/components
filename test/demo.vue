@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { MemoqExpress, ImportMemoqExpress, FormFile, FormLanguagePairs } from "../src/index";
+import { API } from "@js-lion/api";
+import { MemoqExpress, ImportMemoqExpress, FormFile, FormLanguagePairs, FileInformation } from "../src/index";
 import { Button, Space } from "ant-design-vue";
 import * as modal from "@ue/modal";
 import { MemoqItemData, ToolProjectData } from "../src/components/memoq/type";
 
-onMounted(function () {
+
+const state = ref<any>({});
+
+onMounted(async function () {
   // DriveFile("xxx", {
   //   id: 10076054,
   //   language: 12,
@@ -34,7 +38,16 @@ onMounted(function () {
   //     multiple: true
   //   },
   // })
+  // const api = new API();
+  // const data = await api.post("/tbms-task/detail/innerTranslationTaskDetail", { taskId: "4000123750" });
+  // state.value = data;
+  const { data } =await import("./data.json");
+  state.value = data;
 });
+
+
+
+
 
 
 const memoqExpress = ref()
@@ -111,7 +124,20 @@ const languagesMeta = {
       </div> -->
 
     <div>
-      <FormLanguagePairs :value="['1.2', '3.4']" :meta="languagesMeta"></FormLanguagePairs>
+      <!-- <FormLanguagePairs :value="['1.2', '3.4']" :meta="languagesMeta"></FormLanguagePairs> -->
+    </div>
+    <div>
+      <FileInformation 
+        :lqr-level="state.lqrLevel" 
+        :lqr-oper="state.lqrOper" 
+        :list="state.taskBilingualFileRspList"
+        :pm="false" 
+        :partner="false" 
+        :mode="state.catTool"
+        :project-id="state.projectId" 
+        :id="state.id" 
+        :status="(state.status as any)" 
+        :language="state.slang"></FileInformation>
     </div>
   </div>
 </template>

@@ -10,12 +10,13 @@ import i18n from "../../../utils/i18n";
 import * as message from "@ue/message";
 import safeGet from "@fengqiaogang/safe-get";
 import Words from "./words.vue";
+import LqaLink from "./lqa.vue";
 import { h as createElement } from "vue";
 
 import type { HookFunction } from "@ue/utils";
 import type { TaskFileItem, TaskFileStage } from "./type";
 
-const wordRender = function(result: object, rate: boolean, props: any) {
+const wordRender = function (result: object, rate: boolean, props: any) {
   const key = safeGet<string>(result, "column.dataIndex");
   const value = key ? safeGet<TaskFileStage>(result, ["record", key]) : undefined;
   return createElement(Words, {
@@ -27,28 +28,59 @@ const wordRender = function(result: object, rate: boolean, props: any) {
   });
 }
 
-export const headers = function(fileList: TaskFileItem[] = [], props: any) {
-  const prev = [{ 
-    title: i18n.part(i18n.common.label.file, 1), 
-    dataIndex: "bilingualFileName", 
+export const headers = function (fileList: TaskFileItem[] = [], props: any, onReload: () => void) {
+  const prev = [{
+    title: i18n.part(i18n.common.label.file, 1),
+    dataIndex: "bilingualFileName",
     key: "name"
   }];
-  const next = [{ 
-    title: i18n.lqr.title.lqr, 
-    dataIndex: "lqrName", 
+  const next = [{
+    title: i18n.lqr.title.lqr,
+    dataIndex: "lqrName",
     key: "lqr",
-    minWidth:140
+    minWidth: 140,
+    customRender: function({ record }: { record: TaskFileItem }) {
+      if (record.showLqr) {
+        // <LqaLink :data="record" :status="status" :pm="pm" :mode="mode" :id="id" :before="before" :projectId="projectId" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqaLink>
+        const option = Object.assign({
+            data: record,
+            oper: safeGet<number | string>(props, "lqrOper")
+          }, 
+          _.pick(props, ["status", "pm", "mode", "id", "before", "projectId", "partner"])
+        );
+        return createElement(LqaLink, { ...option, onAdd: onReload }, [
+          createElement("span", { "class": "ant-btn-link", title: record.lqrName }, record.lqrName)
+        ]);
+      }
+      return "--";
+    }
   }];
-  const lqf = [{ 
-    title: i18n.lqr.title.lqf, 
-    dataIndex: "lqfName", 
+  const lqf = [{
+    title: i18n.lqr.title.lqf,
+    dataIndex: "lqfName",
     key: "lqf",
-    minWidth:140
+    minWidth: 140,
+    customRender: function({ record }: { record: TaskFileItem }) {
+      if (record.showLqr) {
+        // <LqaLink :data="record" :status="status" :pm="pm" :mode="mode" :lqType="3" :id="id" :projectId="projectId" :before="before" :lqf-oper="lqfOper" :partner="partner" @add="onReload"></LqaLink>
+        const option = Object.assign({ 
+            type: 3,
+            data: record,
+            oper: safeGet<number | string>(props, "lqfOper")
+          }, 
+          _.pick(props, ["status", "pm", "mode", "id", "before", "projectId", "partner"])
+        );
+        return createElement(LqaLink, { ...option, onAdd: onReload }, [
+          createElement("span", { "class": "ant-btn-link", title: record.lqfName }, record.lqfName)
+        ]);
+      }
+      return "--";
+    }
   }];
   let list: object[] = [...prev];
   for (const data of fileList) {
     const temp: object[] = [];
-    _.forEach<TaskFileStage>(data.taskBilingualFileStageRspList || [], function(item: TaskFileStage, index: number) {
+    _.forEach<TaskFileStage>(data.taskBilingualFileStageRspList || [], function (item: TaskFileStage, index: number) {
       let { subType = "", current = false } = item;
       subType = _.toUpper(subType);
       temp.push({
@@ -57,43 +89,43 @@ export const headers = function(fileList: TaskFileItem[] = [], props: any) {
         width: "120px",
         dataIndex: `taskBilingualFileStageRspList[${index}]`,
         className: "word-content",
-        customRender: function(result: object) {
+        customRender: function (result: object) {
           return wordRender(result, false, props);
         }
       },
-      {
-        className: current ? "word-content text-yellow bg-yellow bg-opacity-10" : "word-content",
-        key: "resourceName",
-        title: subType,
-        width: "200px",
-        dataIndex: `taskBilingualFileStageRspList[${index}]`,
-        customRender: function(result: object) {
-          return wordRender(result, true, props);
-        }
-      });
+        {
+          className: current ? "word-content text-yellow bg-yellow bg-opacity-10" : "word-content",
+          key: "resourceName",
+          title: subType,
+          width: "200px",
+          dataIndex: `taskBilingualFileStageRspList[${index}]`,
+          customRender: function (result: object) {
+            return wordRender(result, true, props);
+          }
+        });
     });
-    _.forEach<object>(temp, function(item: object, index: number) {
+    _.forEach<object>(temp, function (item: object, index: number) {
       list[index + prev.length] = item;
     });
   }
-  if (_.includes([2,3], props.lqrOper)) {
+  if (_.includes([2, 3], props.lqrOper)) {
     list = [...list, ...next];
   }
-  if (_.includes([2,3], props.lqfOper)) {
+  if (_.includes([2, 3], props.lqfOper)) {
     list = [...list, ...lqf];
   }
   return list;
 };
 
 
-export const fileList = function(fileList: TaskFileItem[]) {
-  return _.map(fileList, function(item: TaskFileItem) {
+export const fileList = function (fileList: TaskFileItem[]) {
+  return _.map(fileList, function (item: TaskFileItem) {
     const key = _.get<TaskFileItem, string>(item, "bilingualFileId");
     return { key, ...item };
   });
 };
 
-export const before = async function(callback?: HookFunction | HookFunction[], ...args: any[]) {
+export const before = async function (callback?: HookFunction | HookFunction[], ...args: any[]) {
   try {
     return await hook.run(callback, args);
   } catch (error) {

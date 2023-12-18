@@ -75,22 +75,22 @@ const className = computed<string[]>(function() {
     </template>
   </Button>
 </template>
-<style scoped lang="scss">
+<style scoped lang="less">
 
-@mixin lqr($color, $border, $bg) {
+.lqr(@color, @border, @bg) {
   &:not(:hover) {
-    color: $color;
-    border-color: $border;
-    background-color: $bg;
+    color: @color;
+    border-color: @border;
+    background-color: @bg;
   }
 }
 .lqr-a {
-  @include lqr(#52C41A, #B7EB8F, #F6FFED);
+  .lqr(#52C41A, #B7EB8F, #F6FFED);
 }
 .lqr-b {
-  @include lqr(#E49251, #FFBF8D, #FFFAF0);
+  .lqr(#E49251, #FFBF8D, #FFFAF0);
 }
 .lqr-c {
-  @include lqr(#E45651, #ED6864, #FFE4E3);
+  .lqr(#E45651, #ED6864, #FFE4E3);
 }
 </style>

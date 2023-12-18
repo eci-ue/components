@@ -182,7 +182,7 @@ defineExpose({ submit: onSubmit });
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .level-box {
   ::v-deep(.ant-radio-button-wrapper) {
     @apply w-full mb-2 bg-milk text-deep-gray;

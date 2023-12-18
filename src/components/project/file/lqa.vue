@@ -1,4 +1,8 @@
 <script setup lang="ts">
+/**
+ * @file Lqr / Lqa / Lqf
+ * @author svon.me@gmail.com
+ */
 import * as _ from "lodash-es";
 import { Icon } from "@ue/icon";
 import { PropType } from "vue";
@@ -6,11 +10,13 @@ import { before } from "./util";
 import { api } from "../../../api";
 import { AddLqr } from "../lqr/index";
 import i18n from "../../../utils/i18n";
-import { fileDownloadUrl } from "@ue/utils";
 import { Button } from "ant-design-vue";
+import { fileDownloadUrl } from "@ue/utils";
 
 import { Status } from "../type";
 import { WorkMode } from "../../export";
+import { selectBilingualFile } from "./file";
+
 import type { TaskFileItem } from "./type";
 import type { HookFunction } from "@ue/utils";
 
@@ -42,12 +48,12 @@ const props = defineProps({
     type: String as PropType<WorkMode>,
   },
   /** 类型 1：lqr 2:lqa 3:lqf */
-  lqType: {
+  type: {
     type: [String, Number],
     default: () => 1
   },
-  // lqr 枚举
-  lqrOper: {
+  // lqr / lqf 枚举
+  oper: {
     type: [String, Number],
     required: false,
   },
@@ -74,9 +80,15 @@ const props = defineProps({
   }
 });
 
+const isLqf = function () {
+  if (Number(props.type) === 3) {
+    return true;
+  }
+  return false;
+}
 
-// lqr 链接处理
-const lqrLink = function (value: string): string | undefined {
+// 链接处理
+const toLink = function (value: string): string | undefined {
   if (value && /^http/.test(value)) {
     return value;
   }
@@ -89,11 +101,11 @@ const lqrLink = function (value: string): string | undefined {
 };
 
 // 查看 Lqr
-const onCheckLqr = function (e: Event, value: string) {
+const onCheck = function (e: Event, value: string) {
   const run = async () => {
-    const status = await before(props.before, "lqr");
+    const status = await before(props.before, isLqf() ? "lqf" : "lqr");
     if (status) {
-      const url = lqrLink(value);
+      const url = toLink(value);
       if (url) {
         window.open(url);
       }
@@ -102,13 +114,13 @@ const onCheckLqr = function (e: Event, value: string) {
   if (props.mode === WorkMode.Transdoc) {
     run();
   } else {
-    onAddLqr(e, props.data);
+    onCreate(e, props.data);
   }
 }
 
-// 添加 Lqr
-const onAddLqr = async function (e: Event, data: TaskFileItem) {
-  const status = await before(props.before, "addLqr");
+// 添加 Lqr / Lqf
+const onCreate = async function (e: Event, data: TaskFileItem) {
+  const status = await before(props.before, isLqf() ? "addLqf" : "addLqr");
   if (!status) {
     return false;
   }
@@ -122,45 +134,69 @@ const onAddLqr = async function (e: Event, data: TaskFileItem) {
     disabled = true;
   }
 
-  const option = { disabled, id: props.id, projectId: props.projectId, file: data.bilingualFileId, partner: props.partner, lqType: props.lqType };
+  // 获取双语文件下的同组双语文件列表
+  const lqrRelateBilingualFileIds: Array<string | number> = await selectBilingualFile(props.id, data.bilingualFileId, props.type);
+  if (_.size(lqrRelateBilingualFileIds) < 1) {
+    // 双语文件为空
+    return false;
+  }
+
+  const option = {
+    disabled,
+    id: props.id,
+    projectId: props.projectId,
+    file: data.bilingualFileId,
+    partner: props.partner,
+    lqType: props.type
+  };
   const callback = async function (value: object) {
     if (disabled) {
       return false;
     }
-    const status = await api.project.saveLqr(value, props.partner);
+    // 报错报告
+    const formData = { ...value, lqrRelateBilingualFileIds };
+    const status = await api.project.saveLqr(formData, props.partner);
     if (status) {
       $emit("add", e, data);
     }
     return status;
   };
-  AddLqr(option, { onOk: callback }, data.lqrData || {});
+  AddLqr(option, { onOk: callback }, (isLqf() ? data.lqfData : data.lqrData) || {});
 };
 
 </script>
 
 <template>
   <div v-if="data">
-    <template v-if="lqrOper && String(lqrOper) === '3'">
+    <template v-if="oper && String(oper) === '3'">
       <!-- 可上传 -->
-      <!-- 如果有 lqr 链接 -->
-      <span v-if="data.lqrVisitPath" @click="onCheckLqr($event, data.lqrVisitPath)"
-        class="break-all max-w-40 cursor-pointer ant-btn-link">{{ data.lqrName }}</span>
+      <!-- 如果有链接 -->
+      <div v-if="data.lqrVisitPath" class="max-w-40 cursor-pointer truncate" @click="onCheck($event, data.lqrVisitPath)">
+        <slot></slot>
+      </div>
       <!-- 无链接时展示添加按钮 -->
-      <Button v-else type="link" class="text-sm" @click="onAddLqr($event, data)">
+      <Button v-else type="link" class="text-sm" @click="onCreate($event, data)">
         <span class="flex items-center">
           <Icon class="flex mr-1" type="icon-a-add"></Icon>
-          <span>{{ i18n.common.button.addLqr }}</span>
-          <span class="ml-0.5">{{ data.lqrIndex }}</span>
+          <template v-if="isLqf()">
+            <span>{{ i18n.common.button.addLqf }}</span>
+            <span class="ml-0.5">{{ data.lqfIndex }}</span>
+          </template>
+          <template v-else>
+            <span>{{ i18n.common.button.addLqr }}</span>
+            <span class="ml-0.5">{{ data.lqrIndex }}</span>
+          </template>
         </span>
       </Button>
     </template>
-    <template v-else-if="lqrOper && String(lqrOper) === '2' && data.lqrVisitPath">
-      <!-- Lqr Link -->
-      <span @click="onCheckLqr($event, data.lqrVisitPath)" class="break-all max-w-40 cursor-pointer ant-btn-link">{{
-        data.lqrName }}</span>
+    <template v-else-if="oper && String(oper) === '2' && data.lqrVisitPath">
+      <!-- Link -->
+      <div class="max-w-40 cursor-pointer truncate" @click="onCheck($event, data.lqrVisitPath)">
+        <slot></slot>
+      </div>
     </template>
     <template v-else>
-      <span>--</span>
+      <slot>--</slot>
     </template>
   </div>
 </template>
