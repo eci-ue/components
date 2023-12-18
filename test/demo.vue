@@ -129,12 +129,14 @@ const languagesMeta = {
     <div>
       <FileInformation 
         :lqr-level="state.lqrLevel" 
-        :lqr-oper="state.lqrOper" 
+        :lqr-oper="state.lqrOper"
+        :lqf-level="state.lqfLevel" 
+        :lqf-oper="state.lqfOper" 
         :list="state.taskBilingualFileRspList"
         :pm="false" 
         :partner="false" 
         :mode="state.catTool"
-        :project-id="state.projectId" 
+        :projectId="state.projectId" 
         :id="state.id" 
         :status="(state.status as any)" 
         :language="state.slang"></FileInformation>
