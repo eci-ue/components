@@ -87,7 +87,7 @@ export default defineComponent({
       type: String,
     }
   },
-  setup: function(props, { emit, slots }) {
+  setup: function (props, { emit, slots }) {
     const isLqf = function () {
       if (Number(props.type) === 3) {
         return true;
@@ -119,13 +119,9 @@ export default defineComponent({
           }
         }
       }
-      console.log(1);
-      
       if (props.mode === WorkMode.Transdoc) {
-        console.log(2);
         run();
       } else {
-        console.log(3);
         onCreate(e, props.data);
       }
     }
@@ -176,27 +172,27 @@ export default defineComponent({
       AddLqr(option, { onOk: callback }, (isLqf() ? data.lqfData : data.lqrData) || {});
     };
 
-    const viewContent = function(link: string) {
-      const click = function(e: Event) {
+    const viewContent = function (link: string) {
+      const click = function (e: Event) {
         return onCheck(e, link);
       };
       const value = slots.default ? slots.default() : void 0;
-      return (<div class="cursor-pointer truncate" onClick={ click }>{ value }</div>);
+      return (<div class="cursor-pointer truncate" onClick={click}>{value}</div>);
     }
 
-    const viewCreate = function() {
+    const viewCreate = function () {
       // 可上传时展示上传按钮
       if (Number(props.oper) === 3) {
-        const click = function(e: Event) {
+        const click = function (e: Event) {
           return onCreate(e, props.data);
         }
         const name = isLqf() ? props.data.lqfIndex : props.data.lqrIndex;
         const label = isLqf() ? i18n.common.button.addLqf : i18n.common.button.addLqr;
-        return (<Button type="link" class="text-sm p-0 m-0" onClick={ click }>
+        return (<Button type="link" class="text-sm p-0 m-0" onClick={click}>
           <span class="flex items-center">
             <Icon class="flex mr-1" type="icon-a-add"></Icon>
-            <span>{ label }</span>
-            <span class="ml-0.5">{ name }</span>
+            <span>{label}</span>
+            <span class="ml-0.5">{name}</span>
           </span>
         </Button>);
       }
@@ -211,17 +207,19 @@ export default defineComponent({
               if (props.title) {
                 return viewContent(props.data.lqfVisitPath);
               }
-            }
-            // 展示上传按钮
-            const value = viewCreate();
-            if (value) {
-              return value;
+            } else {
+              // 展示上传按钮
+              const value = viewCreate();
+              if (value) {
+                return value;
+              }
             }
           } else if (props.data.lqrVisitPath) {
             // 如果查看链接存在
             if (props.title) {
               return viewContent(props.data.lqrVisitPath);
             }
+          } else {
             // 展示上传按钮
             const value = viewCreate();
             if (value) {
