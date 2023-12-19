@@ -6,7 +6,7 @@
 import * as _ from "lodash-es";
 import { hook } from "@ue/utils";
 import Words from "./words.vue";
-import LqaLink from "./lqa.vue";
+import LqaLink from "./lqa";
 import i18n from "../../../utils/i18n";
 import * as message from "@ue/message";
 import { h as createElement } from "vue";

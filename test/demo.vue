@@ -39,7 +39,7 @@ onMounted(async function () {
   //   },
   // })
   const api = new API();
-  const data = await api.post("http://erpapi.eciol-test.com/tbms-task/detail/innerTranslationTaskDetail", { taskId: "4000123750" });
+  const data = await api.post("http://erpapi.eciol-test.com/tbms-task/detail/innerTranslationTaskDetail", { taskId: "4000123756" });
   state.value = data;
   // const { data } =await import("./data.json");
   // state.value = data;
