@@ -22,6 +22,7 @@ import type { TaskFileItem } from "./type";
 import type { HookFunction } from "@ue/utils";
 
 import type { PropType } from "vue";
+import safeGet from "@fengqiaogang/safe-get";
 
 export default defineComponent({
   emits: ["add"],
@@ -141,9 +142,10 @@ export default defineComponent({
       if (props.pm) {
         disabled = true;
       }
-
+      // 议员
+      const user = safeGet<string>(props.data, "taskBilingualFileStageRspList[0].resourceName");
       // 获取双语文件下的同组双语文件列表
-      const lqrRelateBilingualFileIds: Array<string | number> = await selectBilingualFile(props.id, data.bilingualFileId, props.type);
+      const lqrRelateBilingualFileIds: Array<string | number> = await selectBilingualFile(props.id, data.bilingualFileId, props.type, user);
       if (_.size(lqrRelateBilingualFileIds) < 1) {
         // 双语文件为空
         return false;

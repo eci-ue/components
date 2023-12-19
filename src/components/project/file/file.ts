@@ -11,13 +11,16 @@ import i18n from "../../../utils/i18n";
 import * as message from "@ue/message";
 import safeGet from "@fengqiaogang/safe-get";
 
-export const selectBilingualFile = async function (taskId: string | number, fileId: string | number, type: string | number = 1) {
+export const selectBilingualFile = async function (taskId: string | number, fileId: string | number, type: string | number = 1, user: string = "") {
   // 获取双语文件下的同组双语文件列表
   let lqrRelateBilingualFileIds: Array<string | number> = [];
 
   const group = await api.project.getGroupBilingualFile(taskId, fileId, type);
   if (group.total > 1) {
-    const data = await modal.confirm(View, { title: i18n.project.lqa.select, width: 380 }, { list: group.results });
+    const files = group.results.map(item => {
+      return { ...item, user };
+    });
+    const data = await modal.confirm(View, { title: i18n.project.lqa.select, width: 480 }, { list: files });
     if (data) {
       const value = safeGet<Array<string | number>>(data, "value") || [];
       if (_.size(value) > 0) {

@@ -469,13 +469,14 @@ export default class Project {
   @tryError(new PageResult())
   @post("/:task/lqr/getGroupBilingualFile")
   @validate
-  getGroupBilingualFile(@required taskId: string | number, @required fileId: string | number, @required type: string | number): Promise<PageResult<{ id: string | number; name: string }>> {
+  getGroupBilingualFile(@required taskId: string | number, @required fileId: string | number, @required type: string | number): Promise<PageResult<{ id: string | number; name: string; exists: boolean; }>> {
     const data = { taskId, bilingualFileId: fileId, lqType: type };
     const callback = function (list: object[]) {
       const value = _.map(list, function (data: object) {
         const id = safeGet<string | number>(data, "bilingualFileId");
         const name = safeGet<string>(data, "bilingualFileName");
-        return { id, name };
+        const exists = safeGet<boolean>(data, "reportExists") || false;
+        return { id, name, exists };
       });
       return new PageResult(value);
     }

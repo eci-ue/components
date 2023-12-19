@@ -3,10 +3,10 @@
  * @author svon.me@gmail.com
  */
 
+import LqaLink from "./lqa";
 import * as _ from "lodash-es";
 import { hook } from "@ue/utils";
 import Words from "./words.vue";
-import LqaLink from "./lqa";
 import i18n from "../../../utils/i18n";
 import * as message from "@ue/message";
 import { h as createElement } from "vue";
@@ -28,12 +28,13 @@ const wordRender = function (result: object, rate: boolean, props: any) {
 }
 
 const lqaRender = function(props: object, title?: string) {
+  const option = { ...props, "class": "max-w-40" };
   if (title) {
-    return createElement(LqaLink, { ...props, title } as any, [
+    return createElement(LqaLink, { ...option, title } as any, [
       createElement("span", { "class": "ant-btn-link", title }, title)
     ]);
   }
-  return createElement(LqaLink, props as any);
+  return createElement(LqaLink, option as any);
 }
 
 export const headers = function (fileList: TaskFileItem[] = [], props: any, onReload: () => void) {
@@ -44,6 +45,7 @@ export const headers = function (fileList: TaskFileItem[] = [], props: any, onRe
   }];
   const next = [{
     key: "lqr",
+    width: 200,
     minWidth: 140,
     dataIndex: "lqrName",
     title: i18n.lqr.title.lqr,
@@ -63,6 +65,7 @@ export const headers = function (fileList: TaskFileItem[] = [], props: any, onRe
   }];
   const lqf = [{
     key: "lqf",
+    width: 200,
     minWidth: 140,
     dataIndex: "lqfName",
     title: i18n.lqr.title.lqf,

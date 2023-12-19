@@ -8,7 +8,7 @@ import type { PropType } from "vue";
 
 const props = defineProps({
   list: {
-    type: Array as PropType<Array<{ id: string | number; name: string; }>>,
+    type: Array as PropType<Array<{ id: string | number; name: string; exists: boolean; user: string }>>,
     required: true,
   }
 });
@@ -18,7 +18,14 @@ const indeterminate = ref<boolean>(false);
 const data = ref<Array<string | number>>([]);
 
 onMounted(function() {
-  onCheckedAll();
+  const keys: Array<string | number> = [];
+  for (const item of props.list) {
+    if (item.exists) {
+      continue;
+    }
+    keys.push(item.name);
+  }
+  onChange(keys);
 });
 
 const onCheckedAll = function () {
@@ -73,7 +80,7 @@ defineExpose({ onSubmit: submit, validate });
     <Divider class="my-3"></Divider>
     <CheckboxGroup class="block" :value="data" @change="onChange">
       <div v-for="item in list" :key="item.id" class="mb-3 last:mb-0">
-        <Checkbox :value="item.id">{{ item.name }}</Checkbox>
+        <Checkbox :value="item.id">{{ item.user }} - {{ item.name }}</Checkbox>
       </div>
     </CheckboxGroup>
     <div class="mt-3">
