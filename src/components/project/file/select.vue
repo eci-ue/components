@@ -8,8 +8,9 @@ import type { PropType } from "vue";
 
 const props = defineProps({
   list: {
+    required: false,
+    default: () => [],
     type: Array as PropType<Array<{ id: string | number; name: string; exists: boolean; user: string }>>,
-    required: true,
   }
 });
 
@@ -23,7 +24,7 @@ onMounted(function() {
     if (item.exists) {
       continue;
     }
-    keys.push(item.name);
+    keys.push(item.id);
   }
   onChange(keys);
 });
@@ -40,6 +41,7 @@ const onCheckedAll = function () {
 }
 
 const onChange: any = function (value: Array<string | number>) {
+  console.log(value);
   if (value.length > 0 && value.length === props.list.length) {
     checkedAll.value = true;
     indeterminate.value = false;
