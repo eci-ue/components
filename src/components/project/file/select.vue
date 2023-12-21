@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { Icon } from "@ue/icon";
 import { ref, onMounted } from "vue";
 import * as message from "@ue/message";
 import i18n from "../../../utils/i18n";
-import { CheckboxGroup, Checkbox, Divider } from "ant-design-vue";
+import { CheckboxGroup, Checkbox, Divider, Space } from "ant-design-vue";
 
 import type { PropType } from "vue";
 
@@ -41,7 +42,6 @@ const onCheckedAll = function () {
 }
 
 const onChange: any = function (value: Array<string | number>) {
-  console.log(value);
   if (value.length > 0 && value.length === props.list.length) {
     checkedAll.value = true;
     indeterminate.value = false;
@@ -82,7 +82,17 @@ defineExpose({ onSubmit: submit, validate });
     <Divider class="my-3"></Divider>
     <CheckboxGroup class="block" :value="data" @change="onChange">
       <div v-for="item in list" :key="item.id" class="mb-3 last:mb-0">
-        <Checkbox :value="item.id">{{ item.user }} - {{ item.name }}</Checkbox>
+        <Checkbox :value="item.id">
+          <Space size="small">
+            <!-- 已上传 -->
+            <Icon v-if="item.exists" class="inline-flex text-base text-black text-opacity-25" type="FileTextOutlined"></Icon>
+            <!-- 未上传 -->
+            <Icon v-else class="inline-flex text-base text-primary" type="FileAddOutlined"></Icon>
+            <span>{{ item.user }}</span>
+            <span>-</span>
+            <span>{{ item.name }}</span>
+          </Space>
+        </Checkbox>
       </div>
     </CheckboxGroup>
     <div class="mt-3">
