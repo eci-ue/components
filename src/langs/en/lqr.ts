@@ -19,6 +19,7 @@ export default {
   },
   placeholder: {
     memoq: "MemoQ penalty point",
+    sampleWordCount: "Sample Word Count",
   },
   rule: {
     level: "Please calculate the Language Quality Level.",

@@ -5,6 +5,7 @@ export class UploadLqr {
   fileName?: string;
   level!: number; // 计算后得到的等级
   point!: number; // 输入的数字
+  sampleWords!: number; // 抽样字数
   reportPath?: string;
   taskId!: number | string;
   constructor(value: object = {}) {

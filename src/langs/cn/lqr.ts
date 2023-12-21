@@ -19,6 +19,7 @@ export default {
   },
   placeholder: {
     memoq: "MemoQ 惩罚点数",
+    sampleWordCount: "抽样字数",
   },
   rule: {
     level: "请计算语言质量等级。",
