@@ -103,7 +103,6 @@ const onUpload = async function (file: FileData) {
     const sampleWords = _.get(LQRPerformance, 'sampleWords')
     if (sampleWords) {
       formState.sampleWords = Number(sampleWords)
-      onCalculate()
     }
     if (point || level) {
       disabledEdit.value = true
