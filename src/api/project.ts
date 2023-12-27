@@ -466,7 +466,7 @@ export default class Project {
    * @param fileId 双语文件ID
    * @param type   lq 类型 [lqr: 1, lqa: 2, lqf: 3]
    */
-  @tryError(new PageResult())
+  @$error()
   @post("/:task/lqr/getGroupBilingualFile")
   @validate
   getGroupBilingualFile(@required taskId: string | number, @required fileId: string | number, @required type: string | number): Promise<PageResult<{ id: string | number; name: string; exists: boolean; }>> {

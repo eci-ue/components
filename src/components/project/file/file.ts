@@ -15,7 +15,13 @@ export const selectBilingualFile = async function (taskId: string | number, file
   // 获取双语文件下的同组双语文件列表
   let lqrRelateBilingualFileIds: Array<string | number> = [];
 
-  const group = await api.project.getGroupBilingualFile(taskId, fileId, type);
+  let group;
+  try {
+    group = await api.project.getGroupBilingualFile(taskId, fileId, type);
+  } catch (error) {
+    // 接口异常时返回空数据
+    return lqrRelateBilingualFileIds;
+  }
   if (group.total > 1) {
     const files = group.results.map(item => {
       return { ...item, user };
