@@ -62,7 +62,7 @@ const url = computed<string>(function() {
 
 </script>
 <template>
-  <div class="p-4" :class="{'cursor-pointer': !!url}" @click="catFileDetail(url)">
+  <div :class="{'cursor-pointer': !!url}" @click="catFileDetail(url)">
     <template v-if="rate">
       <Rate :data="data" :mode="mode"></Rate>
     </template>
