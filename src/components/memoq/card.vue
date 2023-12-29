@@ -59,7 +59,7 @@ const deleteItem = function () {
     </section>
   </section>
 </template> 
-<style scoped lang="scss">
+<style scoped lang="less">
 .card-item {
   @apply border border-normal-color rounded p-4;
 }

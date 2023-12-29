@@ -26,4 +26,16 @@ export default {
     notStarted: "未开始",
     openFile: "查看",
   },
+  detail: {
+    rate: "物料单价"
+  },
+  lqa: {
+    select: "双语文件选择",
+    file: {
+      empty: "双语文件数量为空，请联系管理员！",
+      rule: {
+        tips: "请至少选择一个双语文件！"
+      }
+    }
+  }
 };

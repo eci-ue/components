@@ -15,10 +15,15 @@ export class TaskFileStage {
 }
 
 export class TaskFileItem {
+  showLqr?: boolean;
   lqrIndex: number = 1;
   lqrName: string = "";
   lqrData?: object;
   lqrVisitPath: string = "";
+  lqfIndex: number = 1;
+  lqfName: string = "";
+  lqfData?: object;
+  lqfVisitPath: string = "";
   bilingualFileId!: string | number; // 文件ID
   bilingualFileName: string = "";
   taskBilingualFileStageRspList: TaskFileStage[] = []

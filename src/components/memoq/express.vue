@@ -70,7 +70,7 @@ defineExpose({ reload: getData });
     </div>
   </Spin>
 </template> 
-<style scoped lang="scss">
+<style scoped lang="less">
 .card-box {
   @apply grid grid-cols-2 gap-4 lg:grid-cols-3 2xl:grid-cols-4;
 }

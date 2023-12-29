@@ -6,7 +6,7 @@
 
 import _ from "lodash-es";
 import { api } from "../../../api";
-import { reactive, toRaw, computed,ref } from "vue";
+import { reactive, toRaw, computed, ref } from "vue";
 import { UploadLqr } from "./type";
 import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
@@ -24,9 +24,20 @@ const props = defineProps({
     type: [Number, String],
     required: true,
   },
+  // 任务ID
   taskId: {
     type: [Number, String],
     default: true,
+  },
+  /** 项目ID */
+  projectId: {
+    required: true,
+    type: [String, Number]
+  },
+  /** 类型 1：lqr 2:lqa 3:lqf */
+  lqType: {
+    type: [String, Number],
+    default: () => 1
   },
   disabled: {
     type: Boolean,
@@ -78,7 +89,7 @@ const onUpload = async function (file: FileData) {
   formState.reportPath = data?.url || "";
   disabledEdit.value = false
   if (data?.url) {
-    const LQRPerformance = await api.project.getLQRPerformance(data.url);
+    const LQRPerformance = await api.project.getLQRPerformance(data.url,props.projectId, props.lqType);
     const level = _.get(LQRPerformance, 'level')
     if (level) {
       formState.level = Number(level)
@@ -89,7 +100,11 @@ const onUpload = async function (file: FileData) {
       formState.point = Number(point)
       onCalculate()
     }
-    if(point || level){
+    const sampleWords = _.get(LQRPerformance, 'sampleWords')
+    if (sampleWords) {
+      formState.sampleWords = Number(sampleWords)
+    }
+    if (point || level) {
       disabledEdit.value = true
     }
 
@@ -114,7 +129,8 @@ const onSubmit = function () {
   return validate(function () {
     return Object.assign(toRaw(formState), {
       fileId: props.fileId,
-      taskId: props.taskId
+      taskId: props.taskId,
+      lqType: props.lqType
     });
   });
 }
@@ -124,20 +140,15 @@ defineExpose({ submit: onSubmit });
 <template>
   <div>
     <Form ref="formRef" layout="vertical" class="my-4 w-full" :model="formState">
-      <FormItem label="" name="point">
+      <FormItem label="" name="point" v-if="lqType == 1">
         <div class="flex w-full">
           <div class="flex-1">
-            <InputNumber class="w-full" 
-            :min="1" 
-            :precision="0" 
-            v-model:value.trim="formState.point" 
-            :max="9999999"
-              :placeholder="i18n.lqr.placeholder.memoq" 
-              :disabled="disabled || disabledEdit" 
-              @pressEnter="onCalculate"
+            <InputNumber class="w-full" :min="1" :precision="0" v-model:value.trim="formState.point" :max="9999999"
+              :placeholder="i18n.lqr.placeholder.memoq" :disabled="disabled || disabledEdit" @pressEnter="onCalculate"
               @change="changePoint" />
           </div>
-          <Button class="ml-4" type="primary" :disabled="disabled || !formState.point || disabledEdit" @click="onCalculate">{{ i18n.lqr.title.calculate }}</Button>
+          <Button class="ml-4" type="primary" :disabled="disabled || !formState.point || disabledEdit"
+            @click="onCalculate">{{ i18n.lqr.title.calculate }}</Button>
         </div>
       </FormItem>
 
@@ -156,13 +167,14 @@ defineExpose({ submit: onSubmit });
           </template>
         </RadioGroup>
       </FormItem>
+      <FormItem label="" name="sampleWords" :rules="rules.text(i18n.lqr.placeholder.sampleWordCount)">
+        <InputNumber class="w-full" :min="0" :precision="0" v-model:value.trim="formState.sampleWords" :max="9999999"
+              :placeholder="i18n.lqr.placeholder.sampleWordCount" :disabled="disabled" />
+      </FormItem>
 
-      <FormItem 
-      :label="i18n.lqr.title.languageReport" 
-        name="reportPath"
+      <FormItem :label="i18n.lqr.title.languageReport" name="reportPath"
         :rules="rules.text(i18n.lqr.rule.languageReport)">
-
-        <UploadOSS class="w-full" :disabled="disabled" :multiple="true" :success="onUpload">
+        <UploadOSS class="w-full" :disabled="disabled" :task-id="taskId" :multiple="true" :success="onUpload">
           <SkinView.Input label="Upload" :disabled="disabled" :name="formState.fileName"></SkinView.Input>
         </UploadOSS>
         <div class="mt-2">
@@ -178,7 +190,7 @@ defineExpose({ submit: onSubmit });
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .level-box {
   ::v-deep(.ant-radio-button-wrapper) {
     @apply w-full mb-2 bg-milk text-deep-gray;

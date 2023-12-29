@@ -10,8 +10,6 @@ import i18n from "../../../utils/i18n";
 import { headers, fileList, before } from "./util";
 import { table } from "@ue/utils";
 
-
-import LqrLink from "./lqr.vue";
 import Lqr from "../lqr/lqr.vue";
 
 import { Table, Space } from "ant-design-vue";
@@ -51,6 +49,12 @@ const props = defineProps({
     required: false,
     default: () => 0
   },
+  /** 报告等级 */
+  lqfLevel: {
+    type: [Number, String],
+    required: false,
+    default: () => 0
+  },
   /** 工作模式 */
   mode: {
     required: true,
@@ -58,6 +62,11 @@ const props = defineProps({
   },
   // lqr 枚举
   lqrOper: {
+    type: [String, Number],
+    required: false,
+  },
+  // lqr 枚举
+  lqfOper: {
     type: [String, Number],
     required: false,
   },
@@ -96,7 +105,7 @@ const props = defineProps({
 
 const { selectedKeys, rowSelection } = table.useSelection();
 
-const onReload = function() {
+const onReload = function () {
   $emit("reload");
 };
 
@@ -106,25 +115,15 @@ const onReload = function() {
     <div class="flex w-full justify-between items-center mb-4">
       <Space>
         <!-- Lqr 报告 -->
-        <Lqr :id="id" :level="lqrLevel"/>
+        <Lqr :id="id" :level="lqrLevel" />
+        <!-- Lqf 报告 -->
+        <Lqr :id="id" :level="lqfLevel" :lqType="3" />
         <!-- 下载双语文件 -->
-        <ExportDownload 
-          placement="bottomLeft" 
-          :before="before"
-          :pm="pm"  
-          :partner="partner" 
-          :mode="mode" 
-          :disabled="selectedKeys.length < 1" 
-          :file="selectedKeys">
+        <ExportDownload placement="bottomLeft" :before="before" :pm="pm" :partner="partner" :mode="mode"
+          :disabled="selectedKeys.length < 1" :file="selectedKeys">
         </ExportDownload>
         <!-- 文件下载记录 -->
-        <ExportButton 
-          :id="projectId" 
-          :language="language" 
-          :before="before" 
-          :pm="pm" 
-          :mode="mode" 
-          :partner="partner">
+        <ExportButton :id="projectId" :language="language" :before="before" :pm="pm" :mode="mode" :partner="partner">
         </ExportButton>
       </Space>
       <slot>
@@ -134,27 +133,16 @@ const onReload = function() {
         </Space>
       </slot>
     </div>
-    <Table bordered 
-      :pagination="false" 
-      :row-selection="rowSelection" 
-      :columns="headers(list, props)" 
-      :data-source="fileList(list)">
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'lqr'">
-          <template v-if = "record.showLqr">
-            <LqrLink :data="record" :status="status" :pm="pm" :mode="mode" :id="id" :before="before" :lqr-oper="lqrOper" :partner="partner" @add="onReload"></LqrLink>
-          </template>
-          <template v-else> -- </template>
-        </template>
-      </template>
-    </Table>
+    <div class="overflow-x-auto">
+        <Table class="min-w-300" bordered :pagination="false" :row-selection="rowSelection" :columns="headers(list, props, onReload)" :data-source="fileList(list)"></Table>
+    </div>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="less">
 .ant-table .word-content {
   &:not(th) {
     @apply p-0;
-  }  
+  }
 }
 </style>

@@ -1,22 +1,25 @@
 export default {
   title: {
     lqr: "LQR",
+    lqf: "LQF",
     job: "任务",
     task: "任务字数",
     modify: "修改",
     words: "付费字数",
     adjustWorkload: "调整字数",
-    lqrFile: "LQR 文件",
-    lqrLevel: "{{ level }} 级",
-    lqrResult: "LQR 结果：{{ level }} | LQR 结果：{{ level }} 级",
+    remark: "说明",
+    lqrFile: "{lqTypeName} 文件",
+    lqrLevel: "{level} 级",
+    lqrResult: "{lqTypeName} 结果：{level} | {lqTypeName} 结果：{level} 级",
     lqrReport: "提交目标质量报告",
-    lqrUpload: "上传 LQR",
+    lqrUpload: "上传 {lqTypeName}",
     languageReport: "语言质量报告：",
     LanguageLevel: "语言质量等级：",
     calculate: "计算",
   },
   placeholder: {
     memoq: "MemoQ 惩罚点数",
+    sampleWordCount: "抽样字数",
   },
   rule: {
     level: "请计算语言质量等级。",
@@ -34,9 +37,9 @@ export default {
   form: {
     description1: "感谢您抽出宝贵时间填写本质量评估表。本评估表旨在了解 QA 和审校人员对议员译文质量的反馈意见。您的反馈将帮助我们在客观真实评估议员能力和表现的同时，发现并解决潜在的质量问题。",
     description2: "请您客观填写以下评估表。",
-    upload: "请上传 LQR 文件",
+    upload: "请上传 {lqTypeName} 文件",
     comment: "请给出具体建议",
-    download: "下载 LQR 模板",
+    download: "下载 {lqTypeName} 模板",
     option: {
       ececllent: "优秀",
       good: "良好",

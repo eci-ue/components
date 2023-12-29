@@ -102,12 +102,9 @@ const amount = function (list: AmountItemData[]): string {
               </th>
               <th class="ant-table-cell">
                 <span class="block text-right">
-                  <span>{{ i18n.project.detail.unitPrice }}</span>
+                  <span>{{ i18n.project.detail.rate }}</span>
                   <span class="ml-1" v-if="moneyUnit">({{ moneyUnit }})</span>
                 </span>
-              </th>
-              <th class="ant-table-cell">
-                <span class="block text-right">{{ i18n.project.detail.discount }}</span>
               </th>
               <th class="ant-table-cell">
                 <span class="block text-right">
@@ -127,16 +124,15 @@ const amount = function (list: AmountItemData[]): string {
               </td>
               <td class="ant-table-cell text-right" v-if="mtShow">
                 {{ toFixed(task(index, "words"), 0) }}
-                <span v-if="index > 5">({{ toFixed(mtFactor,2) || '1.00' }})</span>
+                <span v-if="index > 5">({{ toFixed(mtFactor, 2) || '1.00' }})</span>
               </td>
-              <td class="ant-table-cell text-right" rowspan="8" v-if="index < 1">{{ toFixed(money, fixed) }}</td>
-              <td class="ant-table-cell text-right">{{ valueFormat(toFixed(task(index, "discount", 0) * 100, 0), "%") }}
+              <td class="ant-table-cell text-right">{{ toFixed(task(index, "rate"), fixed) }}
               </td>
               <td class="ant-table-cell text-right">{{ toFixed(task(index, "subTotal"), fixed) }}</td>
             </tr>
             <tr>
               <td class="ant-table-cell">{{ i18n.project.label.amount }}</td>
-              <td class="ant-table-cell text-right" :colspan="mtShow ? 6 : 5">{{ amount(list) }}</td>
+              <td class="ant-table-cell text-right" :colspan="mtShow ? 5 : 4">{{ amount(list) }}</td>
             </tr>
           </tbody>
         </table>

@@ -1,22 +1,25 @@
 export default {
   title: {
     lqr: "LQR",
+    lqf: "LQF",
     job: "Job",
-    task: "Task Words",
+    task: "Workload",
     modify: "Modify",
-    words: "Paid Words",
+    words: "Paid Workload",
     adjustWorkload: "Adjust Workload",
-    lqrFile: "LQR File",
+    remark: "Remark",
+    lqrFile: "{lqTypeName} File",
     lqrLevel: "Level {level}",
-    lqrResult: "LQR Result: {level} | LQR Result: Level {level}",
+    lqrResult: "{lqTypeName} Result: {level} | {lqTypeName} Result: Level {level}",
     lqrReport: "Submit Targeted Quality Report",
-    lqrUpload: "Upload LQR",
+    lqrUpload: "Upload {lqTypeName}",
     languageReport: "Language Quality Report:",
     LanguageLevel: "Language Quality Level:",
     calculate: "Calculate",
   },
   placeholder: {
     memoq: "MemoQ penalty point",
+    sampleWordCount: "Sample Word Count",
   },
   rule: {
     level: "Please calculate the Language Quality Level.",
@@ -34,9 +37,9 @@ export default {
   form: {
     description1: "Thank you for taking the time to complete this quality assessment form. The purpose of this form is to gather feedback from QA and review staff on the quality of the translated content. Your feedback will help us objectively and accurately assess the translator's abilities and performance, as well as identify and address potential quality issues.",
     description2: "Would you complete the following assessment form objectively?",
-    upload: "Please upload the LQR File.",
+    upload: "Please upload the {lqTypeName} File.",
     comment: "Please provide some specific advice.",
-    download: "Download LQR Template",
+    download: "Download {lqTypeName} Template",
     option: {
       ececllent: "Excellent",
       good: "Good",

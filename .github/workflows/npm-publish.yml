@@ -5,7 +5,8 @@ name: Npm Package
 
 on:
   push:
-    branches: ["master"]
+    branches:
+      - '*'
 
 jobs:
   build:

@@ -19,7 +19,7 @@ import FormFile from "../form/file.vue";
 import { ExportDownload } from "../export/index";
 import FormlanguagePairs from "../form/language/pairs.vue";
 
-import type { UploadFile, FileData } from "@ue/upload";
+import type { FileData } from "@ue/upload";
 
 const $emit = defineEmits(["update:progress", "click", "download"]);
 const props = defineProps({
@@ -133,13 +133,16 @@ const onSelectDriveFile = async function () {
 
 // 直接上传文件
 const onUpload = async function (fileData: FileData) {
-  const data: UploadFile = fileData.value;
+  // const data: UploadFile = fileData.value;
 
   const file = {
-    fileName: fileData.name(),
-    filePath: data.url,
-    fileSize: data.file?.size,
-    fileExt: _.last(data.name.split(".")),
+    fileName: fileData.name(),              // 文件名称
+    // filePath: data.url,
+    // fileSize: data.file?.size,
+    // fileExt: _.last(data.name.split(".")),
+    filePath: fileData.url(),               // 文件路径
+    fileSize: fileData.size(),              // 文件大小
+    fileExt: fileData.suffix(),             // 文件后缀
   };
 
   let status: boolean = false;
@@ -240,7 +243,7 @@ const operateBtn = computed(() => {
 const disabledDel = computed(() => {
   if (props.task) {
     //解析的双语文件类型不允许删除和下载
-    return _.size(props.selected.filter(item => item.type != 5)) < 1
+    return _.some(props.selected, item => item.type == 5) || props.selected.length < 1
   }
   return props.selectedKeys.length < 1
 })
@@ -256,14 +259,30 @@ const disabledDel = computed(() => {
         <Button :disabled="selectedKeys.length < 1" @click="onChangePairs">{{ i18n.common.label.languagePairs }}</Button>
       </template>
 
-      <UploadOSS 
-        v-if="!disabled && operateBtn.upload" 
-        :accept="accept" 
-        :disabled="disabled" 
-        :multiple="true"
-        :success="onUpload">
-        <span class="ant-btn ant-btn-primary">{{ i18n.common.label.fileUpload }}</span>
-      </UploadOSS>
+      <template v-if="task">
+        <!-- 如果时任务相关的文件，则需要传入任务ID -->
+        <UploadOSS 
+          v-if="!disabled && operateBtn.upload"
+          :task-id="id" 
+          :accept="accept" 
+          :disabled="disabled" 
+          :multiple="true"
+          :success="onUpload">
+          <span class="ant-btn ant-btn-primary">{{ i18n.common.label.fileUpload }}</span>
+        </UploadOSS>
+      </template>
+      <template v-else>
+        <!-- 默认为项目相关的文件，则传入项目ID -->
+        <UploadOSS 
+          v-if="!disabled && operateBtn.upload" 
+          :project-id="id" 
+          :accept="accept" 
+          :disabled="disabled" 
+          :multiple="true"
+          :success="onUpload">
+          <span class="ant-btn ant-btn-primary">{{ i18n.common.label.fileUpload }}</span>
+        </UploadOSS>
+      </template>
 
       <span v-if="operateBtn.downTarget">
         <ExportDownload 

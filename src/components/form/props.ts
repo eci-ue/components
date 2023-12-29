@@ -61,6 +61,10 @@ export interface TextAreaMeta extends FormItemMeta{
 
 
 export interface UploadMeta extends FormItemMeta {
+  // 项目ID
+  projectId?: string | number;
+  // 任务ID
+  taskId?: string | number;
   preview: boolean;
   transform?: (value: UploadFile) => any
 }

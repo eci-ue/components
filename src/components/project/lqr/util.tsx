@@ -14,7 +14,8 @@ export const headers: ColumnsType<object> = [
   { title: i18n.lqr.title.task, dataIndex: "words", key: "words", align: "right" },
   { title: i18n.lqr.title.modify, dataIndex: "modify", key: "modify", align: "right" },
   { title: i18n.lqr.title.adjustWorkload, dataIndex: "adjustWorkload", key: "adjustWorkload", align: "right" },
-  { title: i18n.lqr.title.words, dataIndex: "paidWords", key: "words", align: "right" }
+  { title: i18n.lqr.title.words, dataIndex: "paidWords", key: "words", align: "right" },
+  { title: i18n.lqr.title.remark, dataIndex: "remark", key: "remark" }
 ];
 
 const showNumber = function (words: number, paidWords: number): string | undefined {
@@ -25,7 +26,7 @@ const showNumber = function (words: number, paidWords: number): string | undefin
   return String(value);
 }
 
-export const list = function (results: object[]) {
+export const list = function (results: object[], lqType: string | number) {
   return _.map(results, function (item: object, index: number) {
     return {
       index: index,
@@ -34,19 +35,21 @@ export const list = function (results: object[]) {
       list: [
         // T
         {
-          resourceName: "T" + safeGet<string>(item, "tresourceName"),
-          words: safeGet<number>(item, "twords"),
+          resourceName: safeGet<string>(item, "tresourceName"),
+          words: `${safeGet<number>(item, "twords")} ${safeGet<string>(item, "ttaskUnitName") || "Word"}`,
           modify: _.toNumber(safeGet<number>(item, "tadjustPercent")),
-          adjustWorkload: showNumber((safeGet<number>(item, "twords") || 0), (safeGet<number>(item, "tpaidWords") || 0)),
-          paidWords: safeGet<number>(item, "tpaidWords"),
+          adjustWorkload: `${showNumber((safeGet<number>(item, "twords") || 0), (safeGet<number>(item, "tpaidWords") || 0))} ${safeGet<string>(item, "ttaskUnitName") || "Word"}`,
+          paidWords: `${safeGet<number>(item, "tpaidWords")}  ${safeGet<string>(item, "ttaskUnitName") || "Word"}`,
+          remark: safeGet<string>(item, "remark")
         },
         // E
         {
-          resourceName: "E" + safeGet<string>(item, "eresourceName"),
-          words: safeGet<number>(item, "ewords"),
+          resourceName: safeGet<string>(item, "eresourceName"),
+          words: `${safeGet<number>(item, "ewords")} ${safeGet<string>(item, "etaskUnitName") || "Word"}`,
           modify: _.toNumber(safeGet<number>(item, "eadjustPercent")),
-          adjustWorkload: showNumber((safeGet<number>(item, "ewords") || 0), (safeGet<number>(item, "epaidWords") || 0)),
-          paidWords: safeGet<number>(item, "epaidWords"),
+          adjustWorkload: `${showNumber((safeGet<number>(item, "ewords") || 0), (safeGet<number>(item, "epaidWords") || 0))} ${safeGet<string>(item, "etaskUnitName") || "Word"}`,
+          paidWords: `${safeGet<number>(item, "epaidWords")} ${safeGet<string>(item, "etaskUnitName") || "Word"}`,
+          remark: safeGet<string>(item, "remark")
         }
       ]
     };
@@ -59,7 +62,13 @@ const toValue = function (value?: string | number): string | undefined {
   }
 }
 
-export const partnerItems = function (data: object = {}, disabled: boolean = false): FormOptionValue {
+export const partnerItems = function (data: object = {}, disabled: boolean = false,lqType: string | number, taskId?: string | number): FormOptionValue {
+  let lqTypeName = ""
+  if (lqType == 1){
+    lqTypeName = "LQR"
+  }else if (lqType == 3){
+    lqTypeName = "LQF"
+  }
   return [
     {
       from: false,
@@ -138,15 +147,18 @@ export const partnerItems = function (data: object = {}, disabled: boolean = fal
           key: "LQRFileUrl",
           disabled,
           lable: (<span>
-            <span>{i18n.lqr.title.lqrFile}</span>
-            <a class="ml-2" target="_blank" href="https://static.eciol.com/template/prod/lqr_template.xlsx" download="lqr_template.xlsx">{i18n.lqr.form.download}</a>
+            <span>{i18n.part(i18n.lqr.title.lqrFile, 1, { lqTypeName: lqTypeName })}</span>
+            <a class="ml-2" target="_blank" href={`https://static.eciol.com/template/prod/` + (lqType==1?`lqr_template.xlsx`:`lqf_template.xls`)} download={lqTypeName + `_template.xlsx`}>
+              {i18n.part(i18n.lqr.form.download, 1, { lqTypeName: lqTypeName })}
+            </a>
           </span>),
           component: FormUpload,
-          rules: disabled ? [] : rules.text(i18n.lqr.form.upload),
+          rules: disabled ? [] : rules.text( i18n.part(i18n.lqr.form.upload, 1, { lqTypeName: lqTypeName }) ),
           value: safeGet<string>(data, "storagePath"),
           meta: {
+            taskId,
             preview: true,
-            placeholder: i18n.lqr.form.upload,
+            placeholder: i18n.part(i18n.lqr.form.upload, 1, { lqTypeName: lqTypeName }),
             transform: function (data: UploadFile): string | undefined {
               if (data && data.url) {
                 return data.url;

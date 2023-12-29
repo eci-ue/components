@@ -26,4 +26,16 @@ export default {
     notStarted: "Not Started",
     openFile: "Open File",
   },
+  detail: {
+    rate: "Material Price"
+  },
+  lqa: {
+    select: "Files Selection",
+    file: {
+      empty: "The bilingual file count is empty. Please contact the administrator!",
+      rule: {
+        tips: "Please select at least one bilingual file."
+      }
+    }
+  }
 };

@@ -18,7 +18,8 @@ const props = defineProps({
     default: "",
   }
 });
-const { state } = useState.data(function () {
+// @ts-ignore
+const { state } = useState.data<InfoType>(function () {
   return api.task.interruptInfo<InfoType>(props.taskId)
 });
 const onDownload = function (fileName: string, filePath: string) {
@@ -57,7 +58,7 @@ const onDownload = function (fileName: string, filePath: string) {
     <span v-else class="ml-5 text-label-color">--</span>
   </div>
 </template>
-<style scoped lang="scss">
+<style scoped lang="less">
 .work-info {
   ::v-deep(.ant-descriptions-bordered .ant-descriptions-item-label) {
     @apply py-2 px-3 text-deep-gray text-center;
