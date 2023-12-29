@@ -26,6 +26,7 @@ export default {
     notStarted: "未开始",
     openFile: "查看",
   },
+<<<<<<< HEAD
   detail: {
     rate: "物料单价"
   },
@@ -38,4 +39,6 @@ export default {
       }
     }
   }
+=======
+>>>>>>> parent of 2fc9247 (feat：任务工作量区间修改)
 };
