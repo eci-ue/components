@@ -26,7 +26,6 @@ export default {
     notStarted: "Not Started",
     openFile: "Open File",
   },
-<<<<<<< HEAD
   detail: {
     rate: "Material Price"
   },
@@ -39,6 +38,4 @@ export default {
       }
     }
   }
-=======
->>>>>>> parent of 2fc9247 (feat：任务工作量区间修改)
 };
