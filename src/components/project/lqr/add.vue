@@ -167,7 +167,7 @@ defineExpose({ submit: onSubmit });
           </template>
         </RadioGroup>
       </FormItem>
-      <FormItem label="" name="sampleWords" :rules="rules.text(i18n.lqr.placeholder.sampleWordCount)">
+      <FormItem label="">
         <InputNumber class="w-full" :min="0" :precision="0" v-model:value.trim="formState.sampleWords" :max="9999999"
               :placeholder="i18n.lqr.placeholder.sampleWordCount" :disabled="disabled" />
       </FormItem>
