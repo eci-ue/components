@@ -411,8 +411,8 @@ export default class Project {
   @$error()
   @post("/:task/detail/culMemoqPoint")
   @validate
-  culMemoqPoint(@required fileId: number | string, @required point: number): Promise<number> {
-    const data = { point, fileId };
+  culMemoqPoint(@required lqrRelateBilingualFileIds: Array<number | string>, @required point: number): Promise<number> {
+    const data = { point, lqrRelateBilingualFileIds };
     return { data } as any;
   }
 

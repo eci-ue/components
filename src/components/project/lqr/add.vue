@@ -6,7 +6,7 @@
 
 import _ from "lodash-es";
 import { api } from "../../../api";
-import { reactive, toRaw, computed, ref } from "vue";
+import { reactive, toRaw, computed, ref, PropType } from "vue";
 import { UploadLqr } from "./type";
 import { useValidate } from "@ue/form";
 import { rule as rules } from "@ue/utils";
@@ -48,7 +48,11 @@ const props = defineProps({
     default() {
       return {};
     }
-  }
+  },
+  lqrRelateBilingualFileIds: {
+    type: Array as PropType<Array<number | string>>,
+    required: true
+  },
 });
 
 const formState = reactive<UploadLqr>(new UploadLqr(props.value));
@@ -70,7 +74,7 @@ const disabledEdit = ref(false)
 
 //计算 memoq penalty point 对应级别接口
 const onCalculate = async function () {
-  const level = await api.project.culMemoqPoint(props.fileId, formState.point);
+  const level = await api.project.culMemoqPoint(props.lqrRelateBilingualFileIds, formState.point);
   if (level) {
     formState.level = level;
   } else {
