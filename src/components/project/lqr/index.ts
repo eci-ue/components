@@ -14,6 +14,7 @@ interface Option {
   file: string | number; // 双语文件ID
   partner?: boolean;     // 是否为外部议员
   projectId?: number | string;     // 项目ID
+  lqrRelateBilingualFileIds?: Array<string | number>;     // 语言id
 }
 
 /**
@@ -40,7 +41,7 @@ export const AddLqr = function <T>(option: Option, config: ModalFuncProps = {}, 
       okText: i18n.common.button.save,
       title: i18n.part(i18n.lqr.title.lqrUpload, 1, { lqTypeName: Number(option.lqType) == 3 ? "LQF" : "LQR" })
     }, config || {});
-    const props = Object.assign(params, { value: data, disabled: option.disabled, projectId: option.projectId });
+    const props = Object.assign(params, { value: data, disabled: option.disabled, projectId: option.projectId, lqrRelateBilingualFileIds: option.lqrRelateBilingualFileIds });
     return modal.confirm<Component, T>(AddLqrForm, temp, props);
   }
 }

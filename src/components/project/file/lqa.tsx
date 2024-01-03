@@ -157,7 +157,8 @@ export default defineComponent({
         projectId: props.projectId,
         file: data.bilingualFileId,
         partner: props.partner,
-        lqType: props.type
+        lqType: props.type,
+        lqrRelateBilingualFileIds
       };
       const callback = async function (value: object) {
         if (disabled) {
