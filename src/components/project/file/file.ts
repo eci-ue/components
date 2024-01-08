@@ -41,11 +41,16 @@ export const selectBilingualFile = async function (taskId: string | number, file
     }
   } else {
     const list = group.results.map((data: { id: string | number }) => data.id);
+    let total: number = 0
+    _.each(group.results, item => {
+      total += item.sampleWords
+    })
     if (_.size(list) < 1) {
       message.error(i18n.project.lqa.file.empty);
       return { lqrRelateBilingualFileIds, totalSampleWords };
     }
     lqrRelateBilingualFileIds = list;
+    totalSampleWords = total;
   }
 
   return { lqrRelateBilingualFileIds, totalSampleWords };
