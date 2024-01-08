@@ -10,17 +10,22 @@ import * as modal from "@ue/modal";
 import i18n from "../../../utils/i18n";
 import * as message from "@ue/message";
 import safeGet from "@fengqiaogang/safe-get";
-
-export const selectBilingualFile = async function (taskId: string | number, fileId: string | number, type: string | number = 1, user: string = "") {
+interface Type {
+  lqrRelateBilingualFileIds: Array<string | number>
+  totalSampleWords: number
+}
+export const selectBilingualFile = async function (taskId: string | number, fileId: string | number, type: string | number = 1, user: string = ""): Promise<Type> {
   // 获取双语文件下的同组双语文件列表
   let lqrRelateBilingualFileIds: Array<string | number> = [];
+
+  let totalSampleWords: number = 0;
 
   let group;
   try {
     group = await api.project.getGroupBilingualFile(taskId, fileId, type);
   } catch (error) {
     // 接口异常时返回空数据
-    return lqrRelateBilingualFileIds;
+    return { lqrRelateBilingualFileIds, totalSampleWords };
   }
   if (group.total > 1) {
     const files = group.results.map(item => {
@@ -29,6 +34,7 @@ export const selectBilingualFile = async function (taskId: string | number, file
     const data = await modal.confirm(View, { title: i18n.project.lqa.select, width: 480 }, { list: files });
     if (data) {
       const value = safeGet<Array<string | number>>(data, "value") || [];
+      totalSampleWords = safeGet<number>(data, "totalSampleWords") || 0;
       if (_.size(value) > 0) {
         lqrRelateBilingualFileIds = value;
       }
@@ -37,10 +43,10 @@ export const selectBilingualFile = async function (taskId: string | number, file
     const list = group.results.map((data: { id: string | number }) => data.id);
     if (_.size(list) < 1) {
       message.error(i18n.project.lqa.file.empty);
-      return [];
+      return { lqrRelateBilingualFileIds, totalSampleWords };
     }
     lqrRelateBilingualFileIds = list;
   }
 
-  return lqrRelateBilingualFileIds;
+  return { lqrRelateBilingualFileIds, totalSampleWords };
 }
