@@ -145,7 +145,7 @@ export default defineComponent({
       // 议员
       const user = safeGet<string>(props.data, "taskBilingualFileStageRspList[0].resourceName");
       // 获取双语文件下的同组双语文件列表
-      const lqrRelateBilingualFileIds: Array<string | number> = await selectBilingualFile(props.id, data.bilingualFileId, props.type, user);
+      const {lqrRelateBilingualFileIds, totalSampleWords} = await selectBilingualFile(props.id, data.bilingualFileId, props.type, user);
       if (_.size(lqrRelateBilingualFileIds) < 1) {
         // 双语文件为空
         return false;
@@ -158,7 +158,8 @@ export default defineComponent({
         file: data.bilingualFileId,
         partner: props.partner,
         lqType: props.type,
-        lqrRelateBilingualFileIds
+        lqrRelateBilingualFileIds,
+        totalSampleWords
       };
       const callback = async function (value: object) {
         if (disabled) {

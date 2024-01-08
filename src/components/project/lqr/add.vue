@@ -29,6 +29,11 @@ const props = defineProps({
     type: [Number, String],
     default: true,
   },
+  // 默认抽样字数
+  totalSampleWords: {
+    type: Number,
+    default: 0,
+  },
   /** 项目ID */
   projectId: {
     required: true,
@@ -93,7 +98,7 @@ const onUpload = async function (file: FileData) {
   formState.reportPath = data?.url || "";
   disabledEdit.value = false
   if (data?.url) {
-    const LQRPerformance = await api.project.getLQRPerformance(data.url,props.projectId, props.lqType);
+    const LQRPerformance = await api.project.getLQRPerformance(data.url, props.projectId, props.lqType);
     const level = _.get(LQRPerformance, 'level')
     if (level) {
       formState.level = Number(level)
@@ -107,6 +112,8 @@ const onUpload = async function (file: FileData) {
     const sampleWords = _.get(LQRPerformance, 'sampleWords')
     if (sampleWords) {
       formState.sampleWords = Number(sampleWords)
+    } else {
+      formState.sampleWords = props.totalSampleWords
     }
     if (point || level) {
       disabledEdit.value = true
@@ -173,7 +180,7 @@ defineExpose({ submit: onSubmit });
       </FormItem>
       <FormItem label="">
         <InputNumber class="w-full" :min="0" :precision="0" v-model:value.trim="formState.sampleWords" :max="9999999"
-              :placeholder="i18n.lqr.placeholder.sampleWordCount" :disabled="disabled" />
+          :placeholder="i18n.lqr.placeholder.sampleWordCount" :disabled="disabled" />
       </FormItem>
 
       <FormItem :label="i18n.lqr.title.languageReport" name="reportPath"

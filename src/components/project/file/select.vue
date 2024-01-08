@@ -4,6 +4,7 @@ import { ref, onMounted } from "vue";
 import * as message from "@ue/message";
 import i18n from "../../../utils/i18n";
 import { CheckboxGroup, Checkbox, Divider, Space } from "ant-design-vue";
+import _ from "lodash-es";
 
 import type { PropType } from "vue";
 
@@ -11,7 +12,7 @@ const props = defineProps({
   list: {
     required: false,
     default: () => [],
-    type: Array as PropType<Array<{ id: string | number; name: string; exists: boolean; user: string }>>,
+    type: Array as PropType<Array<{ id: string | number; name: string; exists: boolean; user: string; sampleWords: number }>>,
   }
 });
 
@@ -65,7 +66,13 @@ const validate = function () {
 
 const submit = function () {
   if (validate()) {
-    return { value: [...data.value] };
+    let totalSampleWords: number = 0
+    _.each(props.list,item=>{
+      if (_.includes(data.value,item.id)){
+        totalSampleWords += Number(item.sampleWords || 0)
+      }
+    })
+    return { value: [...data.value], totalSampleWords };
   }
   return false;
 }
