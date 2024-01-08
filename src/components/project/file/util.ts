@@ -114,7 +114,7 @@ export const headers = function (fileList: TaskFileItem[] = [], props: any, onRe
           // 任务状态
           const status = safeGet<number>(item, "status") || 0;
           // 判断第一个节点，是否已提交任务
-          if (index === 0 && Number(status) >= 4) {
+          if (Number(status) >= 4) {
             return createElement("div", { "class": "p-4 flex items-end" }, [
               createElement("div", { "class": "flex-1 mr-2" }, value),
               // 使用 icon 表示任务已提交
