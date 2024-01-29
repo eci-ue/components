@@ -11,7 +11,10 @@ import Time from "../time";
 import SourceTarget from "../source/target.vue";
 import { Button, Divider } from "ant-design-vue";
 import { MemoqItemData } from "./type";
+import { useRouter, useRoute } from "vue-router";
 
+const router = useRouter();
+const route = useRoute();
 const $emit = defineEmits(["delete"]);
 const props = defineProps({
   item: {
@@ -23,7 +26,13 @@ const props = defineProps({
 const deleteItem = function () {
   $emit('delete', props.item)
 }
-
+const toLink = function () {
+  router.push({
+    name: "File List",
+    params: route.params,
+    query: route.query,
+  })
+}
 </script>
 <template>
   <section class="card-item">
@@ -51,11 +60,14 @@ const deleteItem = function () {
       </div>
     </section>
     <Divider dashed class="my-5" />
-    <section>
+    <section class="flex justify-between">
       <template v-if="_.size(item.targetLangInfoList) > 0">
         <SourceTarget :languagePair="item.languagePair"></SourceTarget>
       </template>
       <span v-else>--</span>
+      <Button type="link" class="ml-2" @click="toLink">
+        File Task <Icon type="RightOutlined" class="ml-1"></Icon>
+      </Button>
     </section>
   </section>
 </template> 
