@@ -256,6 +256,7 @@ const buttonName = function (name: string) {
 <template>
   <Menu v-if="layout == Skin.vertical">
     <MenuItem class="py-2" @click="handleClick(name)" :key="name" v-for="name in optTypes">{{ buttonName(name) }}</MenuItem>
+    <slot></slot>
   </Menu>
   <Space size="large" v-else>
     <Button @click="handleClick(name)" :type="buttonType(name).type" :key="name" v-for="name in optTypes">
@@ -264,5 +265,6 @@ const buttonName = function (name: string) {
       </template>
       <span>{{ buttonName(name) }}</span>
     </Button>
+    <slot></slot>
   </Space>
 </template>
